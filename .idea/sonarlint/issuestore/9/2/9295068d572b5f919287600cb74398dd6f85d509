@@ -1,0 +1,9 @@
+
+’
+AWgieAgDKqYsOqLoqYo9squid:S2293="YReplace the type specification in this constructor call with the diamond operator ("<>").(òƒþâøÿÿÿÿ8ð¥Þ‘‚-
+s
+AWgigqHAKqYsOqLoqZNusquid:S1854T":Remove this useless assignment to local variable "equals".(¾Ú¹–ýÿÿÿÿ8€Þ‰”‚-
+d
+AWgigqHAKqYsOqLoqZNwsquid:S1481T"+Remove this unused "equals" local variable.(¾Ú¹–ýÿÿÿÿ8€Þ‰”‚-
+
+AWgigqHAKqYsOqLoqZNvsquid:S2159T"VRemove this call to "equals"; comparisons between unrelated types always return false.(¾Ú¹–ýÿÿÿÿ8€Þ‰”‚-

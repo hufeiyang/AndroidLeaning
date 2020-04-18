@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hfy.demo01">
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".module.home.glide.GlideTestActivity"></activity>
+        <activity android:name=".module.home.touchevent.RecyclerViewAndRecyclerViewActivity" />
+        <activity android:name=".module.home.touchevent.TouchEventTestEnterActivity" />
+        <activity android:name=".module.home.touchevent.ScrollViewAndRecyclerViewActivity" />
+        <activity android:name=".module.home.bitmap.BitmapTestActivity" />
+        <activity android:name=".module.home.animation.AnimationTestActivity" />
+        <activity android:name=".module.home.leaktest.LeakTestActivity" />
+        <activity android:name=".module.home.touchevent.NestedScrollTestActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".module.mvp.view.MvpActivity" />
+        <activity android:name=".module.mvvm.MvvmActivity" />
+        <activity android:name=".module.home.designsupportlibrarytest.NotificationActivity" />
+        <activity android:name=".module.home.designsupportlibrarytest.MaterialDesignWidgetActivity" />
+        <activity android:name=".module.home.designsupportlibrarytest.ViewEventTestActivity" />
+        <activity android:name=".module.home.designsupportlibrarytest.BehaviorTestActivity" />
+
+        <service android:name=".common.push.MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".common.push.MYFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".MainActivity$MyIntentService" />
+        <service android:name=".binder.aidl.BookManagerService" />
+    </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+</manifest>

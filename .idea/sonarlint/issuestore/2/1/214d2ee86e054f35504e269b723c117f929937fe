@@ -1,0 +1,7 @@
+
+_
+AWgieAg4KqYsOqLoqYpGsquid:S1068"+Remove this unused "mUnbind" private field.(Ì¦ÝÑ8ð¥Þ‘‚-
+
+AWgieAg4KqYsOqLoqYpEsquid:S1301("KReplace this "switch" statement by "if" statements to increase readability.(ŽºÖ8ð¥Þ‘‚-
+Š
+AWgieAg4KqYsOqLoqYpFsquid:S1450"VRemove the "mUnbind" field and declare it as a local variable in the relevant methods.(Ì¦ÝÑ8ð¥Þ‘‚-
