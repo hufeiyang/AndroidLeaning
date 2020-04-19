@@ -1,5 +1,6 @@
 package com.hfy.demo01.module.home.glide;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import com.blankj.utilcode.util.AdaptScreenUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -17,10 +19,14 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.hfy.demo01.R;
+import com.hfy.demo01.module.home.glide.component.ProgressInterceptor;
+import com.hfy.demo01.module.home.glide.transform.CircleCropTransformation;
+import com.hfy.demo01.module.mvvm.Utils;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
@@ -29,6 +35,8 @@ import java.util.concurrent.TimeoutException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Glide test
@@ -45,6 +53,8 @@ public class GlideTestActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_glide_test)
     TextView tvGlideTest;
+
+    private ProgressDialog progressDialog;
 
     public static void launch(FragmentActivity activity) {
         Intent intent = new Intent(activity, GlideTestActivity.class);
@@ -76,14 +86,14 @@ public class GlideTestActivity extends AppCompatActivity {
 //                .override(200, 200)//指定要加载到控件的图片大小（由下载的原图压缩所得）
                 .into(ivGlideTest);
 
-//        Glide.with(this)
-//                .load("https://n.sinaimg.cn/tech/transform/550/w330h220/20200103/0f09-imrkkfx2327344.gif")
-////                .asBitmap()//只允许加载静态图片，gif就展示第一帧
-//                .placeholder(R.drawable.brvah_sample_footer_loading_progress)
-//                .error(R.drawable.common_google_signin_btn_icon_disabled)
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true)
-//                .into(ivGlideTestGif);
+        Glide.with(this)
+                .load("https://n.sinaimg.cn/tech/transform/550/w330h220/20200103/0f09-imrkkfx2327344.gif")
+//                .asBitmap()//只允许加载静态图片，gif就展示第一帧
+                .placeholder(R.drawable.brvah_sample_footer_loading_progress)
+                .error(R.drawable.common_google_signin_btn_icon_disabled)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(ivGlideTestGif);
 
         //自定义GlideUrl，可用于修改cache key
         Glide.with(this)
@@ -201,6 +211,58 @@ public class GlideTestActivity extends AppCompatActivity {
 //                .fitCenter()
                 .centerCrop()
                 .into(ivGlideTest);
+
+        Glide.with(this)
+                .load("http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg")
+                .dontTransform()
+                .transform(new CircleCropTransformation(this))
+                .into(ivGlideTest);
+
+
+
+        //多种转换器
+        RoundedCornersTransformation roundedCornersTransformation1 = new RoundedCornersTransformation(this, AdaptScreenUtils.pt2Px(5), 0, RoundedCornersTransformation.CornerType.TOP_LEFT);
+        RoundedCornersTransformation roundedCornersTransformation2 = new RoundedCornersTransformation(this, AdaptScreenUtils.pt2Px(20), 0, RoundedCornersTransformation.CornerType.BOTTOM_RIGHT);
+        BlurTransformation blurTransformation = new BlurTransformation(this, 20);
+        Glide.with(this)
+                .load("http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg")
+                .bitmapTransform(roundedCornersTransformation1, roundedCornersTransformation2, blurTransformation)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(ivGlideTest);
+
+
+        //下载进度(使用okHttp的拦截器)
+        String url = "http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg";
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMessage("加载中");
+
+        ProgressInterceptor.addListener(url, new ProgressInterceptor.ProgressListener() {
+            @Override
+            public void onProgress(int progress) {
+                progressDialog.setProgress(progress);
+            }
+        });
+
+        Glide.with(this)
+                .load(url)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(new GlideDrawableImageViewTarget(ivGlideTest){
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        super.onLoadStarted(placeholder);
+                        progressDialog.show();
+                    }
+
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                        super.onResourceReady(resource, animation);
+                        progressDialog.dismiss();
+
+                    }
+                });
     }
 
 }

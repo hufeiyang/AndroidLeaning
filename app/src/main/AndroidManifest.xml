@@ -44,6 +44,8 @@
         </service>
         <service android:name=".MainActivity$MyIntentService" />
         <service android:name=".binder.aidl.BookManagerService" />
+
+        <meta-data android:name="com.hfy.demo01.module.home.glide.MyGlideModule" android:value="GlideModule"/>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
