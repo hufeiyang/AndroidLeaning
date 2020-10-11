@@ -24,6 +24,14 @@ import okio.Source;
 public class ProgressInterceptor implements Interceptor {
 
     static final Map<String, ProgressListener> LISTENER_MAP = new HashMap<>();
+    private long mAlreadyDownLength;
+
+    public ProgressInterceptor() {
+    }
+
+    public ProgressInterceptor(long alreadyDownLength) {
+        mAlreadyDownLength = alreadyDownLength;
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -31,7 +39,7 @@ public class ProgressInterceptor implements Interceptor {
         Response response = chain.proceed(request);
         String url = request.url().toString();
         ResponseBody body = response.body();
-        Response newResponse = response.newBuilder().body(new ProgressResponseBody(url, body)).build();
+        Response newResponse = response.newBuilder().body(new ProgressResponseBody(url, body, mAlreadyDownLength)).build();
         return newResponse;
     }
 
@@ -52,9 +60,10 @@ public class ProgressInterceptor implements Interceptor {
     /**
      * 能获取进度的ResponseBody
      */
-    private class ProgressResponseBody extends ResponseBody {
+    public static class ProgressResponseBody extends ResponseBody {
 
         private static final String TAG = "ProgressResponseBody";
+        private final long mAlreadyDownLength;
 
         private BufferedSource bufferedSource;
 
@@ -62,9 +71,10 @@ public class ProgressInterceptor implements Interceptor {
 
         private ProgressListener listener;
 
-        public ProgressResponseBody(String url, ResponseBody responseBody) {
+        public ProgressResponseBody(String url, ResponseBody responseBody, long alreadyDownLength) {
             this.responseBody = responseBody;
             listener = ProgressInterceptor.LISTENER_MAP.get(url);
+            mAlreadyDownLength = alreadyDownLength;
         }
 
         @Override
@@ -79,8 +89,11 @@ public class ProgressInterceptor implements Interceptor {
 
         @Override
         public BufferedSource source() {
+            //BufferedSource可以理解为一个带有缓冲区的响应体，因为从网络流读入响应体的时候，
+            // Okio先把响应体读入一个缓冲区内，也即是BufferedSource。
             if (bufferedSource == null) {
-                bufferedSource = Okio.buffer(new ProgressSource(responseBody.source()));
+                //Source相当于一个输入流InputStream，即响应的数据流。
+                bufferedSource = Okio.buffer(new ProgressSource(responseBody.source(), mAlreadyDownLength));
             }
             return bufferedSource;
         }
@@ -91,16 +104,16 @@ public class ProgressInterceptor implements Interceptor {
 
             int currentProgress;
 
-            ProgressSource(Source source) {
+            ProgressSource(Source source, long alreadyDownLength) {
                 super(source);
+                totalBytesRead = alreadyDownLength;
             }
 
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
-
                 long bytesRead = super.read(sink, byteCount);
-
                 long fullLength = responseBody.contentLength();
+                //不断统计当前下载好的数据
                 if (bytesRead == -1) {
                     totalBytesRead = fullLength;
                 } else {

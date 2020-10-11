@@ -1,6 +1,9 @@
 package com.hfy.demo01.module.home.glide.component;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.util.ContentLengthInputStream;
@@ -28,7 +31,7 @@ class OkHttpFetcher implements DataFetcher<InputStream> {
         glideUrl = model;
     }
 
-    @Override
+//    @Override
     public InputStream loadData(Priority priority) throws Exception {
         Request.Builder builder = new Request.Builder();
         builder.url(glideUrl.toStringUrl());
@@ -54,6 +57,11 @@ class OkHttpFetcher implements DataFetcher<InputStream> {
     }
 
     @Override
+    public void loadData(@NonNull Priority priority, @NonNull DataCallback<? super InputStream> callback) {
+
+    }
+
+    @Override
     public void cleanup() {
         if (stream != null) {
             try {
@@ -67,7 +75,7 @@ class OkHttpFetcher implements DataFetcher<InputStream> {
         }
     }
 
-    @Override
+//    @Override
     public String getId() {
         return glideUrl.getCacheKey();
     }
@@ -75,5 +83,17 @@ class OkHttpFetcher implements DataFetcher<InputStream> {
     @Override
     public void cancel() {
         isCancelled = true;
+    }
+
+    @NonNull
+    @Override
+    public Class<InputStream> getDataClass() {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public DataSource getDataSource() {
+        return null;
     }
 }

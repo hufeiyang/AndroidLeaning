@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.hfy.demo01.R;
 import com.hfy.demo01.module.home.glide.GlideTestActivity;
+import com.hfy.demo01.module.home.okhttp.OkHttpTestActivity;
 import com.hfy.demo01.module.mvvm.MvvmActivity;
 
 import butterknife.BindView;
@@ -39,7 +40,11 @@ public class SecondFragment extends Fragment {
     }
 
     @OnClick({R.id.btn_mvvm_test,
-            R.id.btn_glide_test})
+            R.id.btn_glide_test,
+            R.id.btn_okhttp_test,
+            R.id.btn_ui_test,
+            R.id.btn_optimize_test
+    })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_mvvm_test:
@@ -47,6 +52,17 @@ public class SecondFragment extends Fragment {
                 break;
             case R.id.btn_glide_test:
                 GlideTestActivity.launch(getActivity());
+                break;
+            case R.id.btn_okhttp_test:
+                OkHttpTestActivity.launch(getActivity());
+                break;
+
+            case R.id.btn_ui_test:
+                UITestActivity.launch(getActivity());
+                break;
+
+            case R.id.btn_optimize_test:
+                OptimizeActivity.launch(getActivity());
                 break;
             default:
                 break;

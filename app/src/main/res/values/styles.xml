@@ -8,4 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="ActivityAlphaAnimation" parent="@android:style/Animation.Activity">
+        <!-- 打开一个activity，新的activity从进入动画 -->
+        <item name="android:activityOpenEnterAnimation">@anim/enter_from_right</item>
+        <!-- 打开一个activity，原来activity退出的动画 -->
+        <item name="android:activityOpenExitAnimation">@anim/exit_to_left</item>
+        <!-- 关闭一个activity（包括返回键），上一级activity进入的动画 -->
+        <item name="android:activityCloseEnterAnimation">@anim/exit_to_right</item>
+        <!-- 关闭一个activity，关闭的activity退出的动画 -->
+        <item name="android:activityCloseExitAnimation">@anim/enter_from_left</item>
+    </style>
+
+    <style name="AppNoActionBarAlphaAnimTheme" parent="AppTheme">
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+        <item name="android:windowAnimationStyle">@style/ActivityAlphaAnimation</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppNoActionBarAlphaAnimTheme">
+<!--        <item name="colorPrimaryDark">@color/splash_status_bar_color</item>-->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 </resources>

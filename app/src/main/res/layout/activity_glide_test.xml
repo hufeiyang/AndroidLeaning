@@ -25,6 +25,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_glide_test"/>
 
+    <ImageView
+        android:id="@+id/iv_glide_test_apng"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_glide_test_gif"/>
+
     <TextView
         android:id="@+id/tv_glide_test"
         android:layout_width="wrap_content"
@@ -34,5 +43,5 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_glide_test_gif" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_glide_test_apng" />
 </androidx.constraintlayout.widget.ConstraintLayout>

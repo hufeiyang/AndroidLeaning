@@ -17,4 +17,25 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="Glide" />
+
+    <Button
+        android:id="@+id/btn_okhttp_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="okhttp" />
+
+    <Button
+        android:id="@+id/btn_ui_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="uiTest" />
+
+    <Button
+        android:id="@+id/btn_optimize_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="性能优化" />
 </LinearLayout>

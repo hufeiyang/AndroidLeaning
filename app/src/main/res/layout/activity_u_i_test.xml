@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hfy.demo01.module.home.fragment.UITestActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 10pt"
+                android:textColor="#ff000000"
+                android:textSize="10dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_left1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title1"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="10dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_right1"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_left1"
+                android:layout_marginLeft="121dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left1"
+                android:ellipsize="end"
+                android:lines="3"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="10dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 12pt"
+                android:textColor="#ff000000"
+                android:textSize="12dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_left2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title2"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_right2"
+                android:layout_width="204dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="59dp"
+                android:layout_alignTop="@id/tv_left2"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left2"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 14pt"
+                android:textColor="#ff000000"
+                android:textSize="14dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_left3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title3"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="14dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_right3"
+                android:layout_width="204dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="59dp"
+                android:layout_alignTop="@id/tv_left3"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left3"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="14dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 16pt"
+                android:textColor="#ff000000"
+                android:textSize="16dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_left4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title4"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_right4"
+                android:layout_width="204dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="15dp"
+                android:layout_alignTop="@id/tv_left4"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left4"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 20pt"
+                android:textColor="#ff000000"
+                android:textSize="20dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_left5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title5"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:background="#ff0000" />
+
+            <TextView
+                android:id="@+id/tv_right5"
+                android:layout_width="204dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignTop="@id/tv_left5"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left5"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:background="#ff0000"
+                android:text="Font size 24pt"
+                android:textColor="#ff000000"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_left6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title6"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:background="#ff0000"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_right6"
+                android:layout_width="234dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignTop="@id/tv_left6"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left6"
+                android:background="#ff0000"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="24dp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 1dp"
+                android:textColor="#ff000000"
+                android:textSize="1dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_left7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title7"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="1dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_right7"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_left7"
+                android:layout_marginLeft="121dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left7"
+                android:ellipsize="end"
+                android:lines="3"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="1dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 9dp"
+                android:textColor="#ff000000"
+                android:textSize="9dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_left8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title8"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="9dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_right8"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_left8"
+                android:layout_marginLeft="121dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left8"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="9dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 11dp"
+                android:textColor="#ff000000"
+                android:textSize="11dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_left9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title9"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="11dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_right9"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_left9"
+                android:layout_marginLeft="121dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left9"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="11dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 13dp"
+                android:textColor="#ff000000"
+                android:textSize="13dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_left10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title10"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="13dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_right10"
+                android:layout_width="154dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_left10"
+                android:layout_marginLeft="61dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left10"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="13dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#0000ff">
+
+            <TextView
+                android:id="@+id/tv_title11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="Font size 18dp"
+                android:textColor="#ff000000"
+                android:textSize="18dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_left11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_below="@id/tv_title11"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="This is the one line text."
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:background="#ff0000"/>
+
+            <TextView
+                android:id="@+id/tv_right11"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_left11"
+                android:layout_marginLeft="21dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/tv_left11"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="This is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text.\nThis is the multiple line text."
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:background="#ff0000" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

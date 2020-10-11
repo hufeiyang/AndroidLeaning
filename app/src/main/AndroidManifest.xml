@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hfy.demo01">
 
-    <application
+    <application android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".module.home.glide.GlideTestActivity"></activity>
+        <activity android:name=".module.home.fragment.OptimizeActivity"></activity>
+        <activity android:name=".module.home.fragment.UITestActivity" />
+        <activity android:name=".module.home.okhttp.OkHttpTestActivity" />
+        <activity android:name=".module.home.glide.GlideTestActivity" />
         <activity android:name=".module.home.touchevent.RecyclerViewAndRecyclerViewActivity" />
         <activity android:name=".module.home.touchevent.TouchEventTestEnterActivity" />
         <activity android:name=".module.home.touchevent.ScrollViewAndRecyclerViewActivity" />
@@ -18,7 +21,7 @@
         <activity android:name=".module.home.animation.AnimationTestActivity" />
         <activity android:name=".module.home.leaktest.LeakTestActivity" />
         <activity android:name=".module.home.touchevent.NestedScrollTestActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,14 +47,12 @@
         </service>
         <service android:name=".MainActivity$MyIntentService" />
         <service android:name=".binder.aidl.BookManagerService" />
-
-        <meta-data android:name="com.hfy.demo01.module.home.glide.MyGlideModule" android:value="GlideModule"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 </manifest>

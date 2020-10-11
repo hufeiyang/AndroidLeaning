@@ -7,21 +7,18 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+
+import java.security.MessageDigest;
 
 /**
  * 图片 圆形化
  * @author hufeiyang
  */
 public class CircleCropTransformation extends BitmapTransformation {
-    public CircleCropTransformation(Context context) {
-        super(context);
-    }
-
-    public CircleCropTransformation(BitmapPool bitmapPool) {
-        super(bitmapPool);
-    }
 
     @Override
     protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
@@ -55,14 +52,14 @@ public class CircleCropTransformation extends BitmapTransformation {
         canvas.drawCircle(radius, radius, radius, paint);
 
         //尝试将复用的Bitmap对象重新放回到缓存池当中，并将圆形化变换后的Bitmap对象进行返回(固定套路)
-        if (toReuse != null && !pool.put(toReuse)) {
+        if (toReuse != null) {
             toReuse.recycle();
         }
         return result;
     }
 
     @Override
-    public String getId() {
-        return "com.hfy.demo01.module.home.glide.transform.CircleCropTransformation";
+    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+
     }
 }

@@ -7,13 +7,19 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
+import androidx.core.os.TraceCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,9 +27,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
@@ -35,6 +44,9 @@ import com.hfy.demo01.dagger2.bean.Watch;
 import com.hfy.demo01.module.home.adapter.HomePagerAdapter;
 import com.hfy.demo01.module.home.fragment.FirstFragment;
 import com.hfy.demo01.module.home.fragment.SecondFragment;
+
+import org.jay.launchstarter.DelayInitDispatcher;
+import org.jay.launchstarter.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,10 +119,44 @@ public class MainActivity extends AppCompatActivity {
     private AsyncTask<Integer, Integer, String> task;
 
 
+    DelayInitDispatcher delayInitDispatcher = new DelayInitDispatcher();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        new AsyncLayoutInflater(MainActivity.this).inflate(R.layout.activity_main, null, new AsyncLayoutInflater.OnInflateFinishedListener() {
+//            @Override
+//            public void onInflateFinished(@NonNull View view, int i, @Nullable ViewGroup viewGroup) {
+//                setContentView(view);
+//                // findViewById、视图操作等
+//            }
+//        });
+
+        Log.i(TAG, "onCreate begin. ");
+
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
+        TraceCompat.beginSection("MainActivity onCreate");
+
+        Debug.startMethodTracing();//dmtrace.trace
+//        Debug.startMethodTracing(getExternalFilesDir(null)+"test.trace");
+
         setContentView(R.layout.activity_main);
+
+        delayInitDispatcher.addTask(new Task() {
+            @Override
+            public void run() {
+                Log.i(TAG, "run: delay task begin");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.i(TAG, "run: delay task end");
+            }
+        });
+        delayInitDispatcher.start();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -119,26 +165,147 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: age = " + age);
 
         initConfig();
-
         initView();
-
         initData();
 
         //jenkins 在push到github后 自动构建，test
 
         testToast();
-
         testThreadLocal();
-
         testHandler();
-
         testAsyncTask();
-
         testHandlerThread();
-
         testIntentService();
-
         testThreadPoolExecutor();
+
+
+        int i = testFinally();
+        Log.i(TAG, "onCreate: 33333："+i);
+
+        Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long frameTimeNanos) {
+
+                Choreographer.getInstance().postFrameCallback(this);
+            }
+        });
+
+        testString();
+
+
+        Debug.stopMethodTracing();
+
+        TraceCompat.endSection();
+
+
+        Log.i(TAG, "onCreate end. ");
+
+
+        mTlHomeTab.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                return true;
+            }
+        });
+
+        mTlHomeTab.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
+            @Override
+            public void onDraw() {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+    }
+
+    private void testString() {
+        String oriString = "abcdef";
+        StringBuffer desString = new StringBuffer();
+        char[] chars = oriString.toCharArray();
+        for (int i1 = chars.length - 1; i1 >= 0; i1--) {
+            desString.append(chars[i1]);
+        }
+        Log.i(TAG, "字符串逆序：onCreate: "+desString.toString());
+
+        String oriString2 = "abcdef";
+        StringBuffer desString2 = new StringBuffer(oriString2);
+        Log.i(TAG, "字符串逆序2：onCreate: "+desString2.reverse().toString());
+
+        String oriString3 = "abcdef";
+        String deString3="";
+        for (int length = oriString3.length()-1; length >= 0; length--) {
+            deString3+=oriString3.charAt(length);
+        }
+        Log.i(TAG, "字符串逆序3：onCreate: "+desString.toString());
+
+        String string = "abc";
+        List<String> list = getFullList(string);
+        Log.i(TAG, "字符串全排列：onCreate: "+list.toString());
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "onResume begin. ");
+        super.onResume();
+
+        Log.i(TAG, "onResume end. ");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            reportFullyDrawn();
+                        }
+                    }
+                });
+
+            }
+        }).start();
+    }
+
+    private List<String> getFullList(String string) {
+        int lenth = string.length();
+        ArrayList<String> result = new ArrayList<>();
+        result.add(string.charAt(0)+"");
+
+        for(int i=1; i<lenth;i++){
+            ArrayList<String> temp = new ArrayList<>();
+            char charAt = string.charAt(i);
+            for(String str: result){
+                temp.add(charAt+str);
+                temp.add(str+charAt);
+                for(int j=1; j<str.length();j++){
+                    temp.add(str.substring(0,j) + charAt + str.substring(0,j));
+                }
+                temp.add(str+charAt);
+            }
+            result = temp;
+        }
+
+        return result;
+    }
+
+    private int testFinally() {
+        try {
+            Log.i(TAG, "onCreate: 11111");
+            return 99;
+        } finally {
+            //虽然上面return了，但这行日志也会打印
+            Log.i(TAG, "onCreate: 22222");
+        }
     }
 
     private void testThreadPoolExecutor() {
@@ -712,11 +879,13 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case OVERLAY_PERMISSION_REQ_CODE:
-                if (Settings.canDrawOverlays(this)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //打开了权限
-                    handleAddWindow();
-                } else {
-                    Toast.makeText(this, "can not DrawOverlays", Toast.LENGTH_SHORT).show();
+                    if (Settings.canDrawOverlays(this)) {
+                        handleAddWindow();
+                    } else {
+                        Toast.makeText(this, "can not DrawOverlays", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             default:

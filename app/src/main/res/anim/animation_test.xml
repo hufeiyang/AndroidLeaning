@@ -21,6 +21,7 @@
         android:toAlpha="1" />
 
     <rotate
+        android:duration="3000"
         android:fromDegrees="0"
         android:toDegrees="20" />
 </set>

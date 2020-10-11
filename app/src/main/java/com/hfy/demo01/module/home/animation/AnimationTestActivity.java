@@ -9,6 +9,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,6 +92,10 @@ public class AnimationTestActivity extends AppCompatActivity {
         objectAnimatorTest();
 
         testAnimatorAboutButtonWidth();
+
+
+        boolean isNeedLandscape = true;
+        setRequestedOrientation(isNeedLandscape ?ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void frameAnimationTest() {
@@ -196,6 +201,7 @@ public class AnimationTestActivity extends AppCompatActivity {
 
     /**
      * 设置属性动画的监听
+     *
      * @param translationX
      */
     private void setAnimatorListener(ObjectAnimator translationX) {
