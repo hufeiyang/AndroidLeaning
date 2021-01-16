@@ -43,7 +43,7 @@ public class FirstFragment extends Fragment {
 
     private static final int PERMISSIOINS_REQUEST_CODE_CALL = 1000;
     private static final String TAG = "FirstFragment";
-    @BindView(R.id.btn_mvvm_test)
+    @BindView(R.id.btn_mvvm_data_binding_test)
     Button mButton;
 
     @BindView(R.id.btn_go_to_notification_activity)
@@ -102,7 +102,7 @@ public class FirstFragment extends Fragment {
         autoVerticalScrollTextView.start();
     }
 
-    @OnClick({R.id.btn_mvvm_test,
+    @OnClick({R.id.btn_mvvm_data_binding_test,
             R.id.btn_go_to_notification_activity,
             R.id.btn_go_to_call_activity,
             R.id.btn_go_to_material_design_activity,
@@ -115,7 +115,7 @@ public class FirstFragment extends Fragment {
     })
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_mvvm_test:
+            case R.id.btn_mvvm_data_binding_test:
                 MvpActivity.launch(getActivity());
                 break;
             case R.id.btn_go_to_notification_activity:

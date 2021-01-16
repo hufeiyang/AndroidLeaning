@@ -1,8 +1,7 @@
-package com.hfy.demo01.module.mvvm.bean;
+package com.hfy.demo01.module.databinding.bean;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
 
 
 /**

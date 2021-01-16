@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/btn_mvvm_test"
+        android:id="@+id/btn_mvvm_data_binding_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="MVVM" />
+        android:text="MVVM_dataBinding" />
 
     <Button
         android:id="@+id/btn_glide_test"
@@ -38,4 +38,32 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="性能优化" />
+
+    <Button
+        android:id="@+id/btn_lifecycle_old_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="lifecycle_old_Test" />
+
+    <Button
+        android:id="@+id/btn_lifecycle_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="lifecycle_Test" />
+
+    <Button
+        android:id="@+id/btn_mvvm_view_model_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="mvvm_viewModel_Test" />
+
+    <Button
+        android:id="@+id/btn_fragment_share_view_model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="fragment共享_viewModel_数据" />
 </LinearLayout>

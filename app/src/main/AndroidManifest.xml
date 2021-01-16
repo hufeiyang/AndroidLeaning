@@ -3,14 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hfy.demo01">
 
-    <application android:name=".MyApplication"
+    <application
+        android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".module.home.fragment.OptimizeActivity"></activity>
+        <activity android:name=".module.jetpack.viewmodel.fragment.FragmentShareActivity"></activity>
+        <activity android:name=".module.jetpack.old.LocationActivity" />
+        <activity android:name=".module.jetpack.viewmodel.UserActivity" />
+        <activity android:name=".module.jetpack.LifecycleTestActivity" />
+        <activity android:name=".module.home.fragment.OptimizeActivity" />
         <activity android:name=".module.home.fragment.UITestActivity" />
         <activity android:name=".module.home.okhttp.OkHttpTestActivity" />
         <activity android:name=".module.home.glide.GlideTestActivity" />
@@ -21,7 +26,9 @@
         <activity android:name=".module.home.animation.AnimationTestActivity" />
         <activity android:name=".module.home.leaktest.LeakTestActivity" />
         <activity android:name=".module.home.touchevent.NestedScrollTestActivity" />
-        <activity android:name=".MainActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.mvp.view.MvpActivity" />
-        <activity android:name=".module.mvvm.MvvmActivity" />
+        <activity android:name=".module.databinding.DataBindingActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.NotificationActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.MaterialDesignWidgetActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.ViewEventTestActivity" />
@@ -48,11 +55,11 @@
         <service android:name=".MainActivity$MyIntentService" />
         <service android:name=".binder.aidl.BookManagerService" />
     </application>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 </manifest>

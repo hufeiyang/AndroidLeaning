@@ -4,16 +4,16 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.multidex.MultiDex;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
 import com.github.sahasbhop.apngview.ApngImageLoader;
-import com.hfy.demo01.module.home.glide.GlideApp;
 
 import org.jay.launchstarter.MainTask;
 import org.jay.launchstarter.Task;
-import org.jay.launchstarter.TaskCallBack;
 import org.jay.launchstarter.TaskDispatcher;
 import org.jay.launchstarter.utils.DispatcherExecutor;
 
@@ -37,7 +37,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        
+
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new ApplicationLifecycleObserver());
+
         TaskDispatcher.init(getBaseContext());
         TaskDispatcher taskDispatcher = TaskDispatcher.createInstance();
 
@@ -125,4 +127,27 @@ public class MyApplication extends Application {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Application生命周期观察，提供整个应用进程的生命周期
+     *
+     * Lifecycle.Event.ON_CREATE只会分发一次，Lifecycle.Event.ON_DESTROY不会被分发。
+     *
+     * 第一个Activity进入时，ProcessLifecycleOwner将分派Lifecycle.Event.ON_START, Lifecycle.Event.ON_RESUME。
+     * 而Lifecycle.Event.ON_PAUSE, Lifecycle.Event.ON_STOP，将在最后一个Activit退出后后延迟分发。如果由于配置更改而销毁并重新创建活动，则此延迟足以保证ProcessLifecycleOwner不会发送任何事件。
+     *
+     * 作用：你希望在应用程序进入前台或后台时做出反应，并且在接收生命周期事件时不需要毫秒的精确度。
+     */
+    public static class ApplicationLifecycleObserver implements LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
+        public void onAppForeground() {
+            Log.w(TAG, "ApplicationObserver: app moved to foreground");
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        public void onAppBackground() {
+            Log.w(TAG, "ApplicationObserver: app moved to background");
+        }
+    }
+
 }

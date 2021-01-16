@@ -1,13 +1,13 @@
-package com.hfy.demo01.module.mvvm;
+package com.hfy.demo01.module.databinding;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hfy.demo01.module.mvvm.bean.Man;
+import com.hfy.demo01.module.databinding.bean.Man;
 
-public class MvvmActivity extends AppCompatActivity {
+public class DataBindingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class MvvmActivity extends AppCompatActivity {
      * launch MvpActivity
      */
     public static void launch(Activity activity) {
-        Intent intent = new Intent(activity, MvvmActivity.class);
+        Intent intent = new Intent(activity, DataBindingActivity.class);
         activity.startActivity(intent);
     }
 }

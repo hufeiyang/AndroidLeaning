@@ -13,7 +13,11 @@ import android.widget.Button;
 import com.hfy.demo01.R;
 import com.hfy.demo01.module.home.glide.GlideTestActivity;
 import com.hfy.demo01.module.home.okhttp.OkHttpTestActivity;
-import com.hfy.demo01.module.mvvm.MvvmActivity;
+import com.hfy.demo01.module.jetpack.LifecycleTestActivity;
+import com.hfy.demo01.module.jetpack.old.LocationActivity;
+import com.hfy.demo01.module.jetpack.viewmodel.UserActivity;
+import com.hfy.demo01.module.jetpack.viewmodel.fragment.FragmentShareActivity;
+import com.hfy.demo01.module.databinding.DataBindingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +27,7 @@ import butterknife.Unbinder;
 
 public class SecondFragment extends Fragment {
 
-    @BindView(R.id.btn_mvvm_test)
+    @BindView(R.id.btn_mvvm_data_binding_test)
     Button mButton;
     private Unbinder mUnbind;
 
@@ -39,16 +43,20 @@ public class SecondFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.btn_mvvm_test,
+    @OnClick({R.id.btn_mvvm_data_binding_test,
             R.id.btn_glide_test,
             R.id.btn_okhttp_test,
             R.id.btn_ui_test,
-            R.id.btn_optimize_test
+            R.id.btn_optimize_test,
+            R.id.btn_lifecycle_old_test,
+            R.id.btn_lifecycle_test,
+            R.id.btn_mvvm_view_model_test,
+            R.id.btn_fragment_share_view_model
     })
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_mvvm_test:
-                MvvmActivity.launch(getActivity());
+            case R.id.btn_mvvm_data_binding_test:
+                DataBindingActivity.launch(getActivity());
                 break;
             case R.id.btn_glide_test:
                 GlideTestActivity.launch(getActivity());
@@ -63,6 +71,18 @@ public class SecondFragment extends Fragment {
 
             case R.id.btn_optimize_test:
                 OptimizeActivity.launch(getActivity());
+                break;
+            case R.id.btn_lifecycle_old_test:
+                LocationActivity.launch(getActivity());
+                break;
+            case R.id.btn_lifecycle_test:
+                LifecycleTestActivity.launch(getActivity());
+                break;
+            case R.id.btn_mvvm_view_model_test:
+                UserActivity.launch(getActivity());
+                break;
+            case R.id.btn_fragment_share_view_model:
+                FragmentShareActivity.launch(getActivity());
                 break;
             default:
                 break;

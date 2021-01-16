@@ -1,8 +1,8 @@
-package com.hfy.demo01.module.mvvm;
+package com.hfy.demo01.module.databinding;
 
 import androidx.databinding.BindingConversion;
 
-import com.hfy.demo01.module.mvvm.bean.Man;
+import com.hfy.demo01.module.databinding.bean.Man;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

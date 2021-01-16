@@ -120,7 +120,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //显示等级，任何情况 都会显示通知
-            builder.setVisibility(Notification.VISIBILITY_PUBLIC);
+            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         }
 
         if (notificationManager != null) {
