@@ -11,10 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".module.jetpack.viewmodel.fragment.FragmentShareActivity"></activity>
-        <activity android:name=".module.jetpack.old.LocationActivity" />
+        <activity android:name=".module.mvvm.view.UserListActivity"></activity>
+        <activity android:name=".module.jetpack.databinding.ListActivity" />
+        <activity android:name=".module.jetpack.viewmodel.fragment.FragmentShareActivity" />
+        <activity android:name=".module.jetpack.lifecycle_livedata.old.LocationActivity" />
         <activity android:name=".module.jetpack.viewmodel.UserActivity" />
-        <activity android:name=".module.jetpack.LifecycleTestActivity" />
+        <activity android:name=".module.jetpack.lifecycle_livedata.LifecycleTestActivity" />
         <activity android:name=".module.home.fragment.OptimizeActivity" />
         <activity android:name=".module.home.fragment.UITestActivity" />
         <activity android:name=".module.home.okhttp.OkHttpTestActivity" />
@@ -36,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.mvp.view.MvpActivity" />
-        <activity android:name=".module.databinding.DataBindingActivity" />
+        <activity android:name=".module.jetpack.databinding.DataBindingLearningActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.NotificationActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.MaterialDesignWidgetActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.ViewEventTestActivity" />
@@ -55,11 +57,11 @@
         <service android:name=".MainActivity$MyIntentService" />
         <service android:name=".binder.aidl.BookManagerService" />
     </application>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

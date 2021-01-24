@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <!--导入-->
+        <import type="com.hfy.demo01.module.jetpack.databinding.bean.User" />
+        <import type="java.util.ArrayList" />
+        <import type="java.util.Map" />
+        <import type="android.view.View" />
+
+        <!--对象变量的定义-->
+        <variable
+            name="time"
+            type="java.util.Date" />
+        <variable
+            name="user"
+            type="User" />
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="clickPresenter"
+            type="com.hfy.demo01.module.jetpack.databinding.DataBindingLearningActivity.ListenerPresenter" />
+
+        <variable
+            name="vm"
+            type="com.hfy.demo01.module.jetpack.databinding.UserViewModel" />
+
+        <!--基本数据类型 的变量， java.lang.*会自动导入-->
+        <variable
+            name="home"
+            type="String" />
+        <variable
+            name="age"
+            type="int" />
+        <variable
+            name="isFemale"
+            type="boolean" />
+        <!--集合变量的定义( <> 要用转移符 )-->
+        <variable
+            name="list"
+            type="ArrayList&lt;String&gt;" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--事件监听的四种方法-->
+
+        <!--方法一、先设置控件id，然后java代码中使用Binding设置-->
+        <!--点击按钮，实体类变化，UI也变化-->
+        <Button
+            android:id="@+id/btn_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已绑定的数据发生变化" />
+
+        <!--方法二、引用 原始监听器变量-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClickListener}"
+            android:text="重新绑定其他的数据实例" />
+
+        <!--方法三、引用 原始同参方法-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{clickPresenter.onClick}"
+            android:text="监听：同参方法" />
+
+        <!--方法四、引用 自定义监听器： ()->  -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick='@{()->clickPresenter.onBindingClick(user)}'
+            android:text="监听：自定义监听器" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.name}" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.level}" />
+
+        <!--双向绑定：使用EditText通过 "@={}" 改变man.name的值-->
+        <!--UI EditText变化，实体类man也动态变化 ，即双向绑定了-->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@={user.name}' />
+
+        <!--include， 使用bind:给引用的布局 直接绑定数据-->
+        <include layout="@layout/include_demo"
+            bind:user="@{user}"/>
+
+        <!--自定义属性 -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:imageUrl="@{user.avatar}"
+            app:placeHolder="@{@drawable/dog}"/>
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{!isFemale? user.name + "：男的": user.name + "：女的"}'
+            android:visibility="@{isFemale? View.GONE : View.VISIBLE }"/>   <!--支持表达式-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.level}"
+            android:visibility="@{tv1.visibility}"/>
+
+        <!--&lt;!&ndash;静态方法调用&ndash;&gt;-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@{Utils.getName(user)}" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@{list.get(0)}" />-->
+
+        <!-- 绑定 ViewModel中的LiveData ！！！-->
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取user：DataBinding + LiveData"
+            android:onClick="@{clickPresenter.onGetUser}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.userLiveData.name}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.userLiveData.level}"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={vm.userLiveData.level}"/>
+
+    </LinearLayout>
+
+</layout>

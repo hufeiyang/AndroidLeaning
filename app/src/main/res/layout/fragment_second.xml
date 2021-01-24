@@ -5,25 +5,39 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/btn_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="notification_setting" />
+
+    <Button
         android:id="@+id/btn_mvvm_data_binding_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="MVVM_dataBinding" />
+        android:text="dataBinding学习" />
+
+    <Button
+        android:id="@+id/btn_data_binding_list_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="dataBinding for list" />
 
     <Button
         android:id="@+id/btn_glide_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="Glide" />
+        android:text="Glide学习" />
 
     <Button
         android:id="@+id/btn_okhttp_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="okhttp" />
+        android:text="okhttp学习" />
 
     <Button
         android:id="@+id/btn_ui_test"
@@ -37,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="性能优化" />
+        android:text="性能优化 学习" />
 
     <Button
         android:id="@+id/btn_lifecycle_old_test"
@@ -51,14 +65,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="lifecycle_Test" />
+        android:text="lifecycle_学习" />
 
     <Button
         android:id="@+id/btn_mvvm_view_model_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="mvvm_viewModel_Test" />
+        android:text="mvvm_viewModel_学习" />
 
     <Button
         android:id="@+id/btn_fragment_share_view_model"
@@ -66,4 +80,11 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="fragment共享_viewModel_数据" />
+
+    <Button
+        android:id="@+id/btn_mvvm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="MVVM 架构" />
 </LinearLayout>

@@ -2,26 +2,26 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <!--导入-->
+        <import type="com.hfy.demo01.module.jetpack.databinding.bean.User" />
         <variable
             name="user"
-            type="com.hfy.demo01.module.jetpack.databinding.bean.User" />
+            type="User" />
     </data>
 
     <LinearLayout
+        android:id="@+id/ll_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{user.name}" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{user.level}" />
-
-
     </LinearLayout>
+
 </layout>

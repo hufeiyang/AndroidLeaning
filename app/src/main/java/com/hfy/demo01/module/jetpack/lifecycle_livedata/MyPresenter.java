@@ -1,10 +1,9 @@
-package com.hfy.demo01.module.jetpack;
+package com.hfy.demo01.module.jetpack.lifecycle_livedata;
 
 import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
 class MyPresenter implements LifecycleObserver {
