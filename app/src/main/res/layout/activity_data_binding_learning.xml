@@ -109,17 +109,15 @@
             app:placeHolder="@{@drawable/dog}"/>
 
         <TextView
-            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{!isFemale? user.name + "：男的": user.name + "：女的"}'
+            android:text='@{!isFemale? user.name + "：男士": user.name + "：女士"}'
             android:visibility="@{isFemale? View.GONE : View.VISIBLE }"/>   <!--支持表达式-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{user.level}"
-            android:visibility="@{tv1.visibility}"/>
+            android:text="@{user.level}"/>
 
         <!--&lt;!&ndash;静态方法调用&ndash;&gt;-->
         <!--<TextView-->

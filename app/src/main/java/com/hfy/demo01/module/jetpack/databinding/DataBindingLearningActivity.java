@@ -4,24 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.chad.library.BR;
-import com.hfy.demo01.module.jetpack.databinding.bean.User;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.Observable;
-import androidx.databinding.OnRebindCallback;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.transition.TransitionManager;
 
+import com.chad.library.BR;
 import com.hfy.demo01.R;
 import com.hfy.demo01.databinding.ActivityDataBindingLearningBinding;
+import com.hfy.demo01.module.jetpack.databinding.bean.User;
 
 import java.util.Date;
 

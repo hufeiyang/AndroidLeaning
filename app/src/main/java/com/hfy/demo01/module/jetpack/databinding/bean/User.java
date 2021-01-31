@@ -17,6 +17,7 @@ public class User extends BaseObservable{
     private String level;
     private String avatar;
 
+
     /**
      * 直接使用 基础的 ObservableField，就不用 @Bindable + notifyPropertyChanged 了
      */
