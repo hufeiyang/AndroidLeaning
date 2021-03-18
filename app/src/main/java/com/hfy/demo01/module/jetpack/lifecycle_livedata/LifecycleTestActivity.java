@@ -50,7 +50,8 @@ public class LifecycleTestActivity extends AppCompatActivity implements IView {
             }
         });
         Log.i(TAG, "onCreate: ");
-        mLiveData.setValue("onCreate");
+        mLiveData.setValue("onCreate1");
+        mLiveData.setValue("onCreate2");
 
 
         //2.1修改数据-map
@@ -139,35 +140,35 @@ public class LifecycleTestActivity extends AppCompatActivity implements IView {
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "onStart: ");
-        mLiveData.setValue("onStart");
+//        mLiveData.setValue("onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");
-        mLiveData.setValue("onResume");
+//        mLiveData.setValue("onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "onPause: ");
-        mLiveData.setValue("onPause");
+//        mLiveData.setValue("onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.i(TAG, "onStop: ");
-        mLiveData.setValue("onStop");
+//        mLiveData.setValue("onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy: ");
-        mLiveData.setValue("onDestroy");
+//        mLiveData.setValue("onDestroy");
     }
 
     @Override
