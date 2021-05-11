@@ -11,6 +11,47 @@ public class QuickSorter {
 
     private static final String TAG = "QuickSorter";
 
+    public static void main(String[] args){
+        int[] a ={10,4,8,4,100,6,9,45,30};
+//        QuickSorter.sort(a, 0, a.length-1);
+        QuickSorter.quickSort(a,0,a.length -1);
+
+        for (int value : a) {
+            System.out.println(value);
+        }
+    }
+
+    //快速排序：从冒泡排序演变，使用分治思想，比冒泡高效，所以叫快速排序。
+    //选择一个基准b，小于b的放左边、大于b放右边。 a<b<c ,那么 a<c 是必然的，就不需要进行比较了。可用填坑法完成。
+    //所以，只需要分别在操作左右部分（就是递归了）
+    private static void quickSort(int[] a, int low, int high){
+        if(low >= high){
+            return;
+        }
+        int i = low;
+        int j = high;
+
+        int temp = a[i]; //取第一个为基准，比较其他所有数（此位置就看做一个坑位）
+        while(i < j){
+            //右侧找小于temp的,大于就左移
+            while(i < j && a[j] >= temp){
+                j--;
+            }
+            a[i] = a[j];//此时a[j] < temp，放到坑位中
+
+            while(i < j && a[i] <= temp){ //左侧找大于temp的
+                i++;
+            }
+            a[j] = a[i];//此时a[j] < temp，放到坑位中
+        }
+        a[i] = temp; //这里i=j,也是坑位，把基准数放入即可。这样就完成了 小于temp的在左边，大于temp的放右边
+
+        //然后，再递归 左右两边即可‘
+        quickSort(a,low,i-1);
+        quickSort(a,i+1,high);
+    }
+
+
     public static void sort(int[] origin, int low, int high){
 
         int i = low;
@@ -47,12 +88,4 @@ public class QuickSorter {
         }
     }
 
-    public static void main(String args[]){
-        int[] a ={10,4,8,4,100,6,9,45,30};
-        QuickSorter.sort(a, 0, a.length-1);
-
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
-    }
 }
