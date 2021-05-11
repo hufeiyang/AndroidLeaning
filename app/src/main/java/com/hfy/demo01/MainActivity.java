@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.hfy.demo01.common.customview.MyToast;
 import com.hfy.demo01.dagger2.bean.Car;
 import com.hfy.demo01.dagger2.bean.Watch;
+//import com.hfy.demo01.kotlin.LearnKotlin;
 import com.hfy.demo01.module.home.adapter.HomePagerAdapter;
 import com.hfy.demo01.module.home.fragment.FirstFragment;
 import com.hfy.demo01.module.home.fragment.SecondFragment;
@@ -124,14 +125,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        new AsyncLayoutInflater(MainActivity.this).inflate(R.layout.activity_main, null, new AsyncLayoutInflater.OnInflateFinishedListener() {
-//            @Override
-//            public void onInflateFinished(@NonNull View view, int i, @Nullable ViewGroup viewGroup) {
-//                setContentView(view);
-//                // findViewById、视图操作等
-//            }
-//        });
-
         Log.i(TAG, "onCreate begin. ");
 
         setTheme(R.style.AppTheme);
@@ -211,9 +204,21 @@ public class MainActivity extends AppCompatActivity {
         mTlHomeTab.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
             @Override
             public void onDraw() {
-
+                Log.i(TAG, "onDraw: ");
             }
         });
+
+        mTlHomeTab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: ");
+            }
+        });
+
+        //kotlin test
+//        LearnKotlin learnKotlin = new LearnKotlin();
+//        learnKotlin.work("深圳","996");
+
 
     }
 

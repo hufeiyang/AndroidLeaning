@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.hfy.demo01.R;
+//import com.hfy.demo01.kotlin.KotlinTestActivity;
 import com.hfy.demo01.module.home.animation.AnimationTestActivity;
 import com.hfy.demo01.module.home.bitmap.BitmapTestActivity;
 import com.hfy.demo01.module.home.designsupportlibrarytest.MaterialDesignWidgetActivity;
@@ -111,7 +112,8 @@ public class FirstFragment extends Fragment {
             R.id.btn_test_touch_event,
             R.id.btn_test_leak,
             R.id.btn_animation_test,
-            R.id.btn_bitmap_test
+            R.id.btn_bitmap_test,
+            R.id.btn_kotlin_test
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -148,6 +150,9 @@ public class FirstFragment extends Fragment {
                 break;
             case R.id.btn_bitmap_test:
                 BitmapTestActivity.launch(getActivity());
+                break;
+            case R.id.btn_kotlin_test:
+//                KotlinTestActivity.launch(getActivity());
                 break;
             default:
                 break;

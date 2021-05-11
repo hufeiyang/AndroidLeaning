@@ -54,6 +54,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
@@ -115,6 +116,10 @@ dependencies {
     //BRVAH
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2'
 
+    //x2c
+    annotationProcessor 'com.zhangyue.we:x2c-apt:1.1.2'
+    implementation 'com.zhangyue.we:x2c-lib:1.0.6'
+
 
     //我的简单图片加载库
     implementation project(path: ':simpleimageloader')
@@ -131,3 +136,9 @@ dependencies {
 
 
 apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'kotlin-android'
+//compileKotlin {
+//    kotlinOptions {
+//        languageVersion = "1.4"
+//    }
+//}

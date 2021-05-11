@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.hfy.demo01.module.home.fragment.OptimizeActivity">
 
+
+
     <ImageView
         android:id="@+id/iv_dog"
         android:layout_width="141dp"
@@ -15,4 +17,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/dog" />
+
+    <TextView
+        android:id="@+id/tv_XToC_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我是TextView"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/iv_dog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hfy.demo01.common.customview.MyTextView
+        android:id="@+id/mtv_XToC_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我是MyTextView"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_XToC_test"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

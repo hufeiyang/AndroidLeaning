@@ -12,13 +12,21 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.view.LayoutInflaterCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.hfy.demo01.MainActivity;
 import com.hfy.demo01.R;
+import com.zhangyue.we.x2c.X2C;
+import com.zhangyue.we.x2c.ano.Xml;
 
 import java.lang.ref.WeakReference;
 
@@ -33,6 +41,8 @@ import butterknife.ButterKnife;
  * apk瘦身：
  *
  */
+
+@Xml(layouts = "activity_rotate_view")
 public class OptimizeActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_dog)
@@ -52,32 +62,58 @@ public class OptimizeActivity extends AppCompatActivity {
             Trace.beginSection("hufeiyang");
         }
 
+        //布局加载耗时：setContentView()中的 LayoutInflater.from(mContext).inflate(resId, contentParent);
+        //即， IO读xml文件 + 反射创建View实例
+
+        //布局异步加载：在子线程进行 布局加载
+        //缺点：它内部的onCreateView并没有使用Factory做AppCompat控件兼容的处理；不能自定义。
+        //所以 一般不用。
+//        new AsyncLayoutInflater(this).inflate(R.layout.activity_main, null, new AsyncLayoutInflater.OnInflateFinishedListener() {
+//            @Override
+//            public void onInflateFinished(@NonNull View view, int i, @Nullable ViewGroup viewGroup) {
+//                setContentView(view);
+//                // findViewById、视图操作等
+//            }
+//        });
 
         // 使用LayoutInflaterCompat.Factory2全局监控Activity界面每一个控件的加载耗时，
         // 也可以做全局的自定义控件替换处理，比如：将TextView全局替换为自定义的TextView。
-        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new LayoutInflater.Factory2() {
-            @Override
-            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
 
-                if (TextUtils.equals(name, "TextView")) {
-                    // 生成自定义TextView
-                }
-                long time = System.currentTimeMillis();
-                // 1
-                View view = getDelegate().createView(parent, name, context, attrs);
-                Log.i("OptimizeActivity",name + " cost " + (System.currentTimeMillis() - time));
-                return view;
-            }
-
-            @Override
-            public View onCreateView(String name, Context context, AttributeSet attrs) {
-                return null;
-            }
-        });
+        //setFactory、setFactory2 是系统提供的hook，如果没有设置就是使用反射创建所有View
+        //这里 setFactory2 一定要在super.onCreate前，
+        // 因为CompatAppActivity中使用了delegate.installViewFactory() 有尝试setFactory2，如果在它之后就会异常
+//        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new LayoutInflater.Factory2() {
+//            @Override
+//            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+//
+//                long time = System.currentTimeMillis();
+//
+//                // 这句是一定要调用的：因为你覆盖了系统 在CompatAppActivity设置的Factory2，而下面这句就是它本来要做的事（1、TextView等替换成兼容版本；2、其他的使用反射（带. 和 不带.））
+//                View view = getDelegate().createView(parent, name, context, attrs);
+//
+//                if (view != null && view instanceof TextView) {
+//                    // 可以直接创建生成自定义TextView
+//                    //也可以统一修改 TextView的字体等
+//                }
+//
+//                //这里就是 每个View创建所需时间
+//                Log.i("OptimizeActivity",name + " cost " + (System.currentTimeMillis() - time));
+//                return view;
+//            }
+//
+//            @Override
+//            public View onCreateView(String name, Context context, AttributeSet attrs) {
+//                return null;
+//            }
+//        });
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rotate_view);
+
+//        setContentView(R.layout.activity_rotate_view);
+        X2C.setContentView(this, R.layout.activity_rotate_view);
+
+
         ButterKnife.bind(this);
 
 
