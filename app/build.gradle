@@ -132,6 +132,11 @@ dependencies {
 
     // 启动器
     implementation 'com.github.zeshaoaaa:LaunchStarter:0.0.1'
+
+    //自定义 注解处理器（注解处理器 只在编译处理期间需要用到，编译处理完后就没有实际作用了。所以使用annotationProcessor（允许只将编译时注释处理器配置为依赖项，而不在最终APK或库中包括工件）
+    annotationProcessor project(path: ':test_annotation_compiler')
+    //依赖test_annotations声明库（一般只需要依赖一个库api库 不需要直接依赖annotations声明库，api库会透传依赖的annotations声明库）
+    implementation project(path: ':test_annotations')
 }
 
 

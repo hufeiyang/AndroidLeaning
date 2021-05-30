@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', includes: ['*.jar'])
+
+    //auto-service会把 注解处理器 注册到Java编译器中，这样在编译时期才能对注解进行处理
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
+
+    //javaPoet，用于生成代码，可以让 我们通过 类调用 的方式来生成Java代码
+    implementation 'com.squareup:javapoet:1.10.0'
+
+    // 要依赖于注解声明库
+    implementation project(':test_annotations')
+
+}
+
+// 控制台中文设置UTF-8
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+
+//定义编译的 jdk 版本为 1.8，这个很重要，不写会报错。
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

@@ -45,10 +45,13 @@ import com.hfy.demo01.dagger2.bean.Watch;
 import com.hfy.demo01.module.home.adapter.HomePagerAdapter;
 import com.hfy.demo01.module.home.fragment.FirstFragment;
 import com.hfy.demo01.module.home.fragment.SecondFragment;
+import com.hfy.test_annotations.TestAnnotation;
+import com.jennifer.andy.aptdemo.domain.HelloWorld;
 
 import org.jay.launchstarter.DelayInitDispatcher;
 import org.jay.launchstarter.Task;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -69,6 +72,7 @@ import dagger.Lazy;
  * @author hufy
  * @date
  */
+@TestAnnotation
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "hfy";
