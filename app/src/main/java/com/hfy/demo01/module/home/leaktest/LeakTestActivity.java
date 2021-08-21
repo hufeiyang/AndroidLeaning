@@ -11,7 +11,7 @@ import com.hfy.demo01.R;
 
 public class LeakTestActivity extends AppCompatActivity {
 
-    private static final String TAG = "LeakTestActivity";
+    private static final String TAG = "hfyLeakTestActivity";
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, LeakTestActivity.class);

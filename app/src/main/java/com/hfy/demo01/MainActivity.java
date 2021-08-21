@@ -13,45 +13,39 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
-import androidx.core.os.TraceCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.os.TraceCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.hfy.demo01.common.customview.MyToast;
 import com.hfy.demo01.dagger2.bean.Car;
 import com.hfy.demo01.dagger2.bean.Watch;
-//import com.hfy.demo01.kotlin.LearnKotlin;
 import com.hfy.demo01.module.home.adapter.HomePagerAdapter;
 import com.hfy.demo01.module.home.fragment.FirstFragment;
 import com.hfy.demo01.module.home.fragment.SecondFragment;
+import com.hfy.demo01.module.home.fragment.ThirdFragment;
 import com.hfy.test_annotations.TestAnnotation;
-import com.jennifer.andy.aptdemo.domain.HelloWorld;
 
 import org.jay.launchstarter.DelayInitDispatcher;
 import org.jay.launchstarter.Task;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -65,8 +59,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 
-//import com.hfy.demo01.dagger2.component.DaggerMainActivityComponent;
-//import com.hfy.demo01.dagger2.component.DaggerMainActivityComponent;
+//import com.hfy.demo01.kotlin.LearnKotlin;
+
+/*
+import com.hfy.demo01.dagger2.component.DaggerMainActivityComponent;
+import com.hfy.demo01.dagger2.component.DaggerMainActivityComponent;
+*/
 
 /**
  * @author hufy
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     He he = new He();
 
-    private String[] titles = {"艺术探索", "进阶实战"};
+    private String[] titles = {"艺术探索", "进阶实战","高级知识"};
 
     /**
      * 首页fragments
@@ -691,6 +689,7 @@ public class MainActivity extends AppCompatActivity {
         //PagerAdapter
         fragments.add(new FirstFragment());
         fragments.add(new SecondFragment());
+        fragments.add(new ThirdFragment());
 
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(), titles, fragments);
         mVpHomePage.setAdapter(adapter);
