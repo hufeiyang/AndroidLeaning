@@ -146,7 +146,8 @@ dependencies {
 
 
 apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 //compileKotlin {
 //    kotlinOptions {
 //        languageVersion = "1.4"

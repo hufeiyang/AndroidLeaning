@@ -14,6 +14,7 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.multidex.MultiDex;
 
 import com.github.sahasbhop.apngview.ApngImageLoader;
+import com.hfy.demo01.hook.HookUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -72,6 +73,8 @@ public class MyApplication extends Application {
         Log.i(TAG, "onCreate: end.");
 
         ApngImageLoader.getInstance().init(getApplicationContext());
+
+        HookUtil.hookInstrumentation();
 
 //        //微信sdk初始化
 //        regToWx();
