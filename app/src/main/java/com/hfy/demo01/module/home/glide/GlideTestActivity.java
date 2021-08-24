@@ -100,7 +100,7 @@ public class GlideTestActivity extends AppCompatActivity {
                 .load("http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg")
 //                .asGif()//只允许加载静态图片,若原本url就是静态图，则会加载失败
                 .placeholder(R.drawable.brvah_sample_footer_loading_progress)
-                .error(R.drawable.common_google_signin_btn_icon_disabled)
+//                .error(R.drawable.common_google_signin_btn_icon_disabled)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
 //                .override(200, 200)//指定要加载到控件的图片大小（由下载的原图压缩所得）
@@ -110,7 +110,7 @@ public class GlideTestActivity extends AppCompatActivity {
                 .load("https://n.sinaimg.cn/tech/transform/550/w330h220/20200103/0f09-imrkkfx2327344.gif")
 //                .asBitmap()//只允许加载静态图片，gif就展示第一帧
                 .placeholder(R.drawable.brvah_sample_footer_loading_progress)
-                .error(R.drawable.common_google_signin_btn_icon_disabled)
+//                .error(R.drawable.common_google_signin_btn_icon_disabled)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(ivGlideTestGif);
@@ -145,7 +145,7 @@ public class GlideTestActivity extends AppCompatActivity {
         //自定义Target
         GlideApp.with(this)
                 .load("http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg")
-                .error(R.drawable.common_google_signin_btn_icon_disabled)
+//                .error(R.drawable.common_google_signin_btn_icon_disabled)
                 .into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -167,7 +167,7 @@ public class GlideTestActivity extends AppCompatActivity {
 
         GlideApp.with(this)
                 .load("http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg")
-                .error(R.drawable.common_google_signin_btn_icon_disabled)
+//                .error(R.drawable.common_google_signin_btn_icon_disabled)
                 .into(new CustomViewTarget<TextView, Drawable>(tvGlideTest) {
                     @Override
                     public void onLoadFailed(@Nullable Drawable errorDrawable) {

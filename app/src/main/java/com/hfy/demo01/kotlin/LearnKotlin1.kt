@@ -151,36 +151,36 @@ open class People constructor(open val name: String, val age: Int){
 
 
     //object:  创建匿名类实例
-    var man: Man = object:Man, Runnable {
-        override fun eat() {
-            TODO("Not yet implemented")
-        }
-
-        override fun invoke() {
-            TODO("Not yet implemented")
-        }
-    }
-
-    var man2 = object :Man{
-        override fun eat() {
-            TODO("Not yet implemented")
-        }
-
-    }
-
-    //SAM 转换 后的 匿名类实例
-    var man3 = Man { TODO("Not yet implemented") }
+//    var man: Man = object:Man, Runnable {
+//        override fun eat() {
+//            TODO("Not yet implemented")
+//        }
+//
+//        override fun invoke() {
+//            TODO("Not yet implemented")
+//        }
+//    }
+//
+//    var man2 = object :Man{
+//        override fun eat() {
+//            TODO("Not yet implemented")
+//        }
+//
+//    }
+//
+//    //SAM 转换 后的 匿名类实例
+//    var man3 = Man { TODO("Not yet implemented") }
 }
 
 /**
  * 函数式接口
  */
-fun interface Man{
-    fun eat()
-    fun walk(){}
-}
-
-fun interface Runnable {
-    fun invoke()
-
-}
+//fun interface Man{
+//    fun eat()
+//    fun walk(){}
+//}
+//
+//fun interface Runnable {
+//    fun invoke()
+//
+//}

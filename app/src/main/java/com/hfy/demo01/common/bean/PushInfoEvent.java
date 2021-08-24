@@ -1,6 +1,6 @@
 package com.hfy.demo01.common.bean;
 
-import com.google.firebase.messaging.RemoteMessage;
+//import com.google.firebase.messaging.RemoteMessage;
 
 /**
  * @author hufy
@@ -12,17 +12,17 @@ public class PushInfoEvent {
     /**
      * 接受到的push信息
      */
-    RemoteMessage remoteMessage;
-
-    public PushInfoEvent(RemoteMessage remoteMessage) {
-        this.remoteMessage = remoteMessage;
-    }
-
-    public RemoteMessage getRemoteMessage() {
-        return remoteMessage;
-    }
-
-    public void setRemoteMessage(RemoteMessage remoteMessage) {
-        this.remoteMessage = remoteMessage;
-    }
+//    RemoteMessage remoteMessage;
+//
+//    public PushInfoEvent(RemoteMessage remoteMessage) {
+//        this.remoteMessage = remoteMessage;
+//    }
+//
+//    public RemoteMessage getRemoteMessage() {
+//        return remoteMessage;
+//    }
+//
+//    public void setRemoteMessage(RemoteMessage remoteMessage) {
+//        this.remoteMessage = remoteMessage;
+//    }
 }

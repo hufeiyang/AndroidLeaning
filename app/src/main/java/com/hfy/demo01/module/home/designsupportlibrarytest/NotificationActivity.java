@@ -285,7 +285,7 @@ public class NotificationActivity extends AppCompatActivity {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
         remoteViews.setImageViewBitmap(
                 R.id.notification_large_icon,
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.common_full_open_on_phone));
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.brvah_sample_footer_loading));
         remoteViews.setTextViewText(R.id.notification_content, "" +
                 "contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent" +
                 "contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent" +
