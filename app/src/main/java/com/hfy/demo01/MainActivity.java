@@ -42,6 +42,7 @@ import com.hfy.demo01.module.home.fragment.FirstFragment;
 import com.hfy.demo01.module.home.fragment.SecondFragment;
 import com.hfy.demo01.module.home.fragment.ThirdFragment;
 import com.hfy.test_annotations.TestAnnotation;
+import com.tencent.tauth.Tencent;
 
 import org.jay.launchstarter.DelayInitDispatcher;
 import org.jay.launchstarter.Task;
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     DelayInitDispatcher delayInitDispatcher = new DelayInitDispatcher();
+    private Tencent mTencent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +224,12 @@ public class MainActivity extends AppCompatActivity {
 //        learnKotlin.work("深圳","996");
 
 
+//        mTencent = Tencent.createInstance("APP_ID", this.getApplicationContext(), "Authorities");
+//
+//        if (!mTencent.isSessionValid())
+//        {
+//            mTencent.login(this, Scope, listener);
+//        }
     }
 
     @Override

@@ -50,8 +50,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+//    implementation 'com.google.firebase:firebase-core:16.0.7'
+//    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -137,6 +137,11 @@ dependencies {
     annotationProcessor project(path: ':test_annotation_compiler')
     //依赖test_annotations声明库（一般只需要依赖一个库api库 不需要直接依赖annotations声明库，api库会透传依赖的annotations声明库）
     implementation project(path: ':test_annotations')
+
+    //三方登录
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.9'
+    implementation 'com.tencent.tauth:qqopensdk:3.52.0'
+    implementation 'com.qq.e.union:union:4.400.1270' // 普通版本
 }
 
 
