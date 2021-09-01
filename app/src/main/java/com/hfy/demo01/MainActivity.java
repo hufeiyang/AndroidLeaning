@@ -69,6 +69,7 @@ import com.hfy.demo01.dagger2.component.DaggerMainActivityComponent;
 
 /**
  * @author hufy
+ * test rebase
  * @date
  */
 @TestAnnotation
