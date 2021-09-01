@@ -1,6 +1,7 @@
 package com.hfy.demo01;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.Gravity;
@@ -32,6 +34,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.hfy.demo01.common.customview.MyToast;
@@ -41,6 +44,7 @@ import com.hfy.demo01.module.home.adapter.HomePagerAdapter;
 import com.hfy.demo01.module.home.fragment.FirstFragment;
 import com.hfy.demo01.module.home.fragment.SecondFragment;
 import com.hfy.demo01.module.home.fragment.ThirdFragment;
+import com.hfy.demo01.performance.viewopt.ViewOpt;
 import com.hfy.test_annotations.TestAnnotation;
 import com.tencent.tauth.Tencent;
 
@@ -140,7 +144,10 @@ public class MainActivity extends AppCompatActivity {
         Debug.startMethodTracing();//dmtrace.trace
 //        Debug.startMethodTracing(getExternalFilesDir(null)+"test.trace");
 
+        Log.i(TAG, "onCreate: setContentView begin：");
+        long nowMills = TimeUtils.getNowMills();
         setContentView(R.layout.activity_main);
+        Log.i(TAG, "onCreate: setContentView end：,cost:" + (TimeUtils.getNowMills() - nowMills));
 
         delayInitDispatcher.addTask(new Task() {
             @Override
@@ -231,6 +238,23 @@ public class MainActivity extends AppCompatActivity {
 //        {
 //            mTencent.login(this, Scope, listener);
 //        }
+    }
+
+    /**
+     * 布局优化-去反射
+     * @param parent
+     * @param name
+     * @param context
+     * @param attrs
+     * @return
+     */
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        View view = ViewOpt.createView(name, context, attrs);
+        if (view != null) {
+            return view;
+        }
+        return super.onCreateView(parent, name, context, attrs);
     }
 
     @Override
@@ -488,7 +512,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onProgressUpdate(values);
                 //执行在主线程，调用publishProgress()后就会执行
                 Log.i(TAG, "testAsyncTask onProgressUpdate: 进度：" + values[0] + "%");
-                Toast.makeText(MainActivity.this, "进度：" + values[0] + "%", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "进度：" + values[0] + "%", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -665,7 +689,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testToast() {
-        Toast.makeText(this, "hehe", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "hehe", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -774,7 +798,7 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle.syncState();
 
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        Toast.makeText(this, "hehe", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "hehe", Toast.LENGTH_SHORT).show();
 
         //侧滑页面的导航菜单 选中监听
 //        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

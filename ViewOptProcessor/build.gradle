@@ -1,0 +1,17 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //auto-service会把 注解处理器 注册到Java编译器中，这样在编译时期才能对注解进行处理
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
+
+    //javaPoet，用于生成代码，可以让 我们通过 类调用 的方式来生成Java代码
+    implementation 'com.squareup:javapoet:1.10.0'
+
+    implementation project(path: ':ViewOptAnnotations')
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

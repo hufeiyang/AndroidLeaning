@@ -1,3 +1,6 @@
+include ':viewoptapi'
+include ':ViewOptAnnotations'
+include ':ViewOptProcessor'
 include ':test_annotation_compiler'
 include ':test_annotations'
 include ':app', ':simpleimageloader'

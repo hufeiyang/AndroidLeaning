@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: rootProject.file("view_opt.gradle")
 
 android {
 
@@ -12,9 +13,9 @@ android {
         minSdkVersion 16
         //targetSdkVersion是Android提供向前兼容的主要依据，表明该application已经兼容从minSdkVersion至tartgetSdkVersion之间所有api的变化。在targetSdkVersion更新之前系统不会应用最新的行为变化
         //比如，targetSDKVersion < 23 & API(手机系统) >= 6.0 ：安装时默认获得权限，但是用户可以在安装App完成后动态取消授权（ 取消时手机会弹出提醒，告诉用户这个是为旧版手机打造的应用，让用户谨慎操作 ）。
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 30
+        versionCode 107
+        versionName "1.07"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -43,6 +44,7 @@ android {
     viewBinding {
         enabled = true
     }
+    buildToolsVersion '30.0.3'
 }
 
 dependencies {
@@ -142,6 +144,12 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.9'
     implementation 'com.tencent.tauth:qqopensdk:3.52.0'
     implementation 'com.qq.e.union:union:4.400.1270' // 普通版本
+
+    //布局优化-去反射
+    annotationProcessor project(path: ':ViewOptProcessor')
+    implementation project(path: ':ViewOptAnnotations')
+    implementation project(path: ':viewoptapi')
+
 }
 
 
