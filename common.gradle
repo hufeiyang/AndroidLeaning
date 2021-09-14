@@ -1,0 +1,16 @@
+
+//扩展属性单独 放在一个gradle文件中
+
+ext {
+    //定义一个扩展属性 android，一个map
+    android = [
+            compileSdkVerison : 30,
+            versionCode : 1,
+            versionName:'1.0.0'
+    ]
+
+    //定义一个扩展属性 dependence，一个map
+    dependence = [
+
+    ]
+}

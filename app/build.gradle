@@ -5,7 +5,9 @@ android {
 
     //compileSdkVersion 告诉 Gradle 用哪个 Android SDK 版本编译你的应用。使用任何新添加的 API 就需要使用对应 Level 的 Android SDK。
     //推荐总是使用最新的 SDK 进行编译
-    compileSdkVersion 30
+//    compileSdkVersion this.rootProject.mCompileSdkVersion //这个也可以
+//    compileSdkVersion mCompileSdkVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVerison //使用rootProject引入的扩展属性
 
     defaultConfig {
         applicationId "com.hfy.androidlearning"
@@ -14,8 +16,8 @@ android {
         //targetSdkVersion是Android提供向前兼容的主要依据，表明该application已经兼容从minSdkVersion至tartgetSdkVersion之间所有api的变化。在targetSdkVersion更新之前系统不会应用最新的行为变化
         //比如，targetSDKVersion < 23 & API(手机系统) >= 6.0 ：安装时默认获得权限，但是用户可以在安装App完成后动态取消授权（ 取消时手机会弹出提醒，告诉用户这个是为旧版手机打造的应用，让用户谨慎操作 ）。
         targetSdkVersion 30
-        versionCode 107
-        versionName "1.07"
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -47,9 +49,10 @@ android {
     buildToolsVersion '30.0.3'
 }
 
+//为应用程序添加依赖
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')  //本地jar依赖
+    implementation 'androidx.appcompat:appcompat:1.2.0'      //arr依赖
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 //    implementation 'com.google.firebase:firebase-core:16.0.7'
@@ -63,7 +66,10 @@ dependencies {
     //support:design
     implementation 'com.google.android.material:material:1.0.0'
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation ('com.android.support:multidex:1.0.3'){
+        //如果有依赖冲突，使用exclude配出依赖
+//        exclude group 'com.hfy.group1'  module 'hehe' //排除某个组下面的某个module
+    }
 
     //Jetpack相关
     def lifecycle_version = "2.2.0"
@@ -124,7 +130,7 @@ dependencies {
 
 
     //我的简单图片加载库
-    implementation project(path: ':simpleimageloader')
+    implementation project(path: ':simpleimageloader')    //本地工程依赖
     implementation 'com.squareup.okhttp3:okhttp:3.14.7'
     implementation 'com.squareup.okio:okio:1.17.5'
 
@@ -161,3 +167,25 @@ apply plugin: 'kotlin-android-extensions'
 //        languageVersion = "1.4"
 //    }
 //}
+
+//gradle中使用外部命令：即使用linux命令
+task('apkcopy'){
+    doLast {
+
+        //生成的apk移动到本机目录
+        def sourcePath = this.buildDir.path + '/outputs/apk'
+        def destinationPath = '/Users/bytedance/Downloads'
+        def command = "mv -f ${sourcePath} ${destinationPath}"
+
+        //以下是固定写法,可修改command改变功能
+        exec {
+            try {
+                executable 'bash'
+                args '-c', command
+                println 'the command exec success'
+            }catch(GradleException e){
+                println 'the command exec failed'
+            }
+        }
+    }
+}

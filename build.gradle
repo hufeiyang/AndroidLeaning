@@ -5,15 +5,27 @@ buildscript {
     ext {
         kotlin_version = '1.3.72'
     }
+    //配置工程 仓库地址
     repositories {
         mavenCentral()
         jcenter()
         maven { url 'https://jitpack.io' }
         google()
+        //配置本地私有maven
+        maven {
+            name 'hfyPersionalRepo'
+            url 'http://localhost:8081:/nexus/repositories'
+            //访问校验
+            credentials{
+                username = 'admin'
+                password = 'admin123'
+            }
+        }
 
     }
+    // buildscript 的 dependencies 用于配置工程 "插件"依赖。不同与project 的dependencies。
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.4'
+        classpath 'com.android.tools.build:gradle:4.0.2' //可用于配置Android module是 'application' 或 'library'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
@@ -36,3 +48,118 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+/**
+ * gradle 学习： Project
+ * 一个Android工程 和 每个Android module，就是一个gradle project （他们都有一个build.gradle文件）
+ */
+
+//Gradle提供了对project状态配置监听的接口回调,以方便我们来配置一些Project的配置属性,监听主要分为两大类,
+// 一种是通过project（project.beginEvaluate配置前调用,project.afterEvaluate配置后调用）进行 回调，
+// 一种是通过gradle(this.gradle.beforeProjectpe配置前调用,this.gradle.afterProject配置后调用)进行回调,
+// 作用域也有不同 ,project是只针对当前project实现进行的监听,gradle监听是针对于所有的project而言的。
+// beforeEvaluate方法说的很清楚是配置之前调用,但你要是直接当前build.gradle中使用是肯定不会调用到的,
+// 因为Project都没配置好还有他什么事情(也是无奈),afterEvaluates是配置之后调用只要project配置成功均会调用.
+
+//这个不会执行
+beforeEvaluate {
+    println "beforeEvaluate!!!"
+}
+
+//每个子工程 配置前 都会执行
+gradle.beforeProject {
+    println "gradle.beforeProject!!!"
+}
+
+//当前工程的配置结束时执行--最常用
+afterEvaluate {
+    println "afterEvaluate!!!"
+}
+
+gradle.buildFinished {
+    println "buildFinished!!!"
+}
+
+getAllprojects().each {
+    println "----- project name:${it.getName()}"
+}
+
+//找到指定project，并配置（但一般不会这么干）
+//project('app'){ Project project->
+//    apply plugin:"com.android.application"
+//    dependencies {
+//
+//    }
+//    android{
+//
+//    }
+//}
+
+//针对所有project（root project和 所有子project）
+//allprojects {
+//    group 'com.hfy'
+//    version '1.0.0'
+//}
+
+//所有子project
+//subprojects {Project project->
+//    //如果是library，则添加 上传maven插件
+//    if (project.plugins.hasPlugin('com.android.library')){
+////        apply from: '../publishToMaven.gradle'
+//    }
+//}
+
+//println project('app').group
+
+//扩展属性：使用 ext{} 给当前project扩展属性。
+// 子project 是继承root project的，所以 子project 也可以使用这个扩展属性
+//ext {
+//    mCompileSdkVersion = 30
+//}
+
+//引用common.gradle ，则common.gradle定义的扩展属性，所有project都可使用
+apply from: rootProject.file('common.gradle')
+
+
+/**
+ * 获取 文件路径
+ */
+//println getRootDir().absolutePath
+//println getBuildDir().absolutePath
+//println getProjectDir().absolutePath
+
+/**
+ * 文件定位：file(fileName)
+ * 在当前project目录中找名为fileName的文件,相对于new file(path), 只需要传文件名即可。
+ */
+//println getFileContent('common.gradle')
+//def getFileContent(String fileName){
+//    try {
+//        def file = file(fileName)
+//        return file.text
+//    }catch(GradleException e){
+//        println e.message
+//    }
+//    return null
+//}
+
+/**
+ * 文件、文件夹 的拷贝，so easy！
+ */
+//copy {
+//    from file('README.md')
+//    into getBuildDir()
+//    exclude{} //排除
+//    rename{} //重命名
+//}
+
+/**
+ * 文件树的遍历: fileTree.visit
+ */
+//fileTree('gradle/wrapper'){ ConfigurableFileTree fileTree->
+//    fileTree.visit {FileVisitDetails visitDetails ->
+//        println 'visitDetails ：'+visitDetails.name
+//        visitDetails.copyTo(file(getRootDir().absolutePath+"/test/"+visitDetails.name))
+//    }
+//}
