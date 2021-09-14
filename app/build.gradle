@@ -5,7 +5,7 @@ android {
 
     //compileSdkVersion 告诉 Gradle 用哪个 Android SDK 版本编译你的应用。使用任何新添加的 API 就需要使用对应 Level 的 Android SDK。
     //推荐总是使用最新的 SDK 进行编译
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.hfy.androidlearning"
