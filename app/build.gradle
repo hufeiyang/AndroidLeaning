@@ -189,3 +189,51 @@ task('apkcopy'){
         }
     }
 }
+
+//直接通过task函数创建task;
+// 对task的配置；group ：分组，dependsOn：依赖的task等
+task hellotask(group: 'cusGroup',description: 'hellotask in cusGroup'){
+    println 'i am a hello task' //注意这句也是配置，是在配置阶段执行
+
+    //只有这两个do 是在执行阶段
+    doFirst {
+        println 'hellotask doFirst 1'
+    }
+    doFirst {
+        println 'hellotask doFirst 2'
+    }
+    doLast {
+        println 'hellotask doLast 1'
+    }
+    doLast {
+        println 'hellotask doLast 2'
+    }
+}
+
+//通过 TaskContainer 函数创建task
+tasks.create('hellotask2'){
+
+    //配置
+    setGroup('cusGroup')
+    setDescription('hellotask2 in cusGroup')
+//    setDependsOn(...)
+//    setFinalizedBy(...)
+
+    println 'i am a hello task2'
+}
+
+//统计build时长: 对 系统task 进行doFirst、doLast操作，记录时间
+def beginBuildTime, endBuildTime
+afterEvaluate {
+    tasks.getByName('preBuild').doFirst {
+        beginBuildTime = System.currentTimeMillis()
+    }
+
+    tasks.getByName('build').doLast {
+        endBuildTime = System.currentTimeMillis()
+
+        println "task执行时间：${endBuildTime - beginBuildTime}"
+
+        file()
+    }
+}
