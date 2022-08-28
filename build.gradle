@@ -52,7 +52,9 @@ task clean(type: Delete) {
 
 /**
  * gradle 学习： Project
- * 一个Android工程 和 每个Android module，就是一个gradle project （他们都有一个build.gradle文件）
+ * 1. 一个Android工程 和 每个Android module，就是一个gradle project （他们都有一个build.gradle文件）
+ * 2. 在build.gradle中写的逻辑，实际就是调用Project这个类的方法。一个build.gradle文件编译后就是一个Project对象
+ * 3. 在build.gradle中写的代码就是配置代码，在配置阶段就执行了！而添加的task的内容逻辑 是在执行阶段执行的。
  */
 
 //Gradle提供了对project状态配置监听的接口回调,以方便我们来配置一些Project的配置属性,监听主要分为两大类,
@@ -87,18 +89,36 @@ gradle.buildFinished {
     println "root buildFinished!!!"
 }
 
-getAllprojects().each {
-    println "----- project name:${it.getName()}"
+//输出所有project
+def printAllProjects(){
+    getAllprojects().eachWithIndex { Project project, int index ->
+        if (index == 0){
+            println "----${index}, root project ----"
+        }else{
+            println "----${index}, project:${project.name} ----"
+
+        }
+    }
+
+    println "getChildProjects().size:${getChildProjects().size()}"
+    println "getSubprojects().size:${getSubprojects().size()}"
+//    getParent()
+    println "root project name:${getRootProject().name}"
 }
 
+printAllProjects()
+
+
 //找到指定project，并配置（但一般不会这么干）
-//project('app'){ Project project->
-//    apply plugin:"com.android.application"
-//    dependencies {
-//
+//project('app'){Project project->
+//    project.beforeEvaluate {
+//        println "app beforeEvaluate!!!"
 //    }
-//    android{
 //
+//    apply plugin ''
+//
+//    android{}
+//    dependencies {
 //    }
 //}
 
@@ -124,7 +144,7 @@ getAllprojects().each {
 //    mCompileSdkVersion = 30
 //}
 
-//引用common.gradle ，则common.gradle定义的扩展属性，所有project都可使用
+//在root project中引用common.gradle ，则common.gradle定义的扩展属性，所有project都可使用
 apply from: rootProject.file('common.gradle')
 
 

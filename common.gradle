@@ -1,4 +1,5 @@
 
+//定义project的扩展属性，ext
 //扩展属性单独 放在一个gradle文件中
 
 ext {
