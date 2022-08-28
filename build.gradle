@@ -149,43 +149,55 @@ apply from: rootProject.file('common.gradle')
 
 
 /**
+ * gradle 提供的文件相关API 只能用于本root工程下的文件操作！！！
  * 获取 文件路径
  */
-//println getRootDir().absolutePath
-//println getBuildDir().absolutePath
-//println getProjectDir().absolutePath
+println "RootDir: ${getRootDir().absolutePath}"
+println "BuildDir:${getBuildDir().absolutePath}"
+println "ProjectDir:${getProjectDir().absolutePath}"
 
 /**
  * 文件定位：file(fileName)
- * 在当前project目录中找名为fileName的文件,相对于new file(path), 只需要传文件名即可。
+ * 在当前project目录中找名为fileName的文件,相对于new file(path), 只需要传文件名即可，不需要路径
  */
-//println getFileContent('common.gradle')
-//def getFileContent(String fileName){
-//    try {
-//        def file = file(fileName)
-//        return file.text
-//    }catch(GradleException e){
-//        println e.message
-//    }
-//    return null
-//}
+println getFileContent('common.gradle')
+def getFileContent(String fileName){
+    try {
+        def file = file(fileName)
+        return file.text
+    }catch(GradleException e){
+        println e.message
+    }
+    return null
+}
 
 /**
  * 文件、文件夹 的拷贝，so easy！
  */
-//copy {
-//    from file('README.md')
-//    into getBuildDir()
-//    exclude{} //排除
-//    rename{} //重命名
-//}
+copy {
+    from file('README.md')
+    into getBuildDir()
+    exclude{} //排除
+    rename{
+        'README2.md' //重命名
+    }
+}
 
 /**
  * 文件树的遍历: fileTree.visit
  */
-//fileTree('gradle/wrapper'){ ConfigurableFileTree fileTree->
+//fileTree('gradle/'){ ConfigurableFileTree fileTree->
 //    fileTree.visit {FileVisitDetails visitDetails ->
 //        println 'visitDetails ：'+visitDetails.name
 //        visitDetails.copyTo(file(getRootDir().absolutePath+"/test/"+visitDetails.name))
 //    }
 //}
+
+fileTree('gradle/'){ConfigurableFileTree configurableFileTree ->
+    configurableFileTree.visit {FileVisitDetails fileVisitDetails ->
+        copy {
+            from fileVisitDetails.file
+            into rootProject.getBuildDir().absolutePath+'/test/'
+        }
+    }
+}

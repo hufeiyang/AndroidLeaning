@@ -246,3 +246,9 @@ this.beforeEvaluate {
 this.afterEvaluate {
     println "app afterEvaluate!!!"
 }
+
+//copy apk
+copy {
+    from file('build/outputs/apk/')
+    into rootProject.getBuildDir().absolutePath+'/apk'
+}
