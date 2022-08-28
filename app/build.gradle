@@ -176,18 +176,19 @@ apply plugin: 'kotlin-android-extensions'
 //}
 
 //gradle中使用外部命令：即使用linux命令
-task('apkcopy'){
-    doLast {
-
+//场景：gradle命令不满足了。例如 涉及到本机目录
+task('apkcopy'){  //手动执行：./gradlew apkcopy
+    doLast { //doLast后闭包的内容 是执行在 执行阶段，而不是配置阶段
         //生成的apk移动到本机目录
         def sourcePath = this.buildDir.path + '/outputs/apk'
         def destinationPath = '/Users/bytedance/Downloads'
         def command = "mv -f ${sourcePath} ${destinationPath}"
+//        def command = "cp -r ${sourcePath} ${destinationPath}" //-r 递归复制，用于复制目录
 
         //以下是固定写法,可修改command改变功能
         exec {
             try {
-                executable 'bash'
+                executable 'bash' //外部命令 executable都是bash
                 args '-c', command
                 println 'the command exec success'
             }catch(GradleException e){
