@@ -109,7 +109,7 @@ public class ThirdFragment extends Fragment {
     }
 
     /**
-     * 获取摸摸鱼的meta-data
+     * 获取mmy的meta-data
      *
      * @param key
      * @return

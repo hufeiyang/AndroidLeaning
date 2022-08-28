@@ -43,7 +43,7 @@ public class MvpActivity extends AppCompatActivity implements IIpInfoView {
      * launch MvpActivity
      */
     public static void launch(Activity activity) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(activity, MvpActivity.class);
         activity.startActivity(intent);
     }
 

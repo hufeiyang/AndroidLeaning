@@ -15,12 +15,12 @@
         android:id="@+id/btn_share_dy1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="通过摸摸鱼分享视频到抖音"/>
+        android:text="通过mmy分享视频到dy"/>
 
     <Button
         android:id="@+id/btn_share_dy2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="通过摸摸鱼分享视频到抖音_sd_card"/>
+        android:text="通过mmy分享视频到dy_sd_card"/>
 
 </LinearLayout>

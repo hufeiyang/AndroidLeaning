@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         mTlHomeTab.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
             @Override
             public void onDraw() {
-                Log.i(TAG, "onDraw: ");
+//                Log.i(TAG, "onDraw: ");
             }
         });
 
@@ -772,13 +772,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        View close = findViewById(R.id.tv_close);
-//        close.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mDrawerLayout.closeDrawer(Gravity.LEFT);
-//            }
-//        });
+        View close = findViewById(R.id.tv_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+            }
+        });
 
         //Toolbar的背景设置为 palette从图片提取到的活力色 (目的是动态 适应当前界面的色调)
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.dog);

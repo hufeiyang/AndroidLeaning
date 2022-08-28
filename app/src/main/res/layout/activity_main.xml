@@ -23,8 +23,8 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:elevation="5dp">
+                app:elevation="5dp"
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <!--引入Toolbar-->
                 <include layout="@layout/mytoolbar" />
@@ -38,7 +38,7 @@
                     app:tabIndicatorColor="@color/colorAccent"
                     app:tabMode="scrollable"
                     app:tabSelectedTextColor="@color/colorAccent"
-                    app:tabTextColor="@android:color/black"/>
+                    app:tabTextColor="@android:color/black" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,36 +46,36 @@
                 android:id="@+id/vp_home_page"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
 
         <!--侧滑界面-->
 
         <!--第一种：自定义，layout_gravity="start" ,这个必须要有，作为侧滑界面 -->
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:orientation="vertical">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_close"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="侧滑界面， 点击收回" />-->
-        <!--</LinearLayout>-->
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="侧滑界面， 点击收回" />
+        </LinearLayout>
 
-        <!--第二种：NavigationView headerLayout是头部布局 menu是菜单列表-->
-        <!--layout_gravity="start" ,这个必须要有，作为侧滑界面-->
-        <!--<android.support.design.widget.NavigationView-->
-            <!--android:id="@+id/nv_navigation"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_gravity="start"-->
-            <!--app:headerLayout="@layout/navigation_header"-->
-            <!--app:menu="@menu/navigation_menu" />-->
+        <!--        第二种：NavigationView headerLayout是头部布局 menu是菜单列表-->
+        <!--        layout_gravity="start" ,这个必须要有，作为侧滑界面-->
+        <!--        <android.support.design.widget.NavigationView-->
+        <!--            android:id="@+id/nv_navigation"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            app:headerLayout="@layout/navigation_header"-->
+        <!--            app:menu="@menu/navigation_menu" />-->
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
