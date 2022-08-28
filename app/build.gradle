@@ -50,9 +50,15 @@ android {
 }
 
 //为应用程序添加依赖
-dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')  //本地jar依赖
-    implementation 'androidx.appcompat:appcompat:1.2.0'      //arr依赖
+dependencies {DependencyHandler dependencyHandler ->
+    implementation fileTree(include: ['*.jar'], dir: 'libs')  //依赖本地文件树（文件夹），本地jar依赖
+//    implementation file('') //依赖本地单个依赖
+//    implementation files('','')//依赖本地多个文件
+    implementation project(path: ':viewoptapi') //依赖本地module
+    implementation 'androidx.appcompat:appcompat:1.2.0'      //依赖远程arr依赖
+
+//    compileOnly '' //编译时依赖
+
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 //    implementation 'com.google.firebase:firebase-core:16.0.7'
@@ -68,7 +74,8 @@ dependencies {
 
     implementation ('com.android.support:multidex:1.0.3'){
         //如果有依赖冲突，使用exclude配出依赖
-//        exclude group 'com.hfy.group1'  module 'hehe' //排除某个组下面的某个module
+//        exclude group 'com.hfy.group1'  module 'hehe' //排除依赖：某个组下面的某个module
+//        transitive false //关闭传递依赖 A->B->C，A不依赖C
     }
 
     //Jetpack相关
