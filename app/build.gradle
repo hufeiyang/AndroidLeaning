@@ -237,3 +237,12 @@ afterEvaluate {
         file()
     }
 }
+
+//没有用
+this.beforeEvaluate {
+    println "app beforeEvaluate!!!"
+}
+
+this.afterEvaluate {
+    println "app afterEvaluate!!!"
+}

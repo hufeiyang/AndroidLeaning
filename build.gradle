@@ -57,28 +57,34 @@ task clean(type: Delete) {
 
 //Gradle提供了对project状态配置监听的接口回调,以方便我们来配置一些Project的配置属性,监听主要分为两大类,
 // 一种是通过project（project.beginEvaluate配置前调用,project.afterEvaluate配置后调用）进行 回调，
-// 一种是通过gradle(this.gradle.beforeProjectpe配置前调用,this.gradle.afterProject配置后调用)进行回调,
+// 一种是通过gradle(this.gradle.beforeProject配置前调用,this.gradle.afterProject配置后调用)进行回调,
 // 作用域也有不同 ,project是只针对当前project实现进行的监听,gradle监听是针对于所有的project而言的。
 // beforeEvaluate方法说的很清楚是配置之前调用,但你要是直接当前build.gradle中使用是肯定不会调用到的,
-// 因为Project都没配置好还有他什么事情(也是无奈),afterEvaluates是配置之后调用只要project配置成功均会调用.
+// 因为Project都没配置好还有他什么事情(也是无奈),afterEvaluate是配置之后调用只要project配置成功均会调用.
 
 //这个不会执行
 beforeEvaluate {
-    println "beforeEvaluate!!!"
-}
-
-//每个子工程 配置前 都会执行
-gradle.beforeProject {
-    println "gradle.beforeProject!!!"
+    println "root beforeEvaluate!!!"
 }
 
 //当前工程的配置结束时执行--最常用
 afterEvaluate {
-    println "afterEvaluate!!!"
+    println "root afterEvaluate!!!"
 }
 
+//每个子project 配置前 都会执行
+gradle.beforeProject {
+    println "gradle.beforeProject!!!"
+}
+
+//每个子project 配置后 都会执行
+gradle.afterProject {
+    println "gradle.afterProject!!!"
+}
+
+//全部执行完毕后
 gradle.buildFinished {
-    println "buildFinished!!!"
+    println "root buildFinished!!!"
 }
 
 getAllprojects().each {
