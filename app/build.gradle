@@ -272,3 +272,62 @@ copy {
     from file('build/outputs/apk/')
     into rootProject.getBuildDir().absolutePath+'/apk'
 }
+
+/**
+ * task 依赖
+ */
+task taskX {
+    println "configuration in taskX"
+    doLast {
+        println "do last in taskX"
+    }
+}
+
+task taskY {
+    println "configuration in taskY"
+    doLast {
+        println "do last in taskY"
+    }
+}
+
+//taskX,taskY 要放在taskZ前面，否则会不认识
+//1.使用属性dependsOn添加依赖
+task taskZ (dependsOn:[taskX,taskY] ){
+    println "configuration in taskZ"
+    doLast {
+        println "do last in taskZ"
+    }
+}
+
+task lib1{
+    println "configuration in lib1"
+    doLast {
+        println "do last in lib1"
+    }
+}
+
+task lib2{
+    println "configuration in lib2"
+    doLast {
+        println "do last in lib2"
+    }
+}
+
+task taskW{
+    println "configuration in taskW 1"
+    println "tasks size: ${tasks.size()}, tasks  :" + tasks.toListString()
+
+    //2.使用方法添加依赖
+//    dependsOn lib1
+    //也可以动态添加依赖
+    def setOfTasks = this.tasks.findAll {task ->
+        return task.name.contains('lib')
+    }
+    println "setOfTasks  :" + setOfTasks.toListString()
+    dependsOn setOfTasks
+
+    doLast {
+        println "do last in taskW"
+    }
+    println "configuration in taskW 2"
+}
