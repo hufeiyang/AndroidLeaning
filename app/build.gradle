@@ -198,14 +198,21 @@ task('apkcopy'){  //手动执行：./gradlew apkcopy
     }
 }
 
-//直接通过task函数创建task;
+/**
+ * Task
+ * 1. gradle中只有task可以在执行阶段执行
+ * 2. 且task必须使用deFirst、doLast才能执行在执行阶段
+ * 3. gradle的重点就是各种task的执行阶段的逻辑
+ */
+//1. 直接通过task函数创建task;
+//实际是调用的project的task方法，task('hellotask'){ }，小括号省略：
 // 对task的配置；group ：分组，dependsOn：依赖的task等
 task hellotask(group: 'cusGroup',description: 'hellotask in cusGroup'){
     println 'i am a hello task' //注意这句也是配置，是在配置阶段执行
 
     //只有这两个do 是在执行阶段
     doFirst {
-        println 'hellotask doFirst 1'
+        println 'hellotask doFirst 1， group:'+group
     }
     doFirst {
         println 'hellotask doFirst 2'
@@ -218,7 +225,9 @@ task hellotask(group: 'cusGroup',description: 'hellotask in cusGroup'){
     }
 }
 
-//通过 TaskContainer 函数创建task
+hellotask.doFirst {}
+
+//2. 通过 TaskContainer 函数创建task
 tasks.create('hellotask2'){
 
     //配置
@@ -231,20 +240,23 @@ tasks.create('hellotask2'){
 }
 
 //统计build时长: 对 系统task 进行doFirst、doLast操作，记录时间
-def beginBuildTime, endBuildTime
-afterEvaluate {
-    tasks.getByName('preBuild').doFirst {
-        beginBuildTime = System.currentTimeMillis()
+def buildStartTime,buildEndTime
+//afterEvaluate保证要找的Task一定能找到！
+this.afterEvaluate {Project project ->
+    //找到Task-preBuild，然后doFirst
+    project.tasks.findByName("preBuild").doFirst {Task task->
+        buildStartTime = System.currentTimeMillis()
+        println "preBuild name：${task.name} is start，time：${buildStartTime}"
     }
 
-    tasks.getByName('build').doLast {
-        endBuildTime = System.currentTimeMillis()
-
-        println "task执行时间：${endBuildTime - beginBuildTime}"
-
-        file()
+    project.tasks.findByName("assembleDebug").doLast {Task task->
+        buildEndTime = System.currentTimeMillis()
+        println "build name ${task.name} is ended, time cost:${buildEndTime - buildStartTime}"
     }
 }
+//preBuild name：preBuild is start，time：1661775855486
+//build name assembleDebug is ended, time cost:1445
+
 
 //没有用
 this.beforeEvaluate {
