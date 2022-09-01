@@ -358,8 +358,9 @@ task handleReleaseFile {
 task testReleasesFile(dependsOn: handleReleaseFile) {
     doLast{
         def fileTree = fileTree("build/outputs/generated/releases")
-        fileTree.each { file->
-            file.withReader {reader->
+        //visit 会深度遍历文件树
+        fileTree.visit { FileVisitDetails fileVisitDetails->
+            fileVisitDetails.file.withReader {reader->
                 println "the versioin file info is: ${reader.text}"
             }
         }

@@ -200,3 +200,33 @@ fileTree('gradle/'){ConfigurableFileTree configurableFileTree ->
         }
     }
 }
+
+
+//读取 所有module的  字符串资源并 把 key、value 写入单独的文件中
+afterEvaluate {
+    getSubprojects().each {project ->
+        def projectName = project.name
+        println "------${ projectName}: read string value begin------"
+
+        def xmlFile = project.file("src/main/res/values/strings.xml")
+        if (!xmlFile.exists()){
+            println "------${projectName}: read string value end, ${xmlFile.absolutePath} not exist！------"
+            return
+        }
+        def desFile = project.file("string_values.txt")
+        def xmlSlurper = new XmlSlurper()
+        def resources = xmlSlurper.parse(xmlFile)
+
+        desFile.withWriter {writer ->
+            String fileContent = ""
+            resources.string.each{ stringNode ->
+                def stringKey = stringNode.@name //使用@获取节点属性
+                def stringValue = stringNode.text()
+                fileContent = fileContent + "${stringKey} ${stringValue}" +"\n"
+            }
+            writer.write(fileContent)
+        }
+
+        println "------${project.name}: read string value end， succes！------"
+    }
+}
