@@ -290,7 +290,7 @@ task taskY {
     }
 }
 
-//taskX,taskY 要放在taskZ前面，否则会不认识
+//taskX,taskY 要放在taskZ前面，否则会不认识！！！
 //1.使用属性dependsOn添加依赖
 task taskZ (dependsOn:[taskX,taskY] ){
     println "configuration in taskZ"
@@ -321,6 +321,7 @@ task taskW{
 //    dependsOn lib1
     //也可以动态添加依赖
     def setOfTasks = this.tasks.findAll {task ->
+        //这里注意一定要用task.name 而不是name
         return task.name.contains('lib')
     }
     println "setOfTasks  :" + setOfTasks.toListString()
@@ -330,4 +331,37 @@ task taskW{
         println "do last in taskW"
     }
     println "configuration in taskW 2"
+}
+
+task handleReleaseFile {
+    def srcFile = file('release.xml') //file()是处理 当前project中的文件
+    def outDir = mkdir("build/outputs/generated/releases") //创建输出目录
+    doLast {
+        println "------ handleReleaseFile start ------"
+        def xmlSlurper = new XmlSlurper()
+        def releases = xmlSlurper.parse(srcFile)
+        releases.release.each{ releaseNode->
+            def versionCode = releaseNode.versionCode.text()
+            def versionName = releaseNode.versionName.text()
+            def versionInfo = releaseNode.versionInfo.text()
+            //创建文件写入信息
+            def file = new File(outDir, "release-${versionName}" + ".txt")
+            file.withWriter { writer ->
+                writer.write("versionCode:${versionCode}, versionName:${versionName}, versionInfo:${versionInfo}")
+            }
+        }
+        println "------ handleReleaseFile end ------"
+    }
+}
+
+//依赖上面的task，读取上面写入的文件信息
+task testReleasesFile(dependsOn: handleReleaseFile) {
+    doLast{
+        def fileTree = fileTree("build/outputs/generated/releases")
+        fileTree.each { file->
+            file.withReader {reader->
+                println "the versioin file info is: ${reader.text}"
+            }
+        }
+    }
 }

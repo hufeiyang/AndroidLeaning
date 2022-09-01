@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<releases>
+    <release>
+        <versionCode>100</versionCode>
+        <versionName>1.0.0</versionName>
+        <versionInfo>第一个版本</versionInfo>
+    </release>
+    <release>
+        <versionCode>200</versionCode>
+        <versionName>2.0.0</versionName>
+        <versionInfo>第二个版本</versionInfo>
+    </release>
+    <release>
+        <versionCode>300</versionCode>
+        <versionName>3.0.0</versionName>
+        <versionInfo>第三个版本</versionInfo>
+    </release>
+</releases>

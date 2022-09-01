@@ -34,9 +34,7 @@ buildscript { ScriptHandler scriptHandler ->
         // in the individual module build.gradle files
     }
 }
-plugins {
-    id "org.sonarqube" version "2.6"
-}
+
 allprojects {
     repositories {
         mavenCentral()
