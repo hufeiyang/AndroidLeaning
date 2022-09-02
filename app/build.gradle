@@ -47,6 +47,15 @@ android {
         enabled = true
     }
     buildToolsVersion '30.0.3'
+
+    sourceSets {
+        main{
+            jniLibs.srcDirs = ['libs'] //修改so库的存放位置
+            res.srcDirs = ['src/main/res',
+                           'src/main/res-ad',
+                           'src/main/res-player' ] //修改资源存放位置
+        }
+    }
 }
 
 //为应用程序添加依赖
