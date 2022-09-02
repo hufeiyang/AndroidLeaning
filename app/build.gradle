@@ -11,6 +11,7 @@ android {
 //    compileSdkVersion mCompileSdkVersion
     compileSdkVersion rootProject.ext.android.compileSdkVerison //使用rootProject引入的扩展属性
 
+    //默认配置，就是每个变体共用的配置，当然也可以单独在变体中配置
     defaultConfig {
         applicationId "com.hfy.androidlearning"
         //minSdkVersion 则是应用可以运行的最低要求。minSdkVersion 是 Google Play 商店用来判断用户设备是否可以安装某个应用的标志之一。
@@ -28,11 +29,37 @@ android {
     //理想上，在稳定状态下三者的关系应该更像这样：minSdkVersion (lowest possible) <= targetSdkVersion == compileSdkVersion (latest SDK)
     //用较低的 minSdkVersion 来覆盖最大的人群，用最新的 SDK 设置 target 和 compile 来获得最好的外观和行为。
 
-
+    //编译类型
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //设置风味的维度：应用市场、是否免费
+    flavorDimensions "market","ifPay"
+
+    //产品风味
+    productFlavors{
+        xiaomi{
+            dimension "market"  //应用市场维度
+//            applicationId = "_xiaomi"
+        }
+
+        huawei{
+            dimension "market"
+//            applicationId = "_huawei"
+        }
+
+        free{
+            dimension "ifPay" //是否免费维度
+//            applicationId = "_free"
+        }
+
+        pay{
+            dimension "ifPay"
+//            applicationId = "_needPay"
         }
     }
 
@@ -377,3 +404,32 @@ task testReleasesFile(dependsOn: handleReleaseFile) {
         }
     }
 }
+
+this.afterEvaluate {
+    this.android.applicationVariants.all{ variant ->
+        def name = variant.name
+        def baseName = variant.baseName
+        def buildType = variant.buildType
+        def versionCode = variant.versionCode
+        def versionName = variant.versionName
+        def flavorName = variant.flavorName
+        def output = variant.outputs.first()
+
+        //配置apk文件
+        def apkName = "hfy_${baseName}_${versionName}.apk"
+        output.outputFileName = apkName
+
+        println "name:${name}, baseName:${baseName}"
+
+        def checkManifestTask = variant.checkManifest
+        println checkManifestTask.name //checkHuaweiFreeReleaseManifest
+    }
+}
+//name:xiaomiPayDebug, baseName:xiaomi-pay-debug
+//name:xiaomiFreeDebug, baseName:xiaomi-free-debug
+//name:huaweiPayDebug, baseName:huawei-pay-debug
+//name:huaweiFreeDebug, baseName:huawei-free-debug
+//name:xiaomiPayRelease, baseName:xiaomi-pay-release
+//name:xiaomiFreeRelease, baseName:xiaomi-free-release
+//name:huaweiPayRelease, baseName:huawei-pay-release
+//name:huaweiFreeRelease, baseName:huawei-free-release
