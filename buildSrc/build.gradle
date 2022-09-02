@@ -1,0 +1,19 @@
+apply plugin: 'groovy'
+
+dependencies {
+}
+
+sourceSets {
+    main{
+        groovy{
+            srcDir 'src/main/groovy'
+        }
+
+        resources{
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

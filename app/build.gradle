@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply from: rootProject.file("view_opt.gradle")
 
+apply plugin: 'hufeiyang'
+
 android {
 
     //compileSdkVersion 告诉 Gradle 用哪个 Android SDK 版本编译你的应用。使用任何新添加的 API 就需要使用对应 Level 的 Android SDK。
