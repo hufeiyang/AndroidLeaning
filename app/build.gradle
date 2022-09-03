@@ -421,8 +421,18 @@ this.afterEvaluate {
 
         println "name:${name}, baseName:${baseName}"
 
+        //找到关注的系统task，这里的checkManifest是在preBuild之后执行
         def checkManifestTask = variant.checkManifest
         println checkManifestTask.name //checkHuaweiFreeReleaseManifest
+
+        //doFirst
+        checkManifestTask.doFirst{
+            //doSth
+        }
+        //doLast
+        checkManifestTask.doLast{
+            //doSth
+        }
     }
 }
 //name:xiaomiPayDebug, baseName:xiaomi-pay-debug
