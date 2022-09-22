@@ -37,6 +37,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.blankj.utilcode.util.TimeUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.hfy.demo01.common.Constant;
 import com.hfy.demo01.common.customview.MyToast;
 import com.hfy.demo01.dagger2.bean.Car;
 import com.hfy.demo01.dagger2.bean.Watch;
@@ -79,7 +80,7 @@ import com.hfy.demo01.dagger2.component.DaggerMainActivityComponent;
 @TestAnnotation
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "hfy";
+    private static final String TAG = Constant.INSTANCE.getHomeActivityLogTag();
     private static final int OVERLAY_PERMISSION_REQ_CODE = 1000;
 
     @BindView(R.id.tl_home_page)
@@ -138,6 +139,20 @@ public class MainActivity extends AppCompatActivity {
 
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (MainActivity.this){
+                    try {
+                        Log.i(TAG, "onCreate begin. sleep 20*1000");
+                        Thread.sleep(50*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
         TraceCompat.beginSection("MainActivity onCreate");
 
@@ -203,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
         TraceCompat.endSection();
 
 
-        Log.i(TAG, "onCreate end. ");
 
 
         mTlHomeTab.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -238,6 +252,12 @@ public class MainActivity extends AppCompatActivity {
 //        {
 //            mTencent.login(this, Scope, listener);
 //        }
+
+        synchronized (MainActivity.this){
+            Log.i(TAG, "onCreate synchronized: ");
+        }
+
+        Log.i(TAG, "onCreate end. ");
     }
 
     /**
