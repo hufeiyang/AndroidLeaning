@@ -140,19 +140,19 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (MainActivity.this){
-                    try {
-                        Log.i(TAG, "onCreate begin. sleep 20*1000");
-                        Thread.sleep(50*1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                synchronized (MainActivity.this){
+//                    try {
+//                        Log.i(TAG, "onCreate begin. sleep 20*1000");
+//                        Thread.sleep(50*1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }).start();
 
         TraceCompat.beginSection("MainActivity onCreate");
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Log.i(TAG, "run: delay task begin");
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -192,11 +192,11 @@ public class MainActivity extends AppCompatActivity {
 
         testToast();
         testThreadLocal();
-        testHandler();
-        testAsyncTask();
-        testHandlerThread();
-        testIntentService();
-        testThreadPoolExecutor();
+//        testHandler();
+//        testAsyncTask();
+//        testHandlerThread();
+//        testIntentService();
+//        testThreadPoolExecutor();
 
 
         int i = testFinally();

@@ -6,7 +6,8 @@
     android:padding="8dp"
     android:background="#DAAA"
     >
-    <ImageView android:src="@drawable/ic_launcher_foreground"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:src="@drawable/ic_launcher_foreground"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginRight="8dp"/>

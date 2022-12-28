@@ -6,7 +6,7 @@ buildscript { ScriptHandler scriptHandler ->
         kotlin_version = '1.3.72'
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
     }
     //配置工程 仓库地址
     scriptHandler.repositories { RepositoryHandler repositoryHandler ->

@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".hook.TestHookActivity"></activity>
+        <activity
+            android:name=".performance.fps.PerformanceLearningActivity"
+            android:exported="false" />
+        <activity android:name=".hook.TestHookActivity" />
         <activity android:name=".kotlin.KotlinTestActivity" />
         <activity android:name=".module.mvvm.view.UserListActivity" />
         <activity android:name=".module.jetpack.databinding.ListActivity" />
@@ -55,7 +58,8 @@
         <service android:name=".MainActivity$MyIntentService" />
         <service android:name=".binder.aidl.BookManagerService" />
 
-        <provider  android:name="androidx.core.content.FileProvider"
+        <provider
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"

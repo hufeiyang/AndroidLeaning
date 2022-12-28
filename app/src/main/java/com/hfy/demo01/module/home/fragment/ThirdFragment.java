@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.blankj.utilcode.util.Utils;
 import com.hfy.demo01.R;
 import com.hfy.demo01.hook.TestHookActivity;
+import com.hfy.demo01.performance.fps.PerformanceLearningActivity;
 
 import java.io.File;
 
@@ -58,7 +59,8 @@ public class ThirdFragment extends Fragment {
     @OnClick({
             R.id.btn_learn_hook,
             R.id.btn_share_dy1,
-            R.id.btn_share_dy2
+            R.id.btn_share_dy2,
+            R.id.btn_performance_learning
     })
     public void onClick(View view) {
         String filePath;
@@ -74,6 +76,9 @@ public class ThirdFragment extends Fragment {
             case R.id.btn_share_dy2:
                 filePath = "/storage/emulated/0/DCIM/mmy_records/org_screen_record_1630406673942.mp4";
                 shareToDY(filePath);
+                break;
+            case R.id.btn_performance_learning:
+                PerformanceLearningActivity.launch(getActivity());
                 break;
             default:
                 break;
