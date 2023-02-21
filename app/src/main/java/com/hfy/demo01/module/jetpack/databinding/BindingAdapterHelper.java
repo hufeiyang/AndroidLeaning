@@ -1,6 +1,9 @@
 package com.hfy.demo01.module.jetpack.databinding;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;

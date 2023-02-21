@@ -8,3 +8,4 @@ include ':test_annotations'
 include ':app', ':simpleimageloader'
 
 println "初始化!!!"
+include ':hfy_bsdiff'

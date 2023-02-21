@@ -18,6 +18,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".bsdiff.BsDiffTestActivity"
+            android:exported="false" />
+        <activity
             android:name=".performance.fps.PerformanceLearningActivity"
             android:exported="false" />
         <activity android:name=".hook.TestHookActivity" />

@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.hfy.androidlearning"
         //minSdkVersion 则是应用可以运行的最低要求。minSdkVersion 是 Google Play 商店用来判断用户设备是否可以安装某个应用的标志之一。
-        minSdkVersion 16
+        minSdkVersion 21
         //targetSdkVersion是Android提供向前兼容的主要依据，表明该application已经兼容从minSdkVersion至tartgetSdkVersion之间所有api的变化。在targetSdkVersion更新之前系统不会应用最新的行为变化
         //比如，targetSDKVersion < 23 & API(手机系统) >= 6.0 ：安装时默认获得权限，但是用户可以在安装App完成后动态取消授权（ 取消时手机会弹出提醒，告诉用户这个是为旧版手机打造的应用，让用户谨慎操作 ）。
         targetSdkVersion 30
@@ -24,6 +24,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
+
+        ndk{
+            abiFilters "armeabi-v7a","arm64-v8a","x86"
+        }
     }
 
     //理想上，在稳定状态下三者的关系应该更像这样：minSdkVersion (lowest possible) <= targetSdkVersion == compileSdkVersion (latest SDK)
@@ -200,6 +204,9 @@ dependencies {DependencyHandler dependencyHandler ->
     annotationProcessor project(path: ':ViewOptProcessor')
     implementation project(path: ':ViewOptAnnotations')
     implementation project(path: ':viewoptapi')
+
+    //依赖差分包处理模块
+    implementation project(path: ':hfy_bsdiff')
 
 }
 

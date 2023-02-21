@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bsdiff.BsDiffTestActivity">
+
+
+    <Button
+        android:id="@+id/btn_get_old_apk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择旧包"
+        app:layout_constraintBottom_toTopOf="@id/tv_old_apk_path"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_old_apk_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_get_old_apk"
+        app:layout_constraintBottom_toTopOf="@id/btn_get_new_apk"
+        android:text="旧包路径："/>
+
+    <Button
+        android:id="@+id/btn_get_new_apk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择新包"
+        app:layout_constraintBottom_toTopOf="@+id/tv_new_apk_path"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_old_apk_path"/>
+
+    <TextView
+        android:id="@+id/tv_new_apk_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_get_new_apk"
+        app:layout_constraintBottom_toTopOf="@id/btn_bsdiff"
+        android:text="新包路径："/>
+
+    <Button
+        android:id="@+id/btn_bsdiff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="生成差分包"
+        app:layout_constraintBottom_toTopOf="@+id/tv_patch_path"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_patch_path"/>
+
+    <TextView
+        android:id="@+id/tv_patch_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="差分包路径："
+        app:layout_constraintTop_toBottomOf="@id/btn_bsdiff"
+        app:layout_constraintBottom_toTopOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999999"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_patch_path"
+        app:layout_constraintBottom_toTopOf="@id/btn_bspatch"/>
+
+    <Button
+        android:id="@+id/btn_bspatch"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="差分包打入旧包，生产组合新包"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view"/>
+
+    <TextView
+        android:id="@+id/tv_combine_apk_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_bspatch"
+        android:text="组合新包路径："/>
+
+    <Button
+        android:id="@+id/btn_install_combine_apk"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="安装组合新包"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_combine_apk_path"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,4 +29,10 @@
         android:layout_height="wrap_content"
         android:text="性能优化test"/>
 
+    <Button
+        android:id="@+id/btn_bsdiff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bsdiff差分包"/>
+
 </LinearLayout>
