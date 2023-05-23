@@ -24,6 +24,7 @@ import com.hfy.demo01.module.jetpack.viewmodel.UserActivity;
 import com.hfy.demo01.module.jetpack.viewmodel.fragment.FragmentShareActivity;
 import com.hfy.demo01.module.jetpack.databinding.DataBindingLearningActivity;
 import com.hfy.demo01.module.mvvm.view.UserListActivity;
+import com.hfy.secondfloor.SecondFloorTest1Activity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +60,9 @@ public class SecondFragment extends Fragment {
             R.id.btn_mvvm_view_model_test,
             R.id.btn_fragment_share_view_model,
             R.id.btn_data_binding_list_test,
-            R.id.btn_mvvm
+            R.id.btn_mvvm,
+            R.id.btn_second_floor_test1,
+            R.id.btn_second_floor_test2
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -101,6 +104,12 @@ public class SecondFragment extends Fragment {
             case R.id.btn_mvvm:
                 UserListActivity.launch(getActivity());
                 break;
+            case R.id.btn_second_floor_test1:
+                SecondFloorTest1Activity.Companion.launch(getActivity());
+                break;
+//            case R.id.btn_second_floor_test2:
+//                SecondFloorTest2Activity.launch(getActivity());
+//                break;
             default:
                 break;
         }

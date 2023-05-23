@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">androidlearning</string>
+    <string name="item_example_number_title">Item %02d</string>
+    <string name="item_example_number_abstract">This is the first floor item %02d</string>
+    <string name="item_example_number_abstract_second_floor">This is the second floor item %02d</string>
+
+</resources>

@@ -1,0 +1,77 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+        <com.scwang.smartrefresh.layout.header.TwoLevelHeader
+            android:id="@+id/twoLevelHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!---二楼引导图，用于吸引用户下拉-->
+            <ImageView
+                android:id="@+id/iv_second_floor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/image_second_floor"/>
+
+            <!---二楼真实内容图-->
+            <FrameLayout
+                android:id="@+id/second_floor_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/image_second_floor_content"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_second_floor_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            </FrameLayout>
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:id="@+id/classicsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"/>
+        </com.scwang.smartrefresh.layout.header.TwoLevelHeader>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_content_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:paddingTop="?attr/actionBarSize"/>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlPrimaryColor="@android:color/white"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#fe1200"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="二楼test"
+        android:visibility="visible">
+
+    </androidx.appcompat.widget.Toolbar>
+</FrameLayout>
