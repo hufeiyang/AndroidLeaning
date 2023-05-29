@@ -102,11 +102,11 @@
         android:text="二楼test1" />
 
     <Button
-        android:id="@+id/btn_second_floor_test2"
+        android:id="@+id/btn_app_inner_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="二楼test2" />
+        android:text="app端内通知" />
 
     </LinearLayout>
 

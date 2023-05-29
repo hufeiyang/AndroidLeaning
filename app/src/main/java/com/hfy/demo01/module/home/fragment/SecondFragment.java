@@ -5,24 +5,24 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.hfy.demo01.R;
-import com.hfy.demo01.module.jetpack.databinding.ListActivity;
 import com.hfy.demo01.module.home.glide.GlideTestActivity;
+import com.hfy.demo01.module.home.notification.AppInnerNotificationActivity;
 import com.hfy.demo01.module.home.okhttp.OkHttpTestActivity;
+import com.hfy.demo01.module.jetpack.databinding.DataBindingLearningActivity;
+import com.hfy.demo01.module.jetpack.databinding.ListActivity;
 import com.hfy.demo01.module.jetpack.lifecycle_livedata.LifecycleTestActivity;
 import com.hfy.demo01.module.jetpack.lifecycle_livedata.old.LocationActivity;
 import com.hfy.demo01.module.jetpack.viewmodel.UserActivity;
 import com.hfy.demo01.module.jetpack.viewmodel.fragment.FragmentShareActivity;
-import com.hfy.demo01.module.jetpack.databinding.DataBindingLearningActivity;
 import com.hfy.demo01.module.mvvm.view.UserListActivity;
 import com.hfy.secondfloor.SecondFloorTest1Activity;
 
@@ -62,7 +62,7 @@ public class SecondFragment extends Fragment {
             R.id.btn_data_binding_list_test,
             R.id.btn_mvvm,
             R.id.btn_second_floor_test1,
-            R.id.btn_second_floor_test2
+            R.id.btn_app_inner_notification
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -107,9 +107,9 @@ public class SecondFragment extends Fragment {
             case R.id.btn_second_floor_test1:
                 SecondFloorTest1Activity.Companion.launch(getActivity());
                 break;
-//            case R.id.btn_second_floor_test2:
-//                SecondFloorTest2Activity.launch(getActivity());
-//                break;
+            case R.id.btn_app_inner_notification:
+                AppInnerNotificationActivity.Companion.launch(getActivity());
+                break;
             default:
                 break;
         }

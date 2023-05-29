@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".module.home.notification.AppInnerNotificationActivity">
+    
+    <Button
+        android:id="@+id/btnShowNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnShowNotificationDark"
+        android:text="Show_Notification_white"/>
+
+    <Button
+        android:id="@+id/btnShowNotificationDark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnShowNotification"
+        app:layout_constraintBottom_toTopOf="@id/btnShowNotification_no_icon"
+        android:text="Show_Notification_dark"/>
+
+    <Button
+        android:id="@+id/btnShowNotification_no_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnShowNotificationDark"
+        app:layout_constraintBottom_toTopOf="@id/btnShowNotification_dark_no_icon"
+        android:text="Show_Notification_no_icon"/>
+
+
+    <Button
+        android:id="@+id/btnShowNotification_dark_no_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnShowNotification_no_icon"
+        app:layout_constraintBottom_toTopOf="@id/btnShowNotification_no_open_url"
+        android:text="Show_Notification_dark_no_icon"/>
+
+    <Button
+        android:id="@+id/btnShowNotification_no_open_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnShowNotification_dark_no_icon"
+        app:layout_constraintBottom_toTopOf="@id/btnShowNotification_dark_no_open_url"
+        android:text="Show_Notification_no_open_url"/>
+
+
+    <Button
+        android:id="@+id/btnShowNotification_dark_no_open_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnShowNotification_no_open_url"
+        android:text="Show_Notification_dark_no_open_url"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

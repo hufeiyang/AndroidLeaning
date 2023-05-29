@@ -57,6 +57,9 @@
         <activity android:name=".module.home.designsupportlibrarytest.MaterialDesignWidgetActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.ViewEventTestActivity" />
         <activity android:name=".module.home.designsupportlibrarytest.BehaviorTestActivity" />
+        <activity
+            android:name=".module.home.notification.AppInnerNotificationActivity"
+            android:exported="false" />
 
         <service android:name=".MainActivity$MyIntentService" />
         <service android:name=".binder.aidl.BookManagerService" />
