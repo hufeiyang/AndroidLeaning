@@ -21,6 +21,7 @@ import com.blankj.utilcode.util.Utils;
 import com.hfy.demo01.R;
 import com.hfy.demo01.bsdiff.BsDiffTestActivity;
 import com.hfy.demo01.hook.TestHookActivity;
+import com.hfy.demo01.longimage.LongImageTestActivity;
 import com.hfy.demo01.performance.fps.PerformanceLearningActivity;
 
 import java.io.File;
@@ -62,7 +63,8 @@ public class ThirdFragment extends Fragment {
             R.id.btn_share_dy1,
             R.id.btn_share_dy2,
             R.id.btn_performance_learning,
-            R.id.btn_bsdiff
+            R.id.btn_bsdiff,
+            R.id.btn_long_image
     })
     public void onClick(View view) {
         String filePath;
@@ -84,6 +86,9 @@ public class ThirdFragment extends Fragment {
                 break;
             case R.id.btn_bsdiff:
                 BsDiffTestActivity.launch(getActivity());
+                break;
+            case R.id.btn_long_image:
+                LongImageTestActivity.launch(getActivity());
                 break;
             default:
                 break;

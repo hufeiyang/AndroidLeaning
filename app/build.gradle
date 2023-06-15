@@ -237,6 +237,8 @@ dependencies {DependencyHandler dependencyHandler ->
     //依赖差分包处理模块
     implementation project(path: ':hfy_bsdiff')
 
+    // PictureSelector 基础 (必须)
+    implementation 'io.github.lucksiege:pictureselector:v3.11.1'
 }
 
 
