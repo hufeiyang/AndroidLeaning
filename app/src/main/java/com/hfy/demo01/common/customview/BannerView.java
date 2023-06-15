@@ -147,13 +147,12 @@ public class BannerView extends FrameLayout {
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     isPositionChanged = false;
-//                    if (mCurrentItem < FIRST_ITEM_POSITION) {
-//                        setCurrentItem(LAST_ITEM_POSITION, false);
-//                        mSegmentProgressBar.setCurrentSelectedSegment(LAST_ITEM_POSITION);
-//                    } else if (mCurrentItem > LAST_ITEM_POSITION) {
-//                        setCurrentItem(FIRST_ITEM_POSITION, false);
-//                        mSegmentProgressBar.setCurrentSelectedSegment(FIRST_ITEM_POSITION);
-//                    }
+                    //手动切换过界时，补充改变进度条
+                    if (mCurrentItem < FIRST_ITEM_POSITION) {
+                        setCurrentItem(LAST_ITEM_POSITION, false);
+                    } else if (mCurrentItem > LAST_ITEM_POSITION) {
+                        setCurrentItem(FIRST_ITEM_POSITION, false);
+                    }
                 }else if (state == ViewPager.SCROLL_STATE_DRAGGING){
                     mSegmentProgressBar.closeAnimationMode();
                 }
@@ -208,11 +207,11 @@ public class BannerView extends FrameLayout {
 //                mBannerIndicator.setDotCount(size);
                 initSegmentProgressBar(size);
 
-                startLoop();
+//                startLoop();
                 mCurrentItem = FIRST_ITEM_POSITION;
             }
         } else {
-            stopLoop();
+//            stopLoop();
             mCurrentItem = FIRST_ITEM_POSITION;
         }
         mBannerAdapter = bannerAdapter;
@@ -319,19 +318,19 @@ public class BannerView extends FrameLayout {
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                stopLoop();
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                startLoop();
-                break;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                stopLoop();
+//                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                startLoop();
+//                break;
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
 
     public BannerPagerAdapter getBannerPagerAdapter() {
         return mBannerPagerAdapter;

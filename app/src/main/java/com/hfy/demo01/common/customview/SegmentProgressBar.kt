@@ -35,7 +35,6 @@ class SegmentProgressBar @JvmOverloads constructor(
     private var mCurrentSelectedSegmentProgress: Float = 0f
     private var mCurrentProgressBar: ProgressBar? = null
 
-    private var mAutoAnimated: Boolean = false
     private var mIsAnimationMode: Boolean = true
 
     private var mProgressBarListener: ISegmentProgressBarListener? = null
@@ -64,7 +63,6 @@ class SegmentProgressBar @JvmOverloads constructor(
 
         mSegmentSize = segmentSize
         mSegmentDuration = segmentDuration
-        mAutoAnimated = autoAnimated
         mProgressBarListener = progressBarListener
 
         for (i in 0 until mSegmentSize) {
@@ -127,6 +125,10 @@ class SegmentProgressBar @JvmOverloads constructor(
                     }
 
                     override fun onAnimationEnd(animation: Animator) {
+                        if (!mIsAnimationMode){
+                            return
+                        }
+
                         ++mCurrentSelectedSegmentPosition
                         if(mCurrentSelectedSegmentPosition >= mSegmentSize){
                             mCurrentSelectedSegmentPosition = 0
@@ -135,9 +137,6 @@ class SegmentProgressBar @JvmOverloads constructor(
 
                         Log.i(TAG, "onAnimationEnd, new position:$mCurrentSelectedSegmentPosition")
 
-                        if (!mIsAnimationMode){
-                            return
-                        }
                         animator?.start()
                     }
 
@@ -178,8 +177,15 @@ class SegmentProgressBar @JvmOverloads constructor(
      * 关闭动画模式
      */
     fun closeAnimationMode(){
-        mAutoAnimated = false
+        if (!mIsAnimationMode) {
+            Log.i(TAG, "AnimationMode has been closed.")
+            return
+        }
+        Log.i(TAG, "closeAnimationMode.")
+
+        mIsAnimationMode = false
         animator?.cancel()
+        animator = null
         mCurrentProgressBar?.progress = mCurrentProgressBar?.max!!
         mCurrentSelectedSegmentProgress = 1f
     }
@@ -188,21 +194,28 @@ class SegmentProgressBar @JvmOverloads constructor(
     /**
      * 设置选中的分块，0到segmentIndex的进度条都是满进度
      */
-    fun setCurrentSelectedSegment(segmentIndex:Int){
+    fun setCurrentSelectedSegment(selectedPosition:Int){
         if (mIsAnimationMode){
+            Log.i(TAG, "setCurrentSelectedSegment. segmentIndex:$selectedPosition，but now is AnimationMode!")
             return
         }
 
-        mCurrentSelectedSegmentPosition = segmentIndex
+        Log.i(TAG, "setCurrentSelectedSegment. segmentIndex:$selectedPosition")
+
+        if(animator?.isRunning == true){
+            animator?.cancel()
+        }
+
+        mCurrentSelectedSegmentPosition = selectedPosition
         mCurrentProgressBar = progressBarList[mCurrentSelectedSegmentPosition]
         mCurrentSelectedSegmentProgress = 1f
-        for (i in 0 until segmentIndex) {
+        for (i in 0 .. selectedPosition) {
             if (progressBarList[i].progress != progressBarList[i].max){
                 progressBarList[i].progress = progressBarList[i].max
             }
         }
 
-        for (i in segmentIndex until mSegmentSize) {
+        for (i in (selectedPosition + 1) until mSegmentSize) {
             if (progressBarList[i].progress != 0){
                 progressBarList[i].progress = 0
             }
