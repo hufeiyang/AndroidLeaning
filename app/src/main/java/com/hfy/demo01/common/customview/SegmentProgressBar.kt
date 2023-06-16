@@ -100,7 +100,10 @@ class SegmentProgressBar @JvmOverloads constructor(
             mCurrentProgressBar = progressBarList[mCurrentSelectedSegmentPosition]
         }
 
-        autoplay()
+        //2个及以上才自动轮播
+        if (mSegmentSize > 1){
+            autoplay()
+        }
     }
 
         private fun autoplay() {

@@ -2,6 +2,7 @@ package com.hfy.demo01.longimage
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -9,13 +10,16 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hfy.demo01.R
@@ -87,6 +91,7 @@ class LongImageTestActivity : AppCompatActivity() {
     private fun addLongImageView(imageList: ArrayList<LocalMedia?>?) {
         //初始化RecyclerView
         val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = object :BaseQuickAdapter<LocalMedia?, BaseViewHolder>(R.layout.item_imageview, imageList){
             override fun convert(holder: BaseViewHolder, item: LocalMedia?) {
                 val imageView = holder.getView<ImageView>(R.id.iv_image)
@@ -113,7 +118,47 @@ class LongImageTestActivity : AppCompatActivity() {
             override fun bindBannerItemView(position: Int, itemView: View?, itemData: LocalMedia?) {
                 val imageView = itemView?.findViewById<ImageView>(R.id.iv_image)
                 if (imageView is ImageView) {
-                    Glide.with(itemView.context).load(itemData?.realPath).into(imageView)
+                    Glide.with(itemView.context).load(itemData?.realPath).addListener(object :
+                            RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                imageView.post{
+                                    val viewRadio = imageView.measuredHeight.toFloat() / imageView.measuredWidth.toFloat()
+
+                                    Log.i(TAG, "onResourceReady: imageView layoutParams.height=${imageView.measuredHeight.toFloat()}, layoutParams.width=${imageView.measuredWidth.toFloat()} ")
+
+                                    resource?.let {
+                                        val resourceRadio = resource.intrinsicHeight.toFloat() / resource.intrinsicWidth.toFloat()
+
+                                        Log.i(TAG, "onResourceReady: viewRadio=$viewRadio, resourceRadio=$resourceRadio, ")
+
+                                        var scaleType = ImageView.ScaleType.FIT_CENTER
+                                        //图的长宽比 大于 view长宽比
+                                        if (resourceRadio > viewRadio){
+                                            scaleType = ImageView.ScaleType.CENTER_CROP
+                                        }
+                                        imageView.scaleType = scaleType
+                                        imageView.setImageDrawable(resource)
+                                    }
+                                }
+
+                                return false
+                            }
+                        }).submit()
                 }
             }
 

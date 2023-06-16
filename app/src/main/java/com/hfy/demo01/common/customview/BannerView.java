@@ -28,11 +28,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author chenjianjiang
- * email:  chenjianjiang@bytedance.com
- * date:   2021/5/17
- */
+
 public class BannerView extends FrameLayout {
 
     private static final String TAG = "BannerView";
