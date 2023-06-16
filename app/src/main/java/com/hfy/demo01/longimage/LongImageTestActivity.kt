@@ -1,7 +1,10 @@
 package com.hfy.demo01.longimage
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BitmapRegionDecoder
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -24,17 +27,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hfy.demo01.R
 import com.hfy.demo01.common.customview.BannerView
-import com.hfy.demo01.common.customview.SegmentProgressBar
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import java.io.FileInputStream
 
 
 class LongImageTestActivity : AppCompatActivity() {
 
-    var imageContainer:FrameLayout? = null
-    var selectImage:Button? = null
+    private val mRect: Rect = Rect()
+
+    var imageContainer: FrameLayout? = null
+    var selectImage: Button? = null
 
     val TAG = "LongImageTestActivity"
 
@@ -63,8 +68,8 @@ class LongImageTestActivity : AppCompatActivity() {
                         var hasLongImage = false
                         imageList?.forEach {
                             val path = it?.realPath
-                            val isLongImage = isLongImage(path)
-                            if (isLongImage){
+                            val isLongImage = isLongImage(path, 2.5f)
+                            if (isLongImage) {
                                 hasLongImage = true
                                 return@forEach
                             }
@@ -72,7 +77,7 @@ class LongImageTestActivity : AppCompatActivity() {
                         Log.i("LongImageTestActivity", "hasLongImage:$hasLongImage ")
 
                         //1.不含长图，就是横向轮播
-                        if (!hasLongImage){
+                        if (!hasLongImage) {
                             addBannerView(imageList)
                             return
                         }
@@ -80,6 +85,7 @@ class LongImageTestActivity : AppCompatActivity() {
                         //2.含长图，就是竖向拼接，自动上滑
                         addLongImageView(imageList)
                     }
+
                     override fun onCancel() {}
                 })
         }
@@ -89,76 +95,154 @@ class LongImageTestActivity : AppCompatActivity() {
      * 长图
      */
     private fun addLongImageView(imageList: ArrayList<LocalMedia?>?) {
+
+        if (imageContainer == null) {
+            return
+        }
+
+        //1.准备分段后的图片列表
+        val finalImageList = mutableListOf<Bitmap>()
+
+        imageList?.forEach {
+            //分段，先分段，在插入
+            imageContainer?.let { it1 ->
+                splitLongImage(finalImageList, it1, it?.realPath!!)
+            }
+        }
+
         //初始化RecyclerView
         val recyclerView = RecyclerView(this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = object :BaseQuickAdapter<LocalMedia?, BaseViewHolder>(R.layout.item_imageview, imageList){
-            override fun convert(holder: BaseViewHolder, item: LocalMedia?) {
+        recyclerView.adapter = object :
+            BaseQuickAdapter<Bitmap, BaseViewHolder>(R.layout.item_imageview, finalImageList) {
+            override fun convert(holder: BaseViewHolder, item: Bitmap) {
                 val imageView = holder.getView<ImageView>(R.id.iv_image)
-                Glide.with(imageView.context).load(item?.realPath).into(imageView)
+                imageView.layoutParams = imageView.layoutParams.also {
+                    it.width = imageContainer!!.measuredWidth
+                    it.height = (imageContainer!!.measuredWidth * (item.height.toFloat()/item.width.toFloat()) ).toInt()
+                }
+                imageView.setImageBitmap(item)
             }
         }
         imageContainer?.addView(recyclerView, ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT))
+    }
+
+    /**
+     * 这里是先把长图分好块了，还是占用了内容，todo 使用时才获取
+     */
+    private fun splitLongImage(finalImageList:MutableList<Bitmap>, imageContainer: FrameLayout, imagePath: String) {
+
+        val imageContainerHeight = imageContainer.measuredHeight
+        val imageContainerWidth = imageContainer.measuredWidth
+
+        val screenRatio = ScreenUtils.getAppScreenHeight().toFloat() / ScreenUtils.getAppScreenWidth().toFloat()
+        if (isLongImage(imagePath, screenRatio)) {
+
+            val tmpOptions = BitmapFactory.Options()
+            tmpOptions.inJustDecodeBounds = true
+            BitmapFactory.decodeFile(imagePath, tmpOptions)
+            val longBitmapWidth = tmpOptions.outWidth
+            val longBitmapHeight = tmpOptions.outHeight
+
+            val radioContainerHeight = (imageContainerHeight * (longBitmapWidth.toFloat() / imageContainerWidth.toFloat())).toInt()
+
+            var itemCount = longBitmapHeight / radioContainerHeight
+            val lastItemHeight = longBitmapHeight % radioContainerHeight
+            if (lastItemHeight > 0) {
+                itemCount += 1
+            }
+
+            mRect.left = 0
+            mRect.right = longBitmapWidth
+            mRect.top = 0
+            mRect.bottom = 0
+
+            for (i in 0 until itemCount) {
+                mRect.top = radioContainerHeight * i
+                if (i == itemCount - 1 ){
+                    mRect.bottom = longBitmapHeight
+                }else{
+                    mRect.bottom = radioContainerHeight * (i + 1)
+                }
+
+                val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(FileInputStream(imagePath), false);
+                val options = BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565
+                val rectBitmap = bitmapRegionDecoder.decodeRegion(mRect, options)
+                finalImageList.add(rectBitmap)
+            }
+        }else{
+            finalImageList.add(BitmapFactory.decodeFile(imagePath))
+        }
     }
 
     private fun addBannerView(imageList: ArrayList<LocalMedia?>?) {
         //初始化BannerView
         val bannerView = BannerView(this)
 
-        bannerView.bannerAdapter = object: BannerView.BannerAdapter<LocalMedia> {
+        bannerView.bannerAdapter = object : BannerView.BannerAdapter<LocalMedia> {
 
             override fun getDataList(): MutableList<LocalMedia?>? {
                 return imageList
             }
 
             override fun getBannerItemView(container: ViewGroup, position: Int): View {
-                return LayoutInflater.from(container.context).inflate(R.layout.item_banner, container, false)
+                return LayoutInflater.from(container.context)
+                    .inflate(R.layout.item_banner, container, false)
             }
 
             override fun bindBannerItemView(position: Int, itemView: View?, itemData: LocalMedia?) {
                 val imageView = itemView?.findViewById<ImageView>(R.id.iv_image)
                 if (imageView is ImageView) {
                     Glide.with(itemView.context).load(itemData?.realPath).addListener(object :
-                            RequestListener<Drawable> {
-                            override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                return false
-                            }
+                        RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
 
-                            override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                imageView.post{
-                                    val viewRadio = imageView.measuredHeight.toFloat() / imageView.measuredWidth.toFloat()
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            imageView.post {
+                                val viewRadio =
+                                    imageView.measuredHeight.toFloat() / imageView.measuredWidth.toFloat()
 
-                                    Log.i(TAG, "onResourceReady: imageView layoutParams.height=${imageView.measuredHeight.toFloat()}, layoutParams.width=${imageView.measuredWidth.toFloat()} ")
+                                Log.i(
+                                    TAG,
+                                    "onResourceReady: imageView layoutParams.height=${imageView.measuredHeight.toFloat()}, layoutParams.width=${imageView.measuredWidth.toFloat()} "
+                                )
 
-                                    resource?.let {
-                                        val resourceRadio = resource.intrinsicHeight.toFloat() / resource.intrinsicWidth.toFloat()
+                                resource?.let {
+                                    val resourceRadio =
+                                        resource.intrinsicHeight.toFloat() / resource.intrinsicWidth.toFloat()
 
-                                        Log.i(TAG, "onResourceReady: viewRadio=$viewRadio, resourceRadio=$resourceRadio, ")
+                                    Log.i(
+                                        TAG,
+                                        "onResourceReady: viewRadio=$viewRadio, resourceRadio=$resourceRadio, "
+                                    )
 
-                                        var scaleType = ImageView.ScaleType.FIT_CENTER
-                                        //图的长宽比 大于 view长宽比
-                                        if (resourceRadio > viewRadio){
-                                            scaleType = ImageView.ScaleType.CENTER_CROP
-                                        }
-                                        imageView.scaleType = scaleType
-                                        imageView.setImageDrawable(resource)
+                                    var scaleType = ImageView.ScaleType.FIT_CENTER
+                                    //图的长宽比 大于 view长宽比
+                                    if (resourceRadio > viewRadio) {
+                                        scaleType = ImageView.ScaleType.CENTER_CROP
                                     }
+                                    imageView.scaleType = scaleType
+                                    imageView.setImageDrawable(resource)
                                 }
-
-                                return false
                             }
-                        }).submit()
+
+                            return false
+                        }
+                    }).submit()
                 }
             }
 
@@ -177,10 +261,27 @@ class LongImageTestActivity : AppCompatActivity() {
         bannerView.startLoop()
     }
 
+//    /**
+//     * 是长图
+//     */
+//    private fun isLongImage(bitmap: Bitmap?): Boolean {
+//        var isLongImage = false
+//        bitmap?.let {
+//            val height = bitmap.height.toFloat()
+//            val width = bitmap.width.toFloat()
+//
+//            val imageRatio = height / width
+////            val screenRatio = ScreenUtils.getAppScreenHeight() / ScreenUtils.getAppScreenWidth()
+//            isLongImage = imageRatio > 2.5f
+//        }
+//
+//        return isLongImage
+//    }
+
     /**
      * 是长图
      */
-    private fun isLongImage(imagePath: String?): Boolean {
+    private fun isLongImage(imagePath: String?, radio: Float): Boolean {
         //1、inJustDecodeBounds设为true，并加载图片
         val options = BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -190,8 +291,7 @@ class LongImageTestActivity : AppCompatActivity() {
         val outWidth = options.outWidth;
         val outHeight = options.outHeight;
         val imageRatio = outHeight / outWidth
-        val screenRatio = ScreenUtils.getAppScreenHeight() / ScreenUtils.getAppScreenWidth()
-        val isLongImage = imageRatio > screenRatio
+        val isLongImage = imageRatio > radio
         return isLongImage
     }
 }
