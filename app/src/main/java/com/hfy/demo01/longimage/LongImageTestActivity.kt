@@ -99,7 +99,6 @@ class LongImageTestActivity : AppCompatActivity() {
     private fun addBannerView(imageList: ArrayList<LocalMedia?>?) {
         //初始化BannerView
         val bannerView = BannerView(this)
-        bannerView.setScrollWhenOnePage(false)
 
         bannerView.bannerAdapter = object: BannerView.BannerAdapter<LocalMedia> {
 

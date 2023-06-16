@@ -47,8 +47,16 @@ class SegmentProgressBar @JvmOverloads constructor(
 
 
     interface ISegmentProgressBarListener {
-        fun onClickSegment(segmentSize: Int, currentPosition: Int, clickPosition: Int)
+
+        /**
+         * on自动播放选中
+         */
         fun onAutoSelectedSegment(segmentSize: Int, currentPosition: Int)
+
+        /**
+         * on手动点击选中
+         */
+        fun onClickSegment(segmentSize: Int, currentPosition: Int, clickPosition: Int)
     }
 
     /**

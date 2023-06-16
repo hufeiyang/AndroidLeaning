@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.SoftReference;
@@ -36,18 +37,9 @@ public class BannerView extends FrameLayout {
 
     private static final String TAG = "BannerView";
 
-//    private static final int MESSAGE_LOOP_BANNER = 0x10;
     private static final long DEFAULT_LOOP_INTERVAL = 2000L;
-    //首个数据项位置
-    private final int FIRST_ITEM_POSITION = 1;
-    //最后数据项位置
-    private int LAST_ITEM_POSITION;
 
-    private ViewPager mViewPager;
-//    private Handler mHandler;
-    // 轮播间隔
-//    private long mLoopInterval = DEFAULT_LOOP_INTERVAL;
-    private PagerScroller mPagerScroller;
+    private ViewPager mViewPager;    private PagerScroller mPagerScroller;
 
     private SegmentProgressBar mSegmentProgressBar;
 
@@ -61,8 +53,7 @@ public class BannerView extends FrameLayout {
     // 指示器水平间距，距左或右，与mIndicatorGravity有关
     private int mIndicatorHorizontalMargin = 20;
     private int mCurrentItem;
-    //只有一页的时候是否能滑动
-    private boolean mScrollWhenOnePage = true;
+
 
     private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener;
 
@@ -85,7 +76,6 @@ public class BannerView extends FrameLayout {
     }
 
     private void init() {
-//        mHandler = new BannerHandler(this);
         initViewPager();
         addView(mViewPager, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -119,26 +109,18 @@ public class BannerView extends FrameLayout {
             boolean isPositionChanged = false;
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
                 if (mBannerPagerAdapter != null) {
-                    int adapterPosition = position;
-                    if (adapterPosition > LAST_ITEM_POSITION) {
-                        adapterPosition = FIRST_ITEM_POSITION;
-                        isPositionChanged = true;
-                    } else if (adapterPosition < FIRST_ITEM_POSITION) {
-                        adapterPosition = LAST_ITEM_POSITION;
-                        isPositionChanged = true;
-                    }
 
                     mCurrentItem = position;
                     if (mBannerAdapter != null && !isPositionChanged) {
-                        //首位添加数据项, 位置往前移一位
-                        mBannerAdapter.onBannerItemChange(adapterPosition - 1, mBannerPagerAdapter.mData.get(adapterPosition));
+                        mBannerAdapter.onBannerItemChange(position, mBannerPagerAdapter.mData.get(position));
                         //如果手动切换viewPager，则改变进度条
-                        mSegmentProgressBar.setCurrentSelectedSegment(adapterPosition - 1);
+                        mSegmentProgressBar.setCurrentSelectedSegment(position);
                     }
                 }
             }
@@ -147,13 +129,7 @@ public class BannerView extends FrameLayout {
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     isPositionChanged = false;
-                    //手动切换过界时，补充改变进度条
-                    if (mCurrentItem < FIRST_ITEM_POSITION) {
-                        setCurrentItem(LAST_ITEM_POSITION, false);
-                    } else if (mCurrentItem > LAST_ITEM_POSITION) {
-                        setCurrentItem(FIRST_ITEM_POSITION, false);
-                    }
-                }else if (state == ViewPager.SCROLL_STATE_DRAGGING){
+                } else if (state == ViewPager.SCROLL_STATE_DRAGGING) {
                     mSegmentProgressBar.closeAnimationMode();
                 }
             }
@@ -172,15 +148,6 @@ public class BannerView extends FrameLayout {
         removeOnGlobalLayoutListener();
         super.onDetachedFromWindow();
     }
-
-    private void handleMessage(@NonNull @NotNull Message msg) {
-//        if (msg.what == MESSAGE_LOOP_BANNER) {
-//            setCurrentItem(mViewPager.getCurrentItem() + 1, true);
-//            mHandler.sendEmptyMessageDelayed(MESSAGE_LOOP_BANNER, mLoopInterval);
-//            Log.d(TAG, "handleMessage: looping...");
-//        }
-    }
-
     public void setCurrentItem(int i, boolean smoothScroll) {
         mCurrentItem = i;
         mViewPager.setCurrentItem(mCurrentItem, smoothScroll);
@@ -199,23 +166,12 @@ public class BannerView extends FrameLayout {
         int size;
         if (bannerAdapter != null && bannerAdapter.getDataList() != null) {
             size = bannerAdapter.getDataList().size();
-            LAST_ITEM_POSITION = size;
-            if (size == 1 && !mScrollWhenOnePage) {
-//                mBannerIndicator.setDotCount(0);
-                mCurrentItem = 0;
-            } else {
-//                mBannerIndicator.setDotCount(size);
+            if (size > 1) {
                 initSegmentProgressBar(size);
-
-//                startLoop();
-                mCurrentItem = FIRST_ITEM_POSITION;
             }
-        } else {
-//            stopLoop();
-            mCurrentItem = FIRST_ITEM_POSITION;
         }
         mBannerAdapter = bannerAdapter;
-        mBannerPagerAdapter = new BannerPagerAdapter(bannerAdapter, mScrollWhenOnePage);
+        mBannerPagerAdapter = new BannerPagerAdapter(bannerAdapter);
         mViewPager.setAdapter(mBannerPagerAdapter);
         mViewPager.setCurrentItem(mCurrentItem);
 
@@ -223,17 +179,16 @@ public class BannerView extends FrameLayout {
     }
 
     private void initSegmentProgressBar(int size) {
-        mSegmentProgressBar.initialize(size, DEFAULT_LOOP_INTERVAL, true, new SegmentProgressBar.ISegmentProgressBarListener(){
+        mSegmentProgressBar.initialize(size, DEFAULT_LOOP_INTERVAL, true, new SegmentProgressBar.ISegmentProgressBarListener() {
 
             @Override
             public void onAutoSelectedSegment(int segmentSize, int currentPosition) {
-                //
-                setCurrentItem(currentPosition+1, true);
+                setCurrentItem(currentPosition, true);
             }
 
             @Override
             public void onClickSegment(int segmentSize, int currentPosition, int clickPosition) {
-                setCurrentItem(clickPosition+1, false);
+                setCurrentItem(clickPosition, false);
             }
         });
     }
@@ -243,7 +198,7 @@ public class BannerView extends FrameLayout {
             mViewPager.getViewTreeObserver().removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
         }
 
-        if (mBannerPagerAdapter != null && mBannerPagerAdapter.getCount() == 1 && !mScrollWhenOnePage) {
+        if (mBannerPagerAdapter != null && mBannerPagerAdapter.getCount() == 1) {
             //只有一页并且不可滑动时不会回调onPageSelected，在此回调可见事件
             if (mOnGlobalLayoutListener == null) {
                 mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -268,69 +223,14 @@ public class BannerView extends FrameLayout {
     }
 
     /**
-     * 设置轮播间隔
-     *
-     * @param loopInterval 轮播间隔
-     */
-    public void setLoopInterval(long loopInterval) {
-//        mLoopInterval = loopInterval <= 0 ? DEFAULT_LOOP_INTERVAL : loopInterval;
-    }
-
-    public void setScrollWhenOnePage(boolean scrollWhenOnePage) {
-        mScrollWhenOnePage = scrollWhenOnePage;
-    }
-
-    /**
      * 开启轮播，默认自动开启
      */
     public void startLoop() {
-//        mHandler.removeMessages(MESSAGE_LOOP_BANNER);
-//        if (!mScrollWhenOnePage && mBannerPagerAdapter != null && mBannerPagerAdapter.getCount() == 1) {
-//            //一页不可滑动时不开启轮播
-//            return;
-//        }
-//        mHandler.sendEmptyMessageDelayed(MESSAGE_LOOP_BANNER, mLoopInterval);
-
-        if (mSegmentProgressBar!=null) {
+        if (mSegmentProgressBar != null) {
             mSegmentProgressBar.startAutoPlay(0, 0f);
         }
     }
 
-    /**
-     * 停止轮播，默认自动开启轮播，可以使用此方法停止轮播
-     */
-    public void stopLoop() {
-//        mHandler.removeMessages(MESSAGE_LOOP_BANNER);
-//        mHandler.removeCallbacksAndMessages(null);
-    }
-
-    /**
-     * viewPager detach 的时候会停止滚动
-     * 主动的 select 一下
-     */
-    public void fixSelectItemWhenDetach() {
-        if (mViewPager != null) {
-            if (mCurrentItem + 1 > LAST_ITEM_POSITION) {
-                mViewPager.setCurrentItem(FIRST_ITEM_POSITION);
-            } else {
-                mViewPager.setCurrentItem(mCurrentItem + 1);
-            }
-        }
-    }
-
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        switch (ev.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                stopLoop();
-//                break;
-//            case MotionEvent.ACTION_UP:
-//            case MotionEvent.ACTION_CANCEL:
-//                startLoop();
-//                break;
-//        }
-//        return super.dispatchTouchEvent(ev);
-//    }
 
     public BannerPagerAdapter getBannerPagerAdapter() {
         return mBannerPagerAdapter;
@@ -377,31 +277,9 @@ public class BannerView extends FrameLayout {
 
         private final BannerAdapter mBannerAdapter;
         private final List mData;
-        private View mCacheView;
-        private int lastItemPosition;
-        private boolean mScrollWhenOnePage;
 
-        public BannerPagerAdapter(BannerAdapter bannerAdapter, boolean scrollWhenOnePage) {
-            mScrollWhenOnePage = scrollWhenOnePage;
-            if (bannerAdapter == null || bannerAdapter.getDataList() == null) {
-                mData = new ArrayList<>();
-            } else {
-                mData = new ArrayList<>();
-                List dataList = new ArrayList<>(bannerAdapter.getDataList());
-                if (dataList.size() > 0) {
-                    if (dataList.size() == 1 && !scrollWhenOnePage) {
-                        lastItemPosition = dataList.size();
-                        mData.addAll(dataList);
-                    } else {
-                        lastItemPosition = dataList.size();
-                        //在头部添加最后一项
-                        mData.add(dataList.get(dataList.size() - 1));
-                        mData.addAll(dataList);
-                        //在尾部添加第一项
-                        mData.add(dataList.get(0));
-                    }
-                }
-            }
+        public BannerPagerAdapter(BannerAdapter bannerAdapter) {
+            mData = new ArrayList<>(bannerAdapter.getDataList());
             mBannerAdapter = bannerAdapter;
         }
 
@@ -414,31 +292,10 @@ public class BannerView extends FrameLayout {
         @NotNull
         @Override
         public Object instantiateItem(@NonNull @NotNull ViewGroup container, int position) {
-            View item;
-            if (getCount() == 1 && !mScrollWhenOnePage) {
-                //只有一页并且不可滑动时，是真实的位置
-                if (mCacheView == null) {
-                    item = mBannerAdapter.getBannerItemView(container, position);
-                } else {
-                    item = mCacheView;
-                    mCacheView = null;
-                }
-                final int finalPosition = position;
-                item.setOnClickListener(v -> mBannerAdapter.onBannerItemClick(finalPosition, mData.get(finalPosition)));
-                mBannerAdapter.bindBannerItemView(finalPosition, item, mData.get(finalPosition));
-            } else {
-                position = handlePosition(position);
-                if (mCacheView == null) {
-                    item = mBannerAdapter.getBannerItemView(container, position - 1);
-                } else {
-                    item = mCacheView;
-                    mCacheView = null;
-                }
-                final int finalPosition = position;
-                //实际position为 finalPosition-1
-                item.setOnClickListener(v -> mBannerAdapter.onBannerItemClick(finalPosition - 1, mData.get(finalPosition)));
-                mBannerAdapter.bindBannerItemView(finalPosition - 1, item, mData.get(position));
-            }
+            View item = mBannerAdapter.getBannerItemView(container, position);
+            final int finalPosition = position;
+            item.setOnClickListener(v -> mBannerAdapter.onBannerItemClick(finalPosition, mData.get(finalPosition)));
+            mBannerAdapter.bindBannerItemView(finalPosition, item, mData.get(finalPosition));
             container.addView(item);
             return item;
         }
@@ -452,44 +309,16 @@ public class BannerView extends FrameLayout {
         public void destroyItem(@NonNull @NotNull ViewGroup container, int position, @NonNull @NotNull Object object) {
             View item = (View) object;
             container.removeView(item);
-            mCacheView = item;
         }
 
         public List getData() {
             return mData;
         }
-
-        //调整position
-        private int handlePosition(int position) {
-            if (position > lastItemPosition) {
-                return 1;
-            } else if (position < 1) {
-                return lastItemPosition;
-            }
-            return position;
-        }
-    }
-
-    private static class BannerHandler extends Handler {
-
-        private final SoftReference<BannerView> mSoftReference;
-
-        private BannerHandler(BannerView bannerView) {
-            super(Looper.getMainLooper());
-            mSoftReference = new SoftReference<>(bannerView);
-        }
-
-        @Override
-        public void handleMessage(@NonNull @NotNull Message msg) {
-            if (mSoftReference != null && mSoftReference.get() != null) {
-                mSoftReference.get().handleMessage(msg);
-            }
-        }
     }
 
     /**
      * 用于解决ViewPager切换过快问题
-     *
+     * <p>
      * 使用setCurrentItem(int item, boolean smoothScroll)切换时动画时长过小，这里从新指定时长
      */
     private static class PagerScroller extends Scroller {
