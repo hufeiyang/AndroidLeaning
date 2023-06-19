@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -134,8 +133,28 @@ class LongImageTestActivity : AppCompatActivity() {
                 }
 
                 imageView.setImageBitmap(currentBitmap)
+                imageView.tag = currentBitmap
+            }
+
+            override fun onViewRecycled(holder: BaseViewHolder) {
+                super.onViewRecycled(holder)
+                //在回收view后，也要回收Bitmap！
+                val imageView = holder.getView<ImageView>(R.id.iv_image)
+                if (imageView.tag is Bitmap) {
+                    (imageView.tag as Bitmap).recycle()
+                }
+                imageView.tag = null
             }
         }
+
+        //对比内存
+//        recyclerView.adapter = object : BaseQuickAdapter<LocalMedia, BaseViewHolder>(R.layout.item_imageview, imageList) {
+//            override fun convert(holder: BaseViewHolder, item: LocalMedia) {
+//                val imageView = holder.getView<ImageView>(R.id.iv_image)
+//                Glide.with(imageView.context).load(item.realPath).into(imageView)
+//            }
+//        }
+
         imageContainer?.addView(recyclerView, ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT))
     }
 
@@ -149,8 +168,8 @@ class LongImageTestActivity : AppCompatActivity() {
 
         val imageContainerHeight = imageContainer.measuredHeight
         val imageContainerWidth = imageContainer.measuredWidth
-        val screenRatio = ScreenUtils.getAppScreenHeight().toFloat() / ScreenUtils.getAppScreenWidth().toFloat()
-        if (isLongImage(imagePath, screenRatio)){
+        val containerRatio = imageContainerHeight.toFloat() / imageContainerWidth.toFloat()
+        if (isLongImage(imagePath, containerRatio)){
 
             val tmpOptions = BitmapFactory.Options()
             tmpOptions.inJustDecodeBounds = true
