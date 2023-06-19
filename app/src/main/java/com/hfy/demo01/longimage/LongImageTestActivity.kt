@@ -16,6 +16,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -26,6 +27,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hfy.demo01.R
 import com.hfy.demo01.common.customview.BannerView
+import com.hfy.demo01.common.customview.NoTouchScrollRecyclerView
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -118,8 +120,8 @@ class LongImageTestActivity : AppCompatActivity() {
         val splitPositions:MutableList<Int?> = mutableListOf<Int?>().also {it.addAll(splitImages.keys)  }
 
         //初始化RecyclerView
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val recyclerView = NoTouchScrollRecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this, VERTICAL, false)
         recyclerView.adapter = object : BaseQuickAdapter<Int?, BaseViewHolder>(R.layout.item_imageview, splitPositions) {
             override fun convert(holder: BaseViewHolder, item: Int?) {
                 //item也是position
@@ -156,6 +158,15 @@ class LongImageTestActivity : AppCompatActivity() {
 //        }
 
         imageContainer?.addView(recyclerView, ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT))
+
+        startAutoScroll(recyclerView)
+    }
+
+    private fun startAutoScroll(recyclerView: NoTouchScrollRecyclerView) {
+        recyclerView.postDelayed({
+            recyclerView.smoothScrollBy(0, 500)
+            startAutoScroll(recyclerView)
+        }, 2000)
     }
 
     /**
