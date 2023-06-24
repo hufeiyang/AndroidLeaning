@@ -124,8 +124,12 @@ class LongImageTestActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, VERTICAL, false)
         recyclerView.adapter = object : BaseQuickAdapter<Int?, BaseViewHolder>(R.layout.item_imageview, splitPositions) {
             override fun convert(holder: BaseViewHolder, item: Int?) {
+
                 //item也是position
                 val position = holder.adapterPosition
+
+                Log.d(TAG, "long imageView convert，position:${position}")
+
                 val currentBitmap: Bitmap = getCurrentBitmap(position)
 
                 val imageView = holder.getView<ImageView>(R.id.iv_image)
@@ -135,17 +139,6 @@ class LongImageTestActivity : AppCompatActivity() {
                 }
 
                 imageView.setImageBitmap(currentBitmap)
-                imageView.tag = currentBitmap
-            }
-
-            override fun onViewRecycled(holder: BaseViewHolder) {
-                super.onViewRecycled(holder)
-                //在回收view后，也要回收Bitmap！
-                val imageView = holder.getView<ImageView>(R.id.iv_image)
-                if (imageView.tag is Bitmap) {
-                    (imageView.tag as Bitmap).recycle()
-                }
-                imageView.tag = null
             }
         }
 
@@ -244,55 +237,6 @@ class LongImageTestActivity : AppCompatActivity() {
         val rectBitmap = bitmapRegionDecoder.decodeRegion(mRect, options)
         return rectBitmap
     }
-
-//    /**
-//     * 这里是先把长图分好块了，还是占用了内容，todo 使用时才获取
-//     */
-//    private fun splitLongImage(finalImageList:MutableList<Bitmap>, imageContainer: FrameLayout, imagePath: String) {
-//
-//        val imageContainerHeight = imageContainer.measuredHeight
-//        val imageContainerWidth = imageContainer.measuredWidth
-//
-//        val screenRatio = ScreenUtils.getAppScreenHeight().toFloat() / ScreenUtils.getAppScreenWidth().toFloat()
-//        if (isLongImage(imagePath, screenRatio)) {
-//
-//            val tmpOptions = BitmapFactory.Options()
-//            tmpOptions.inJustDecodeBounds = true
-//            BitmapFactory.decodeFile(imagePath, tmpOptions)
-//            val longBitmapWidth = tmpOptions.outWidth
-//            val longBitmapHeight = tmpOptions.outHeight
-//
-//            val radioContainerHeight = (imageContainerHeight * (longBitmapWidth.toFloat() / imageContainerWidth.toFloat())).toInt()
-//
-//            var itemCount = longBitmapHeight / radioContainerHeight
-//            val lastItemHeight = longBitmapHeight % radioContainerHeight
-//            if (lastItemHeight > 0) {
-//                itemCount += 1
-//            }
-//
-//            mRect.left = 0
-//            mRect.right = longBitmapWidth
-//            mRect.top = 0
-//            mRect.bottom = 0
-//
-//            for (i in 0 until itemCount) {
-//                mRect.top = radioContainerHeight * i
-//                if (i == itemCount - 1 ){
-//                    mRect.bottom = longBitmapHeight
-//                }else{
-//                    mRect.bottom = radioContainerHeight * (i + 1)
-//                }
-//
-//                val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(FileInputStream(imagePath), false);
-//                val options = BitmapFactory.Options();
-//                options.inPreferredConfig = Bitmap.Config.RGB_565
-//                val rectBitmap = bitmapRegionDecoder.decodeRegion(mRect, options)
-//                finalImageList.add(rectBitmap)
-//            }
-//        }else{
-//            finalImageList.add(BitmapFactory.decodeFile(imagePath))
-//        }
-//    }
 
     private fun addBannerView(imageList: ArrayList<LocalMedia>) {
         //初始化BannerView
