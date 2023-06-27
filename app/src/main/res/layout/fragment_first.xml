@@ -84,6 +84,13 @@
             android:text="kotlin学习"
             android:textAllCaps="false"/>
 
+        <TextView
+            android:id="@+id/tv_anchor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:text="锚点" />
+
         <com.hfy.demo01.common.customview.AppendViewAfterTextView
             android:id="@+id/appendViewAfterTextView"
             android:layout_width="match_parent"

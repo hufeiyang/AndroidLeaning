@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.hfy.demo01.R;
 import com.hfy.demo01.common.customview.AppendViewAfterTextView;
+import com.hfy.demo01.common.util.SizeUtil;
 import com.hfy.demo01.module.home.animation.AnimationTestActivity;
 import com.hfy.demo01.module.home.bitmap.BitmapTestActivity;
 import com.hfy.demo01.module.home.designsupportlibrarytest.MaterialDesignWidgetActivity;
@@ -72,6 +75,8 @@ public class FirstFragment extends Fragment {
     private Unbinder mUnbind;
     private int tempProgress = 0;
     private AppendViewAfterTextView appendViewAfterTextView;
+    private PopupWindow mTipPopupWindow;
+    private View tv_anchor;
 
     @Nullable
     @Override
@@ -81,6 +86,7 @@ public class FirstFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
 
         appendViewAfterTextView = view.findViewById(R.id.appendViewAfterTextView);
+        tv_anchor = view.findViewById(R.id.tv_anchor);
 
         mUnbind = ButterKnife.bind(this, view);
 
@@ -95,9 +101,48 @@ public class FirstFragment extends Fragment {
     }
 
 
+    private void showCopyPopupWindow(View anchorView) {
+        if (mTipPopupWindow == null) {
+            View tipView = LayoutInflater.from(getContext()).inflate(R.layout.layout_publish_image_tips, null);
+            mTipPopupWindow = new PopupWindow(tipView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            tipView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mTipPopupWindow.dismiss();
+                }
+            });
+            mTipPopupWindow.setOutsideTouchable(true);
+        }
+        if (!mTipPopupWindow.isShowing()) {
+            //调整popupwindow位置
+            int screenWidth = getActivity().getResources().getDisplayMetrics().widthPixels;
+            int[] locations = new int[2];
+            anchorView.getLocationInWindow(locations);
+            //保证popUp 与 ImageView 右边对齐
+            int xOffset = screenWidth - locations[0] - anchorView.getWidth() - SizeUtil.dp2px(8f);
+            //保证PopUpWindow 出现在 ImageView 的下方，并留出8dp的间距
+            int yOffset = locations[1] + anchorView.getHeight() + SizeUtil.dp2px(8f);
+            mTipPopupWindow.showAtLocation(anchorView, Gravity.END | Gravity.TOP, xOffset, yOffset);
+            anchorView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+//                    mTipPopupWindow.dismiss();
+                }
+            }, 3000);
+        }
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
+
+        tv_anchor.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showCopyPopupWindow(tv_anchor);
+            }
+        }, 1000);
 
         //test自定义的ImageLoader
         String url = "http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg";
