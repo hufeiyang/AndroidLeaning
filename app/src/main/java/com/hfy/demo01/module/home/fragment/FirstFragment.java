@@ -90,7 +90,7 @@ public class FirstFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String s = "这个游戏";
+        String s = "这个游戏真好玩呀！这个游戏真好玩呀！这个游戏真好玩呀！这个游戏真好玩呀！这个游戏真好玩呀！";
         appendViewAfterTextView.setText(s);
     }
 

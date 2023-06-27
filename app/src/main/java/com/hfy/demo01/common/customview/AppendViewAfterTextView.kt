@@ -84,7 +84,7 @@ class AppendViewAfterTextView  @JvmOverloads constructor(
     fun getSubString(tv: TextView, content: String, maxLine: Int): String {
         val contentWidth = tv.paint.measureText(content) //原始文案总长度
         val tvWidth: Float = tv.measuredWidth.toFloat()//TextView宽
-        val radio = (tvWidth - (tvSpecial?.measuredWidth!!+space) * 1.2f)/tvWidth.toFloat() //TextView中最后一行的最大使用宽度（要保证tvSpecial放得下）(加了1.2的扩大)
+        val radio = (tvWidth - (tvSpecial?.measuredWidth!!+space) * 1.5f)/tvWidth.toFloat() //TextView中最后一行的最大使用宽度（要保证tvSpecial放得下）(加了1.2的扩大)
         val realContentLines = contentWidth / tvWidth  //文案总行数
         val needShowMaxLines = maxLine + radio  //给定的展示行数
         return if (realContentLines > needShowMaxLines) { //文案总行数 大于 给定的展示行数，则需要截取
