@@ -84,6 +84,11 @@
             android:text="kotlin学习"
             android:textAllCaps="false"/>
 
+        <com.hfy.demo01.common.customview.AppendViewAfterTextView
+            android:id="@+id/appendViewAfterTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.hfy.demo01.module.home.fragment.AutoSwitchTextView
             android:id="@+id/autoSwitchTextView"
             android:layout_marginTop="30dp"

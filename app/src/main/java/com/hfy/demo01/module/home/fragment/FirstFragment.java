@@ -21,7 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.hfy.demo01.R;
-//import com.hfy.demo01.kotlin.KotlinTestActivity;
+import com.hfy.demo01.common.customview.AppendViewAfterTextView;
 import com.hfy.demo01.module.home.animation.AnimationTestActivity;
 import com.hfy.demo01.module.home.bitmap.BitmapTestActivity;
 import com.hfy.demo01.module.home.designsupportlibrarytest.MaterialDesignWidgetActivity;
@@ -71,6 +71,7 @@ public class FirstFragment extends Fragment {
 
     private Unbinder mUnbind;
     private int tempProgress = 0;
+    private AppendViewAfterTextView appendViewAfterTextView;
 
     @Nullable
     @Override
@@ -79,10 +80,20 @@ public class FirstFragment extends Fragment {
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
 
+        appendViewAfterTextView = view.findViewById(R.id.appendViewAfterTextView);
+
         mUnbind = ButterKnife.bind(this, view);
 
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        String s = "这个游戏";
+        appendViewAfterTextView.setText(s);
+    }
+
 
     @Override
     public void onResume() {
@@ -237,4 +248,5 @@ public class FirstFragment extends Fragment {
         super.onDestroyView();
         mUnbind.unbind();
     }
+
 }
