@@ -102,11 +102,14 @@
             bind:user="@{user}"/>
 
         <!--自定义属性 -->
+<!--        <ImageView-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            app:imageUrl="@{user.avatar}"-->
+<!--            app:placeHolder="@{@drawable/dog}"/>-->
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:imageUrl="@{user.avatar}"
-            app:placeHolder="@{@drawable/dog}"/>
+            android:layout_height="100dp"/>
 
         <TextView
             android:layout_width="wrap_content"
