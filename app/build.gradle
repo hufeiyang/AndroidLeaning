@@ -55,6 +55,17 @@ android {
     //理想上，在稳定状态下三者的关系应该更像这样：minSdkVersion (lowest possible) <= targetSdkVersion == compileSdkVersion (latest SDK)
     //用较低的 minSdkVersion 来覆盖最大的人群，用最新的 SDK 设置 target 和 compile 来获得最好的外观和行为。
 
+    aaptOptions {
+
+        File publicTxtFile = project.rootProject.file('public.txt')
+//        if (publicTxtFile.exists()) {
+//            project.logger.error "${publicTxtFile} exists, apply it."
+//            project.logger.error "${publicTxtFile.absolutePath} exists, apply it."
+//            aaptOptions.additionalParameters("--stable-ids", "${publicTxtFile.absolutePath}")
+//        }
+        additionalParameters '--allow-reserved-package-id', '--package-id', '0x8f', "--stable-ids", "${publicTxtFile.absolutePath}"
+    }
+
     //编译类型
     buildTypes {
         release {
