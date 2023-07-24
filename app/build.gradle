@@ -492,3 +492,26 @@ this.afterEvaluate {
 //name:xiaomiFreeRelease, baseName:xiaomi-free-release
 //name:huaweiPayRelease, baseName:huawei-pay-release
 //name:huaweiFreeRelease, baseName:huawei-free-release
+
+//自定义继承Task：type是一个关键字，用来引入一个存在的Task，例如 Delete、Jar
+
+//删除dynamic.jar包任务
+task clearJar(type: Delete) {
+    delete 'libs/dynamic.jar'
+}
+
+//打包任务
+task makeJar(type:org.gradle.api.tasks.bundling.Jar) {
+    //指定生成的jar名
+    baseName 'dynamic'
+    //从哪里打包class文件
+    from('build/intermediates/javac/huaweiFreeDebug/classes/com/hfy/demo01/plugin/')
+    //打包到jar后的目录结构
+    into('com/hfy/demo01/plugin')
+    //去掉不需要打包的目录和文件
+    exclude('test/', 'IDex.class', 'BuildConfig.class', 'R.class', 'FileUtils.class')
+    //去掉R$开头的文件
+    exclude{ it.name.startsWith('R$');}
+}
+//makeJar.dependsOn(clearJar, build)
+makeJar.dependsOn(clearJar)
