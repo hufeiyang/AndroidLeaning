@@ -515,3 +515,59 @@ task makeJar(type:org.gradle.api.tasks.bundling.Jar) {
 }
 //makeJar.dependsOn(clearJar, build)
 makeJar.dependsOn(clearJar)
+
+
+class TestDomainBean{
+    //这是一个必须要有的属性并且申明后不要修改
+    public String name
+
+    public String msg
+
+    public TestDomainBean(String name){
+        this.name = name
+    }
+
+    String getName() {
+        return name
+    }
+
+    void setName(String name) {
+        this.name = name
+    }
+
+    String getMsg() {
+        return msg
+    }
+
+    void setMsg(String msg) {
+        this.msg = msg
+    }
+
+
+    @Override
+    public String toString() {
+        return "TestDomainBean{" +
+                "name='" + name + '\'' +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
+}
+
+project.extensions.add("TestDomainConfig", project.container(TestDomainBean))
+
+TestDomainConfig{
+    hufeiyang{
+        msg = "hufeiyang-msg"
+    }
+
+    zhangdie{
+        msg = "zhangdie-msg"
+    }
+}
+
+project.afterEvaluate {
+    def testDomainConfigs = (NamedDomainObjectContainer<TestDomainBean>)project.getExtensions().findByName("TestDomainConfig")
+    testDomainConfigs.each {
+        println "获取到TestDomainBean：${it.toString()}"
+    }
+}
