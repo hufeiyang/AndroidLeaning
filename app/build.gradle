@@ -571,3 +571,20 @@ project.afterEvaluate {
         println "获取到TestDomainBean：${it.toString()}"
     }
 }
+
+//project.gradle.startParameter.getTaskNames().each {
+//    // 命令行输入 ./gradlew clean assembleRelease -s
+//    // 会输出 clean assembleRelease
+//    // 可以利用这个信息确定构建模式
+//}
+afterEvaluate{
+    project.gradle.startParameter.taskNames.each {
+        println "startParameter.taskName:$it"
+    }
+
+    def appExtension = project.extensions.findByType(AppExtension)
+    def variants = appExtension.applicationVariants
+    variants.all{
+        println "variant:${it.name}"
+    }
+}
