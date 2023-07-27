@@ -1,8 +1,14 @@
+import com.android.build.gradle.AppExtension
+
 apply plugin: 'com.android.application'
 apply from: rootProject.file("view_opt.gradle")
 
+apply plugin: 'com.google.dagger.hilt.android'
 
 apply plugin: 'hufeiyang'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'McImage'
 McImageConfig {
@@ -101,8 +107,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     dataBinding {
@@ -250,6 +256,9 @@ dependencies {DependencyHandler dependencyHandler ->
 
     // PictureSelector 基础 (必须)
     implementation 'io.github.lucksiege:pictureselector:v3.11.1'
+
+    implementation 'com.google.dagger:hilt-android:2.46'
+    kapt 'com.google.dagger:hilt-android-compiler:2.46'
 }
 
 
@@ -582,7 +591,7 @@ afterEvaluate{
         println "startParameter.taskName:$it"
     }
 
-    def appExtension = project.extensions.findByType(AppExtension)
+    def appExtension = project.extensions.findByType(AppExtension.class)
     def variants = appExtension.applicationVariants
     variants.all{
         println "variant:${it.name}"
