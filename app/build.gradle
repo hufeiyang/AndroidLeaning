@@ -1,3 +1,5 @@
+import com.android.build.gradle.AppExtension
+
 apply plugin: 'com.android.application'
 apply from: rootProject.file("view_opt.gradle")
 
@@ -582,7 +584,7 @@ afterEvaluate{
         println "startParameter.taskName:$it"
     }
 
-    def appExtension = project.extensions.findByType(AppExtension)
+    def appExtension = project.extensions.findByType(AppExtension.class)
     def variants = appExtension.applicationVariants
     variants.all{
         println "variant:${it.name}"
