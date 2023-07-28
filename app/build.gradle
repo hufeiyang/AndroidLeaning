@@ -597,4 +597,9 @@ afterEvaluate{
     variants.all{
         println "variant:${it.name}"
     }
+
+    def localProperties = new Properties()
+    localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+    def typeProperties = localProperties.getProperty("TYPE")
+    println "typeProperties:$typeProperties"
 }
