@@ -513,7 +513,7 @@ task clearJar(type: Delete) {
     delete 'libs/dynamic.jar'
 }
 
-//打包任务
+//从指定文件夹生成jar，输出目录是app/build/libs
 task makeJar(type:org.gradle.api.tasks.bundling.Jar) {
     //指定生成的jar名
     baseName 'dynamic'
