@@ -1,4 +1,15 @@
+import com.android.build.api.transform.DirectoryInput
+import com.android.build.api.transform.Format
+import com.android.build.api.transform.JarInput
+import com.android.build.api.transform.QualifiedContent
+import com.android.build.api.transform.Transform
+import com.android.build.api.transform.TransformException
+import com.android.build.api.transform.TransformInput
+import com.android.build.api.transform.TransformInvocation
 import com.android.build.gradle.AppExtension
+import com.google.common.collect.ImmutableSet
+import org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.io.FileUtils
 
 apply plugin: 'com.android.application'
 apply from: rootProject.file("view_opt.gradle")
@@ -594,4 +605,84 @@ afterEvaluate{
     localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
     def typeProperties = localProperties.getProperty("TYPE")
     println "typeProperties:$typeProperties"
+}
+
+//注册Transform
+def appExtension = project.extensions.findByType(AppExtension.class)
+appExtension.registerTransform(new MyTransform(project))
+
+class MyTransform extends Transform {
+
+    Project project
+
+    MyTransform(Project project) {
+        this.project = project
+    }
+
+    @Override
+    String getName() {
+        return "MyTransform"
+    }
+
+    @Override
+    Set<com.android.build.api.transform.QualifiedContent.ContentType> getInputTypes() {
+        return ImmutableSet.of(QualifiedContent.DefaultContentType.CLASSES)
+
+    }
+
+    @Override
+    Set<? super QualifiedContent.Scope> getScopes() {
+        return ImmutableSet.of(QualifiedContent.Scope.PROJECT, QualifiedContent.Scope.SUB_PROJECTS,
+                QualifiedContent.Scope.EXTERNAL_LIBRARIES)
+    }
+
+    @Override
+    boolean isIncremental() {
+        return true
+    }
+
+    @Override
+    void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
+        super.transform(transformInvocation)
+
+        println " MyTransform start to transform-------------->>>>>>>"
+
+        transformInvocation.getInputs().each { TransformInput input ->
+
+            input.directoryInputs.each { DirectoryInput directoryInput ->
+
+                if (directoryInput.file.isDirectory()) {
+                    directoryInput.file.eachFileRecurse {File file ->
+                        //形如 IPCProviderProxyMapping$$****$$Proxy 的类，是我们要找的目标class
+                        println("file path:${file.absolutePath}")
+                    }
+                }
+
+                def dest = transformInvocation.getOutputProvider().getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
+                FileUtils.copyDirectory(directoryInput.file, dest)
+            }
+
+            input.jarInputs.each { JarInput jarInput ->
+
+
+                def jarName = jarInput.name
+                def md5 = DigestUtils.md5Hex(jarInput.file.getAbsolutePath())
+                if (jarName.endsWith(".jar")) {
+                    jarName = jarName.substring(0, jarName.length() - 4)
+                }
+
+                def dest = transformInvocation.getOutputProvider().getContentLocation(jarName + md5, jarInput.contentTypes, jarInput.scopes, Format.JAR)
+                if (jarInput.file.getAbsolutePath().endsWith(".jar")) {
+                    //处理jar包里的代码
+                    println("jarInput = ${jarInput.file.absolutePath}")
+                }
+                FileUtils.copyFile(jarInput.file, dest)
+            }
+        }
+
+
+        println "MyTransform transform finish----------------<<<<<<<\n"
+
+    }
+
 }
