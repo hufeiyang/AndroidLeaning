@@ -11,6 +11,9 @@ import com.google.common.collect.ImmutableSet
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
 
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+
 apply plugin: 'com.android.application'
 apply from: rootProject.file("view_opt.gradle")
 
@@ -651,11 +654,27 @@ class MyTransform extends Transform {
 
             input.directoryInputs.each { DirectoryInput directoryInput ->
 
-                if (directoryInput.file.isDirectory()) {
-                    directoryInput.file.eachFileRecurse {File file ->
-                        //形如 IPCProviderProxyMapping$$****$$Proxy 的类，是我们要找的目标class
-                        println("file path:${file.absolutePath}")
+                //遍历class文件
+                directoryInput.file.eachFileRecurse(groovy.io.FileType.FILES) { File file ->
+                    def filePath = file.absolutePath
+                    println("file path:$filePath")
+
+                    //通过class文件路径获取类全名
+                    //有两类class文件，一类是build/intermediates/javac/huaweiFreeDebug/classes，一类是build/tmp/kotlin-classes/huaweiFreeDebug
+                    //    /Users/bytedance/AndroidStudioProjects/AndroidLeaning/app/build/intermediates/javac/huaweiFreeDebug/classes/com/bumptech/glide/GeneratedRequestManagerFactory.class
+                    //    /Users/bytedance/AndroidStudioProjects/AndroidLeaning/app/build/tmp/kotlin-classes/huaweiFreeDebug/com/hfy/demo01/longimage/LongImageTestActivity.class
+                    def className = filePath.split(variantName)[1].substring(1)
+                    if (filePath.contains("classes")) {
+                        className = filePath.split("classes")[1].substring(1)
                     }
+
+                    //todo 识别目标class
+                    if(className.contains("xxx")){
+                        //todo 逻辑处理
+                    }else{
+
+                    }
+
                 }
 
                 def dest = transformInvocation.getOutputProvider().getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
@@ -664,7 +683,6 @@ class MyTransform extends Transform {
 
             input.jarInputs.each { JarInput jarInput ->
 
-
                 def jarName = jarInput.name
                 def md5 = DigestUtils.md5Hex(jarInput.file.getAbsolutePath())
                 if (jarName.endsWith(".jar")) {
@@ -672,10 +690,25 @@ class MyTransform extends Transform {
                 }
 
                 def dest = transformInvocation.getOutputProvider().getContentLocation(jarName + md5, jarInput.contentTypes, jarInput.scopes, Format.JAR)
-                if (jarInput.file.getAbsolutePath().endsWith(".jar")) {
-                    //处理jar包里的代码
-                    println("jarInput = ${jarInput.file.absolutePath}")
+
+                println("jarInput = ${jarInput.file.absolutePath}")
+
+                def file = new JarFile(jarInput.file)
+                Enumeration<JarEntry> enumeration = file.entries()
+                //遍历jar中的class
+                while (enumeration.hasMoreElements()) {
+                    JarEntry jarEntry = enumeration.nextElement()
+                    String entryName = jarEntry.getName()
+
+                    //todo 识别目标class文件并处理
+                    if (entryName == "xxx") {
+                        //
+                    } else {
+                        //
+                    }
+
                 }
+
                 FileUtils.copyFile(jarInput.file, dest)
             }
         }
