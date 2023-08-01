@@ -663,6 +663,7 @@ class MyTransform extends Transform {
                     //有两类class文件，一类是build/intermediates/javac/huaweiFreeDebug/classes，一类是build/tmp/kotlin-classes/huaweiFreeDebug
                     //    /Users/bytedance/AndroidStudioProjects/AndroidLeaning/app/build/intermediates/javac/huaweiFreeDebug/classes/com/bumptech/glide/GeneratedRequestManagerFactory.class
                     //    /Users/bytedance/AndroidStudioProjects/AndroidLeaning/app/build/tmp/kotlin-classes/huaweiFreeDebug/com/hfy/demo01/longimage/LongImageTestActivity.class
+                    def variantName = transformInvocation.context.variantName
                     def className = filePath.split(variantName)[1].substring(1)
                     if (filePath.contains("classes")) {
                         className = filePath.split("classes")[1].substring(1)
