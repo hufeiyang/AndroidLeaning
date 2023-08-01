@@ -48,6 +48,7 @@ android {
 //    compileSdkVersion this.rootProject.mCompileSdkVersion //这个也可以
 //    compileSdkVersion mCompileSdkVersion
     compileSdkVersion rootProject.ext.android.compileSdkVerison //使用rootProject引入的扩展属性
+    buildToolsVersion '30.0.3'
 
     //默认配置，就是每个变体共用的配置，当然也可以单独在变体中配置
     defaultConfig {
@@ -128,7 +129,6 @@ android {
     viewBinding {
         enabled = true
     }
-    buildToolsVersion '30.0.3'
 
     sourceSets {
         main{
@@ -141,6 +141,8 @@ android {
 
     configurations.all {
         resolutionStrategy {
+            // Kotlin Android KTX 的核心库，提供了许多与 Android 框架的交互所需的扩展函数和属性。
+            // 这些扩展函数和属性旨在提高代码的可读性和简洁性，减少样板代码，并利用 Kotlin 的特性和语法糖
             force 'androidx.core:core-ktx:1.6.0'
         }
     }
