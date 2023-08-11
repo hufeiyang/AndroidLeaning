@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +49,7 @@ import com.hfy.demo01.module.home.fragment.ThirdFragment;
 import com.hfy.demo01.performance.viewopt.ViewOpt;
 import com.hfy.demo01.plugin.FileUtils;
 import com.hfy.demo01.plugin.IDex;
+import com.hfy.pluginslim.PluginInjector;
 import com.hfy.test_annotations.TestAnnotation;
 import com.tencent.tauth.Tencent;
 
@@ -262,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "onCreate synchronized: ");
         }
 
-        loadDexClass();
+        testLoadDexClass();
 
         Log.i(TAG, "onCreate end. ");
     }
@@ -271,21 +273,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 使用DexClassLoader去加载dex，然后通过反射调用我们之前定义的方法获取相关资源.
      */
-    private void loadDexClass() {
-        File outputDir = FileUtils.getCacheDir(getApplicationContext());
-        String dexPath = outputDir.getAbsolutePath() + File.separator + "out.jar";
-
-        File desFile=new File(dexPath);
-        try {
-            if (!desFile.exists()) {
-                desFile.createNewFile();
-                //FileUtils类是从assets目录下拷贝out.jar到app/data/cache目录
-                //out.jar包含一个dex文件
-                FileUtils.copyFiles(this,"out.jar",desFile);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void testLoadDexClass() {
+        File desFile = FileUtils.getDesFile(this, "out.jar");
 
         /**
          * 加载dex
@@ -294,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
          * 参数3 libraryPath：指向包含本地库(so)的文件夹路径，可以设为null
          * 参数4 parent：父级类加载器，一般可以通过Context.getClassLoader获取到，也可以通过ClassLoader.getSystemClassLoader()取到。
          */
-        DexClassLoader dexClassLoader = new DexClassLoader(dexPath, outputDir.getAbsolutePath(), null, getClassLoader());
+        DexClassLoader dexClassLoader = new DexClassLoader(desFile.getAbsolutePath(), desFile.getParentFile().getAbsolutePath(), null, getClassLoader());
         try {
             Class<?> dexImplClass = dexClassLoader.loadClass("com.hfy.demo01.plugin.DexImpl");
             IDex dex = (IDex) dexImplClass.newInstance();

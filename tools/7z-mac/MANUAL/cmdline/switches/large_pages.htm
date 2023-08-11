@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+  <META http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+  <TITLE>-slp (Set Large Pages mode) switch</TITLE>
+  <LINK href="style.css" rel="stylesheet" type="text/css">
+</HEAD>
+
+<BODY>
+
+<H1>-slp (Set Large Pages mode) switch</H1>
+
+<P>Sets Large Pages mode.</P>
+
+<H4>Syntax</H4>
+
+<PRE class="syntax">
+-slp[-]
+</PRE>
+
+
+<TABLE>
+  <TR><TH width="80">Switch</TH> <TH>Description</TH></TR>
+  <TR><TD>-slp</TD> <TD>Enables Large Pages mode.</TD></TR>
+  <TR><TD>-slp-</TD> <TD>Disables Large Pages mode. This option is default for all commands.</TD></TR>
+</TABLE>
+
+<P> Large Pages mode increases the speed of compression.
+However, there is a pause at the start of compression while 7-Zip allocates the large pages in memory.
+If 7-Zip can't allocate large pages, it allocates usual small pages.
+Also, the Windows Task Manager doesn't show the real memory usage of the program, if 7-Zip uses large pages.
+This feature doesn't work on Windows 2000 / 32-bit Windows XP. 
+Also, it can require administrator's rights for your system.
+The recommended size of RAM for this feature is 3 GB or more.
+To install this feature, you must run the 7-Zip File Manager with administrator's rights 
+at least once, close it, and then reboot the system.</P>
+
+<P><B>Notes:</B> if you use -slp mode in old Windows version, 
+    your Windows system can hang for several seconds when 7-zip allocates memory blocks. 
+Windows can hang other tasks for that time. 
+It can look like full system hang, but then it resumes. 
+It was so in old Windows versions. 
+But modern Windows versions (Windows 7 / Windows 10) 
+can allocate "Large pages" faster than previous Windows versions.
+
+<P> Also it's senseless to use -slp mode to compress small data sets (less than 100 MB).
+But if you compress big data sets (100 MB or more) with LZMA/LZMA2 method with large dictionary,
+you can get 5%-10% speed improvement with -slp mode.</P>
+
+
+<H4>Example</H4>
+
+<PRE class="example">
+7z a archive.7z -slp a.iso
+</PRE>
+
+<P>compresses <SPAN class="filename">a.iso</SPAN> file with Large Pages mode switched on.</P>
+
+</BODY>
+</HTML>

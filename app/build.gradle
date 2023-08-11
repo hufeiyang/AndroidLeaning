@@ -50,6 +50,19 @@ android {
     compileSdkVersion rootProject.ext.android.compileSdkVerison //使用rootProject引入的扩展属性
     buildToolsVersion '30.0.3'
 
+//    signingConfigs {
+//        debug{
+//            keyAlias 'debug'
+//            keyPassword 'debug'
+//            storeFile
+//            storePassword
+//        }
+//
+//        release{
+//
+//        }
+//    }
+
     //默认配置，就是每个变体共用的配置，当然也可以单独在变体中配置
     defaultConfig {
         applicationId "com.hfy.androidlearning"
@@ -65,7 +78,7 @@ android {
         multiDexEnabled true
 
         ndk{
-            abiFilters "armeabi-v7a","arm64-v8a","x86"
+            abiFilters "armeabi-v7a"
         }
     }
 
@@ -268,6 +281,12 @@ dependencies {DependencyHandler dependencyHandler ->
 
     // PictureSelector 基础 (必须)
     implementation 'io.github.lucksiege:pictureselector:v3.11.1'
+
+    //插件瘦身api
+    implementation 'com.hfy.pluginslim:pluginslim-api:1.0.0'
+
+    implementation 'com.getkeepsafe.relinker:relinker:1.4.5'
+
 }
 
 
@@ -603,7 +622,9 @@ afterEvaluate{
     def appExtension = project.extensions.findByType(AppExtension.class)
     def variants = appExtension.applicationVariants
     variants.all{
-        println "variant:${it.name}"
+//        println "variant:${it.name}"
+//        println "variant outputs:${it.getOutputs()}"
+//        println "variant dirName:${it.dirName}"
     }
 
     def localProperties = new Properties()
@@ -613,8 +634,8 @@ afterEvaluate{
 }
 
 //注册Transform
-def appExtension = project.extensions.findByType(AppExtension.class)
-appExtension.registerTransform(new MyTransform(project))
+//def appExtension = project.extensions.findByType(AppExtension.class)
+//appExtension.registerTransform(new MyTransform(project))
 
 class MyTransform extends Transform {
 
@@ -649,7 +670,6 @@ class MyTransform extends Transform {
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation)
-        println " MyTransform start to transform-------------->>>>>>>"
 
         def variantName = transformInvocation.context.variantName
         println " MyTransform variantName:$variantName"
@@ -661,24 +681,14 @@ class MyTransform extends Transform {
                 //遍历class文件
                 directoryInput.file.eachFileRecurse(groovy.io.FileType.FILES) { File file ->
                     def filePath = file.absolutePath
-                    println("file path:$filePath")
-
-                    //通过class文件路径获取类全名
-                    //有两类class文件，一类是build/intermediates/javac/huaweiFreeDebug/classes，一类是build/tmp/kotlin-classes/huaweiFreeDebug
-                    //    /Users/bytedance/AndroidStudioProjects/AndroidLeaning/app/build/intermediates/javac/huaweiFreeDebug/classes/com/bumptech/glide/GeneratedRequestManagerFactory.class
-                    //    /Users/bytedance/AndroidStudioProjects/AndroidLeaning/app/build/tmp/kotlin-classes/huaweiFreeDebug/com/hfy/demo01/longimage/LongImageTestActivity.class
-                    def className = filePath.split(variantName)[1].substring(1)
-                    if (filePath.contains("classes")) {
-                        className = filePath.split("classes")[1].substring(1)
-                    }
+//                    println("file path:$filePath")
 
                     //todo 识别目标class
-                    if(className.contains("xxx")){
+                    if(filePath.contains("xxx")){
                         //todo 逻辑处理
                     }else{
 
                     }
-
                 }
 
                 def dest = transformInvocation.getOutputProvider().getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
@@ -695,7 +705,7 @@ class MyTransform extends Transform {
 
                 def dest = transformInvocation.getOutputProvider().getContentLocation(jarName + md5, jarInput.contentTypes, jarInput.scopes, Format.JAR)
 
-                println("jarInput = ${jarInput.file.absolutePath}")
+//                println("jarInput = ${jarInput.file.absolutePath}")
 
                 def file = new JarFile(jarInput.file)
                 Enumeration<JarEntry> enumeration = file.entries()
@@ -717,9 +727,29 @@ class MyTransform extends Transform {
             }
         }
 
-
-        println "MyTransform transform finish----------------<<<<<<<\n"
-
     }
 
+}
+
+//注意要配置在android{}后面，这样插进才能获取正确的 buildToolsVersion、compileVersion:android-30
+apply plugin:'com.hfy.pluginslim'
+
+pluginConfig{
+    plugin1{
+        packageFilters = [
+                "com/hfy/demo01/module/home/designsupportlibrarytest",
+        ]
+
+        soFilters = [
+                "arm64-v8a/libhfy_bsdiff.so",
+        ]
+
+        assetFilters = [
+                "apng.png",
+        ]
+
+        classBlackLists = [
+
+        ]
+    }
 }

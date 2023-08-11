@@ -25,6 +25,11 @@ buildscript { ScriptHandler scriptHandler ->
             }
         }
 
+        //自定义插件maven地址(本地maven)
+        maven {
+            url 'file:///Users/bytedance/.m2/repository/'
+        }
+
     }
     //配置工程 "插件"依赖的地址
     // buildscript 的 dependencies 用于配置工程 "插件"依赖。不同与project 的dependencies。
@@ -34,6 +39,8 @@ buildscript { ScriptHandler scriptHandler ->
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath 'com.smallsoho.mobcase:McImage:1.5.1'
+
+        classpath 'com.hfy.pluginslim:pluginslim-plugin:1.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -46,6 +53,11 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         google()
+
+        //自定义插件maven地址(本地maven)
+        maven {
+            url 'file:///Users/bytedance/.m2/repository/'
+        }
     }
 }
 

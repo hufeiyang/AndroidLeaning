@@ -23,6 +23,8 @@ import com.hfy.demo01.bsdiff.BsDiffTestActivity;
 import com.hfy.demo01.hook.TestHookActivity;
 import com.hfy.demo01.longimage.LongImageTestActivity;
 import com.hfy.demo01.performance.fps.PerformanceLearningActivity;
+import com.hfy.demo01.plugin.FileUtils;
+import com.hfy.pluginslim.PluginInjector;
 
 import java.io.File;
 
@@ -64,7 +66,8 @@ public class ThirdFragment extends Fragment {
             R.id.btn_share_dy2,
             R.id.btn_performance_learning,
             R.id.btn_bsdiff,
-            R.id.btn_long_image
+            R.id.btn_long_image,
+            R.id.btn_inject_plugin
     })
     public void onClick(View view) {
         String filePath;
@@ -90,9 +93,19 @@ public class ThirdFragment extends Fragment {
             case R.id.btn_long_image:
                 LongImageTestActivity.launch(getActivity());
                 break;
+            case R.id.btn_inject_plugin:
+                injectPluginApk();
+                break;
             default:
                 break;
         }
+    }
+
+    private void injectPluginApk() {
+        File pluginFile = FileUtils.getDesFile(getContext(), "plugin1_1.apk");
+        String pluginFileAbsolutePath = pluginFile.getAbsolutePath();
+
+        PluginInjector.INSTANCE.inject(getActivity().getApplication(), pluginFileAbsolutePath);
     }
 
     private void shareToDY(String filePath) {

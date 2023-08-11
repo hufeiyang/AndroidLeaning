@@ -1,5 +1,8 @@
 package com.playgame.havefun.hfybsdiff
 
+import android.widget.Toast
+import com.getkeepsafe.relinker.ReLinker
+
 /**
  * 手把手教你在Android中使用bsdiff实现文件增量更新 (超详细)
  * https://blog.csdn.net/yuzhiqiang_1993/article/details/121317195
@@ -10,6 +13,21 @@ object BsDiffUtil {
     // Used to load the 'hfybsdiff' library on application startup.
     init {
         System.loadLibrary("hfy_bsdiff")
+
+//        ReLinker.loadLibrary(this, "hfy_bsdiff", object : ReLinker.LoadListener{
+//            override fun success() {
+//                runOnUiThread {
+//                    Toast.makeText(this@BsDiffTestActivity, "loadLibrary success", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun failure(t: Throwable?) {
+//                runOnUiThread {
+//                    Toast.makeText(this@BsDiffTestActivity, "loadLibrary failure", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//        })
     }
 
     /**

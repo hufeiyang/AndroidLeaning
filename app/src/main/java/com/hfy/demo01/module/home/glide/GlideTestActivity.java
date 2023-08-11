@@ -305,9 +305,9 @@ public class GlideTestActivity extends AppCompatActivity {
 //                .load(R.drawable.apng)
 //                .into(ivGlideTestApng);
 //
-//        String uri = "assets://apng.png";
+        String uri = "file:///android_asset/apng.png";
 //        String uri = "http://a1.att.hudong.com/05/00/01300000194285122188000535877.jpg";
-        String uri = "https://d17qpog9ccnbkb.cloudfront.net/v5res/vova/2018-12-20/images/banners/0yuangou/0yuangou.png";
+//        String uri = "https://d17qpog9ccnbkb.cloudfront.net/v5res/vova/2018-12-20/images/banners/0yuangou/0yuangou.png";
 //        ApngImageLoader.getInstance()
 //                .displayApng(uri, ivGlideTestApng,
 //                        new ApngImageLoader.ApngConfig(5, true));

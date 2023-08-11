@@ -3,6 +3,8 @@ package com.hfy.demo01.plugin;
 import android.content.Context;
 import android.os.Environment;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,6 +62,22 @@ public class FileUtils {
         if (!cache.exists())
             cache.mkdirs();
         return cache;
+    }
+
+    @NonNull
+    public static File getDesFile(Context context,String fileName) {
+        String dexPath = FileUtils.getCacheDir(context).getAbsolutePath() + File.separator + fileName;
+        File desFile=new File(dexPath);
+        try {
+            if (!desFile.exists()) {
+                desFile.createNewFile();
+                //从assets目录下拷贝fileName到app/data/cache目录
+                FileUtils.copyFiles(context, fileName,desFile);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return desFile;
     }
 }
 
