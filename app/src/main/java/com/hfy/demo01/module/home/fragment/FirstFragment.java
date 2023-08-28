@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.hfy.demo01.R;
 import com.hfy.demo01.common.customview.AppendViewAfterTextView;
 import com.hfy.demo01.common.util.SizeUtil;
+import com.hfy.demo01.kotlin.KotlinTestActivity;
 import com.hfy.demo01.module.home.animation.AnimationTestActivity;
 import com.hfy.demo01.module.home.bitmap.BitmapTestActivity;
 import com.hfy.demo01.module.home.designsupportlibrarytest.MaterialDesignWidgetActivity;
@@ -208,7 +209,7 @@ public class FirstFragment extends Fragment {
                 BitmapTestActivity.launch(getActivity());
                 break;
             case R.id.btn_kotlin_test:
-//                KotlinTestActivity.launch(getActivity());
+                KotlinTestActivity.launch(getActivity());
                 break;
             default:
                 break;

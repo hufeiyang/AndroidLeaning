@@ -177,8 +177,9 @@ dependencies {DependencyHandler dependencyHandler ->
 //    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     implementation project(path: ':secondfloor')
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
@@ -190,6 +191,20 @@ dependencies {DependencyHandler dependencyHandler ->
 //        exclude group 'com.hfy.group1'  module 'hehe' //排除依赖：某个组下面的某个module
 //        transitive false //关闭传递依赖 A->B->C，A不依赖C
     }
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // 协程核心库
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    // 协程Android支持库
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+    // 协程Java8支持库
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
+    // lifecycle对于协程的扩展封装
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
     //Jetpack相关
     def lifecycle_version = "2.2.0"
