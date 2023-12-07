@@ -24,7 +24,7 @@ import com.hfy.demo01.hook.TestHookActivity;
 import com.hfy.demo01.longimage.LongImageTestActivity;
 import com.hfy.demo01.performance.fps.PerformanceLearningActivity;
 import com.hfy.demo01.plugin.FileUtils;
-import com.hfy.pluginslim.PluginInjector;
+//import com.hfy.pluginslim.PluginInjector;
 
 import java.io.File;
 
@@ -105,7 +105,7 @@ public class ThirdFragment extends Fragment {
         File pluginFile = FileUtils.getDesFile(getContext(), "plugin1_1.apk");
         String pluginFileAbsolutePath = pluginFile.getAbsolutePath();
 
-        PluginInjector.INSTANCE.inject(getActivity().getApplication(), pluginFileAbsolutePath);
+//        PluginInjector.INSTANCE.inject(getActivity().getApplication(), pluginFileAbsolutePath);
     }
 
     private void shareToDY(String filePath) {

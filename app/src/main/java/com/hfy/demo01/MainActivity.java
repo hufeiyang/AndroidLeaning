@@ -49,7 +49,7 @@ import com.hfy.demo01.module.home.fragment.ThirdFragment;
 import com.hfy.demo01.performance.viewopt.ViewOpt;
 import com.hfy.demo01.plugin.FileUtils;
 import com.hfy.demo01.plugin.IDex;
-import com.hfy.pluginslim.PluginInjector;
+//import com.hfy.pluginslim.PluginInjector;
 import com.hfy.test_annotations.TestAnnotation;
 import com.tencent.tauth.Tencent;
 

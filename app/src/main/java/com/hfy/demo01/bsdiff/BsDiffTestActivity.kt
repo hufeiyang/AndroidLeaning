@@ -18,7 +18,7 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.hfy.demo01.R
 import com.hfy.demo01.fileselector.SelectFileContract
-import com.playgame.havefun.hfybsdiff.BsDiffUtil
+//import com.playgame.havefun.hfybsdiff.BsDiffUtil
 import java.io.File
 
 class BsDiffTestActivity : AppCompatActivity() {
@@ -106,8 +106,8 @@ class BsDiffTestActivity : AppCompatActivity() {
                 patchFile.exists().let {
                     Thread{
 //                        val patch = BigNews.make(oldApkFile.absolutePath, combineFile.absolutePath, patchFile.absolutePath)
-                        val patch = BsDiffUtil.patch(oldApkFile.absolutePath, patchFile.absolutePath, combineFile.absolutePath)
-                        LogUtils.i(TAG,"patch result = $patch")
+//                        val patch = BsDiffUtil.patch(oldApkFile.absolutePath, patchFile.absolutePath, combineFile.absolutePath)
+//                        LogUtils.i(TAG,"patch result = $patch")
                         uiHandler.post{
                             findViewById<TextView>(R.id.tv_combine_apk_path).text = combineFile.absolutePath
                             LogUtils.i(TAG,"newFile MD5:${FileUtils.getFileMD5ToString(newApkFile)}")
@@ -139,8 +139,8 @@ class BsDiffTestActivity : AppCompatActivity() {
                     val patchFilePath = patchFile.absolutePath
                     LogUtils.i(TAG, "patch begin. dest path:$patchFilePath")
 //                    val diff = BigNews.diff(oldApkFile.absolutePath, newApkFile.absolutePath, patchFilePath)
-                    val diff = BsDiffUtil.diff(newApkFile.absolutePath,  oldApkFile.absolutePath, patchFilePath)
-                    LogUtils.i(TAG, "diff end. result = $diff")
+//                    val diff = BsDiffUtil.diff(newApkFile.absolutePath,  oldApkFile.absolutePath, patchFilePath)
+//                    LogUtils.i(TAG, "diff end. result = $diff")
                     uiHandler.post {
                         findViewById<TextView>(R.id.tv_patch_path).text = patchFile.absolutePath
                     }

@@ -292,13 +292,13 @@ dependencies {DependencyHandler dependencyHandler ->
     implementation project(path: ':viewoptapi')
 
     //依赖差分包处理模块
-    implementation project(path: ':hfy_bsdiff')
+//    implementation project(path: ':hfy_bsdiff')
 
     // PictureSelector 基础 (必须)
     implementation 'io.github.lucksiege:pictureselector:v3.11.1'
 
     //插件瘦身api
-    implementation 'com.hfy.pluginslim:pluginslim-api:1.0.0'
+//    implementation 'com.hfy.pluginslim:pluginslim-api:1.0.0'
 
     implementation 'com.getkeepsafe.relinker:relinker:1.4.5'
 
@@ -747,24 +747,24 @@ class MyTransform extends Transform {
 }
 
 //注意要配置在android{}后面，这样插进才能获取正确的 buildToolsVersion、compileVersion:android-30
-apply plugin:'com.hfy.pluginslim'
+//apply plugin:'com.hfy.pluginslim'
 
-pluginConfig{
-    plugin1{
-        packageFilters = [
-                "com/hfy/demo01/module/home/designsupportlibrarytest",
-        ]
-
-        soFilters = [
-                "arm64-v8a/libhfy_bsdiff.so",
-        ]
-
-        assetFilters = [
-                "apng.png",
-        ]
-
-        classBlackLists = [
-
-        ]
-    }
-}
+//pluginConfig{
+//    plugin1{
+//        packageFilters = [
+//                "com/hfy/demo01/module/home/designsupportlibrarytest",
+//        ]
+//
+//        soFilters = [
+//                "arm64-v8a/libhfy_bsdiff.so",
+//        ]
+//
+//        assetFilters = [
+//                "apng.png",
+//        ]
+//
+//        classBlackLists = [
+//
+//        ]
+//    }
+//}
