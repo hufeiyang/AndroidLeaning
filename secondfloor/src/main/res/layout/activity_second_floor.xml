@@ -47,7 +47,7 @@
                 android:id="@+id/classicsHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/actionBarSize"/>
+                android:layout_marginTop="24dp"/>
         </com.scwang.smartrefresh.layout.header.TwoLevelHeader>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingTop="?attr/actionBarSize"/>
+            android:paddingTop="24dp"/>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="24dp"
         android:background="#fe1200"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="二楼test"

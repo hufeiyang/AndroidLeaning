@@ -20,6 +20,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    //设置风味的维度：应用市场、是否免费
+    flavorDimensions "market","ifPay"
+
+    //产品风味
+    productFlavors{
+        xiaomi{
+            dimension "market"  //应用市场维度
+//            applicationId = "_xiaomi"
+        }
+
+        huawei{
+            dimension "market"
+//            applicationId = "_huawei"
+        }
+
+        free{
+            dimension "ifPay" //是否免费维度
+//            applicationId = "_free"
+        }
+
+        pay{
+            dimension "ifPay"
+//            applicationId = "_needPay"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
